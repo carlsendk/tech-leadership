@@ -1,28 +1,82 @@
 ---
-import { getCollection } from 'astro:content';
-import WikiLayout from '../../layouts/WikiLayout.astro';
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import WikiLayout from "../../layouts/WikiLayout.astro";
 
 export async function getStaticPaths() {
-  const wikiEntries = await getCollection('wiki', ({ data }) => {
+  const wikiEntries = await getCollection("wiki", ({ data }) => {
     return !data.draft;
   });
-  
-  return wikiEntries.map(entry => ({
+
+  return wikiEntries.map((entry: CollectionEntry<"wiki">) => ({
     params: { slug: entry.slug },
     props: { entry },
   }));
 }
 
 const { entry } = Astro.props;
-const { Content, headings } = await entry.render();
+const { Content } = await entry.render();
 ---
 
-<WikiLayout 
-  title={entry.data.title} 
+<WikiLayout
+  title={entry.data.title}
   description={entry.data.description}
   tags={entry.data.tags}
   category={entry.data.category}
-  headings={headings}
 >
-  <Content />
+  <div class="prose prose-primary dark:prose-invert max-w-none">
+    <Content
+      components={{
+        pre: ({ children }) => {
+          const content = children[0]?.props?.children?.[0] || "";
+          if (content.startsWith("mermaid")) {
+            const diagram = content.replace("mermaid\n", "");
+            return `<div class="mermaid">${diagram}</div>`;
+          }
+          return `<pre>${children}</pre>`;
+        },
+      }}
+    />
+  </div>
 </WikiLayout>
+
+<script>
+  import mermaid from "mermaid";
+
+  // Initialize mermaid
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: "default",
+    securityLevel: "loose",
+    themeVariables: {
+      fontFamily: "system-ui, -apple-system, sans-serif",
+      fontSize: "16px",
+    },
+  });
+
+  // Function to render mermaid diagrams
+  function renderMermaid() {
+    const diagrams = document.querySelectorAll(".mermaid");
+    diagrams.forEach((diagram) => {
+      if (!diagram.hasAttribute("data-processed")) {
+        mermaid
+          .render(diagram.id || crypto.randomUUID(), diagram.textContent || "")
+          .then(({ svg }) => {
+            diagram.innerHTML = svg;
+          });
+      }
+    });
+  }
+
+  // Initial render
+  renderMermaid();
+
+  // Re-render on theme changes
+  document.addEventListener("astro:after-swap", renderMermaid);
+</script>
+
+<style>
+  :global(.mermaid) {
+    @apply my-8 text-center;
+  }
+</style>
