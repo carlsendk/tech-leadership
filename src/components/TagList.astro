@@ -4,16 +4,19 @@ export interface Props {
 }
 
 const { tags } = Astro.props;
+const baseUrl = "/tech-leadership";
 ---
 
 <div class="flex flex-wrap gap-2">
-  {tags.map((tag) => (
-    <a 
-      href={`/tags/${tag}`}
-      class="text-xs font-medium px-3 py-1.5 rounded-full bg-primary-100 text-primary-600 hover:bg-primary-200 
-      dark:bg-primary-800/50 dark:text-primary-300 dark:hover:bg-primary-700/50 transition-colors"
-    >
-      #{tag}
-    </a>
-  ))}
+  {
+    tags.map((tag) => (
+      <a
+        href={`${baseUrl}/tags/${tag}`}
+        class="inline-flex items-center text-xs px-2 py-1 rounded-md bg-primary-100 text-primary-700 hover:bg-primary-200 dark:bg-primary-800/50 dark:text-primary-300 dark:hover:bg-primary-700/50 transition-colors"
+        onclick="event.stopPropagation()"
+      >
+        #{tag}
+      </a>
+    ))
+  }
 </div>
