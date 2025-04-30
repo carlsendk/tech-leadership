@@ -1,11 +1,11 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ContentCard from '../../components/ContentCard.astro';
-import FilterBox from '../../components/FilterBox.astro';
-import { getCollection } from 'astro:content';
+import Layout from "../../layouts/Layout.astro";
+import ContentCard from "../../components/ContentCard.astro";
+import FilterBox from "../../components/FilterBox.astro";
+import { getCollection } from "astro:content";
 
 // Get all blog posts, excluding drafts
-const allBlogPosts = await getCollection('blog', ({ data }) => {
+const allBlogPosts = await getCollection("blog", ({ data }) => {
   return !data.draft;
 });
 
@@ -15,38 +15,53 @@ const sortedPosts = allBlogPosts.sort((a, b) => {
 });
 
 // Get all categories and tags
-const categories = [...new Set(sortedPosts.map(post => post.data.category))].sort();
-const allTags = [...new Set(sortedPosts.flatMap(post => post.data.tags))].sort();
+const categories = [
+  ...new Set(sortedPosts.map((post) => post.data.category)),
+].sort();
+const allTags = [
+  ...new Set(sortedPosts.flatMap((post) => post.data.tags)),
+].sort();
 
 // Get query parameters for filtering
 const { searchParams } = Astro.url;
-const categoryFilter = searchParams.get('category');
-const tagFilter = searchParams.get('tag');
+const categoryFilter = searchParams.get("category");
+const tagFilter = searchParams.get("tag");
 
 // Decode the category filter if it exists
-const decodedCategoryFilter = categoryFilter ? decodeURIComponent(categoryFilter) : null;
+const decodedCategoryFilter = categoryFilter
+  ? decodeURIComponent(categoryFilter)
+  : null;
 
 // Filter posts based on the query parameters
 let filteredPosts = sortedPosts;
 if (decodedCategoryFilter) {
-  filteredPosts = filteredPosts.filter(post => post.data.category === decodedCategoryFilter);
+  filteredPosts = filteredPosts.filter(
+    (post) => post.data.category === decodedCategoryFilter,
+  );
 }
 if (tagFilter) {
-  filteredPosts = filteredPosts.filter(post => post.data.tags.includes(tagFilter));
+  filteredPosts = filteredPosts.filter((post) =>
+    post.data.tags.includes(tagFilter),
+  );
 }
 
 // Group posts by year for chronological display
-const postsByYear = filteredPosts.reduce((acc, post) => {
-  const year = post.data.date.getFullYear();
-  if (!acc[year]) {
-    acc[year] = [];
-  }
-  acc[year].push(post);
-  return acc;
-}, {} as Record<number, typeof filteredPosts>);
+const postsByYear = filteredPosts.reduce(
+  (acc, post) => {
+    const year = post.data.date.getFullYear();
+    if (!acc[year]) {
+      acc[year] = [];
+    }
+    acc[year].push(post);
+    return acc;
+  },
+  {} as Record<number, typeof filteredPosts>,
+);
 
 // Sort years in descending order
-const sortedYears = Object.keys(postsByYear).map(Number).sort((a, b) => b - a);
+const sortedYears = Object.keys(postsByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
 
 // Calculate post statistics
 const totalPosts = sortedPosts.length;
@@ -54,15 +69,20 @@ const totalCategories = categories.length;
 const totalTags = allTags.length;
 ---
 
-<Layout title="Blog | Knowledge Base" description="Read our latest blog posts and articles">
+<Layout
+  title="Blog | Knowledge Base"
+  description="Read our latest blog posts and articles"
+>
   <div class="max-w-7xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
     <!-- Hero section -->
-    <div class="bg-gradient-to-br from-primary-900 to-primary-950 rounded-2xl p-8 mb-12 text-white">
+    <div
+      class="bg-gradient-to-br from-primary-900 to-primary-950 rounded-2xl p-8 mb-12 text-white"
+    >
       <h1 class="text-4xl font-bold mb-4">Blog</h1>
       <p class="text-xl text-primary-200 mb-6">
         Discover insights, tutorials, and thoughts on various topics
       </p>
-      
+
       <!-- Statistics -->
       <div class="grid grid-cols-3 gap-4 max-w-lg">
         <div class="text-center">
@@ -70,7 +90,9 @@ const totalTags = allTags.length;
           <div class="text-primary-300 text-sm">Posts</div>
         </div>
         <div class="text-center">
-          <div class="text-3xl font-bold text-accent-400">{totalCategories}</div>
+          <div class="text-3xl font-bold text-accent-400">
+            {totalCategories}
+          </div>
           <div class="text-primary-300 text-sm">Categories</div>
         </div>
         <div class="text-center">
@@ -79,7 +101,7 @@ const totalTags = allTags.length;
         </div>
       </div>
     </div>
-    
+
     <!-- Filter box -->
     <div class="mb-8">
       <FilterBox
@@ -91,47 +113,119 @@ const totalTags = allTags.length;
         baseUrl="/blog"
       />
     </div>
-    
+
     <!-- Posts by year -->
-    {sortedYears.length > 0 ? (
-      <div class="space-y-12">
-        {sortedYears.map(year => (
-          <section>
-            <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
-              {year}
-            </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {postsByYear[year].map(post => (
-                <ContentCard
-                  title={post.data.title}
-                  description={post.data.description}
-                  url={`/blog/${post.slug}`}
-                  tags={post.data.tags}
-                  category={post.data.category}
-                  date={post.data.date}
-                  author={post.data.author}
-                />
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
-    ) : (
-      <div class="text-center py-12">
-        <h3 class="text-lg font-medium text-primary-900 dark:text-primary-100">
-          No blog posts found
-        </h3>
-        <p class="mt-2 text-primary-600 dark:text-primary-300">
-          {tagFilter 
-            ? `There are no blog posts with the tag "${tagFilter}".`
-            : decodedCategoryFilter
-              ? `There are no blog posts in the "${decodedCategoryFilter}" category.`
-              : 'There are no blog posts available.'}
-        </p>
-        <a href="/blog" class="mt-4 inline-block text-accent-600 dark:text-accent-400 hover:underline">
-          View all blog posts
-        </a>
-      </div>
-    )}
+    {
+      sortedYears.length > 0 ? (
+        <div class="space-y-12">
+          {sortedYears.map((year) => (
+            <section>
+              <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
+                {year}
+              </h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {postsByYear[year].map((post) => (
+                  <ContentCard
+                    title={post.data.title}
+                    description={post.data.description}
+                    url={`/blog/${post.slug}`}
+                    tags={post.data.tags}
+                    category={post.data.category}
+                    date={post.data.date}
+                    author={post.data.author}
+                  />
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <h3 class="text-lg font-medium text-primary-900 dark:text-primary-100">
+            No blog posts found
+          </h3>
+          <p class="mt-2 text-primary-600 dark:text-primary-300">
+            {tagFilter
+              ? `There are no blog posts with the tag "${tagFilter}".`
+              : decodedCategoryFilter
+                ? `There are no blog posts in the "${decodedCategoryFilter}" category.`
+                : "There are no blog posts available."}
+          </p>
+          <a
+            href="/blog"
+            class="mt-4 inline-block text-accent-600 dark:text-accent-400 hover:underline"
+          >
+            View all blog posts
+          </a>
+        </div>
+      )
+    }
   </div>
+
+  <!-- Stats Section -->
+  <section
+    class="py-16 bg-white dark:bg-primary-950 border-t border-primary-100 dark:border-primary-800"
+  >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-primary-900 dark:text-primary-100">
+          Blog Statistics
+        </h2>
+        <p class="mt-2 text-lg text-primary-600 dark:text-primary-300">
+          Growing collection of tech leadership insights
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+        <div
+          class="bg-primary-50 dark:bg-primary-900 rounded-lg p-6 text-center"
+        >
+          <div class="text-4xl font-bold text-accent-600 dark:text-accent-400">
+            {totalPosts}
+          </div>
+          <div
+            class="mt-2 text-sm font-medium text-primary-600 dark:text-primary-300"
+          >
+            Blog Posts
+          </div>
+        </div>
+        <div
+          class="bg-primary-50 dark:bg-primary-900 rounded-lg p-6 text-center"
+        >
+          <div class="text-4xl font-bold text-accent-600 dark:text-accent-400">
+            {categories.length}
+          </div>
+          <div
+            class="mt-2 text-sm font-medium text-primary-600 dark:text-primary-300"
+          >
+            Categories
+          </div>
+        </div>
+        <div
+          class="bg-primary-50 dark:bg-primary-900 rounded-lg p-6 text-center"
+        >
+          <div class="text-4xl font-bold text-accent-600 dark:text-accent-400">
+            {allTags.length}
+          </div>
+          <div
+            class="mt-2 text-sm font-medium text-primary-600 dark:text-primary-300"
+          >
+            Topics
+          </div>
+        </div>
+        <div
+          class="bg-primary-50 dark:bg-primary-900 rounded-lg p-6 text-center"
+        >
+          <div class="text-4xl font-bold text-accent-600 dark:text-accent-400">
+            {sortedYears.length}
+          </div>
+          <div
+            class="mt-2 text-sm font-medium text-primary-600 dark:text-primary-300"
+          >
+            Years Active
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>
