@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { getBlogUrl, getWikiUrl } from "../utils/url";
 
 interface ContentEntry {
   data: {
@@ -58,7 +59,7 @@ const searchData: SearchItem[] = [
   ...blogPosts.map((post: ContentEntry) => ({
     title: post.data.title,
     description: post.data.description,
-    url: `/blog/${post.slug}`,
+    url: getBlogUrl(post.slug),
     type: "blog" as const,
     category: post.data.category,
     tags: post.data.tags,
@@ -66,7 +67,7 @@ const searchData: SearchItem[] = [
   ...wikiEntries.map((entry: ContentEntry) => ({
     title: entry.data.title,
     description: entry.data.description,
-    url: `/wiki/${entry.slug}`,
+    url: getWikiUrl(entry.slug),
     type: "wiki" as const,
     category: entry.data.category,
     tags: entry.data.tags,
