@@ -6,7 +6,14 @@ import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
+// Get the repository name from package.json for GitHub Pages
+import { readFileSync } from 'fs';
+const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
+const repositoryName = pkg.name;
+
 export default defineConfig({
+  site: `https://${process.env.GITHUB_REPOSITORY_OWNER || 'your-username'}.github.io`,
+  base: `/${repositoryName}`,
   integrations: [
     tailwind(),
     mdx(),
