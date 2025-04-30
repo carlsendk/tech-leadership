@@ -25,7 +25,7 @@ const {
   author,
   isWiki = false,
 } = Astro.props;
-const baseUrl = "/tech-leadership";
+const baseUrl = import.meta.env.BASE_URL;
 const fullUrl = url.startsWith("/") ? `${baseUrl}${url}` : url;
 ---
 

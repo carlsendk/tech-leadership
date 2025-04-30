@@ -1,10 +1,11 @@
 ---
 export interface Props {
   tags: string[];
+  currentTag?: string;
 }
 
-const { tags } = Astro.props;
-const baseUrl = "/tech-leadership";
+const { tags, currentTag } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <div class="flex flex-wrap gap-2">

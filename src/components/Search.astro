@@ -1,28 +1,50 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-// Get all content
-const blogPosts = await getCollection('blog', ({ data }) => !data.draft);
-const wikiEntries = await getCollection('wiki', ({ data }) => !data.draft);
+// Get all blog posts and wiki entries
+const blogPosts = await getCollection("blog", ({ data }) => !data.draft);
+const wikiEntries = await getCollection("wiki", ({ data }) => !data.draft);
 
-// Prepare search data
-const searchData = [
-  ...blogPosts.map(post => ({
+// Combine and format the content for search
+const searchContent = [
+  ...blogPosts.map((post) => ({
     title: post.data.title,
     description: post.data.description,
-    url: `/blog/${post.slug}`,
-    type: 'blog',
+    url: post.slug,
+    type: "blog",
     category: post.data.category,
     tags: post.data.tags,
   })),
-  ...wikiEntries.map(entry => ({
+  ...wikiEntries.map((entry) => ({
+    title: entry.data.title,
+    description: entry.data.description,
+    url: entry.slug,
+    type: "wiki",
+    category: entry.data.category,
+    tags: entry.data.tags,
+  })),
+];
+
+const baseUrl = import.meta.env.BASE_URL;
+
+// Prepare search data
+const searchData = [
+  ...blogPosts.map((post) => ({
+    title: post.data.title,
+    description: post.data.description,
+    url: `/blog/${post.slug}`,
+    type: "blog",
+    category: post.data.category,
+    tags: post.data.tags,
+  })),
+  ...wikiEntries.map((entry) => ({
     title: entry.data.title,
     description: entry.data.description,
     url: `/wiki/${entry.slug}`,
-    type: 'wiki',
+    type: "wiki",
     category: entry.data.category,
     tags: entry.data.tags,
-  }))
+  })),
 ];
 ---
 
@@ -30,7 +52,9 @@ const searchData = [
   window.searchData = searchData;
 </script>
 
-<div class="relative" x-data="{ 
+<div
+  class="relative"
+  x-data="{ 
   open: false, 
   search: '', 
   results: [],
@@ -70,7 +94,8 @@ const searchData = [
       }
     });
   }
-}">
+}"
+>
   <!-- Search input -->
   <div class="relative">
     <input
@@ -81,9 +106,20 @@ const searchData = [
       placeholder="Search..."
       class="w-full md:w-64 pl-10 pr-4 py-2 text-sm bg-primary-100 dark:bg-primary-800 text-primary-900 dark:text-primary-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500"
     />
-    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-      <svg class="h-5 w-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    <div
+      class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+    >
+      <svg
+        class="h-5 w-5 text-primary-400"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
       </svg>
     </div>
   </div>
@@ -105,7 +141,7 @@ const searchData = [
           No results found
         </li>
       </template>
-      
+
       <template x-for="(result, index) in results" :key="result.url">
         <li>
           <a
@@ -118,21 +154,31 @@ const searchData = [
             class="block px-4 py-3"
           >
             <div class="flex items-center justify-between">
-              <span x-text="result.title" class="font-medium text-primary-900 dark:text-primary-100"></span>
+              <span
+                x-text="result.title"
+                class="font-medium text-primary-900 dark:text-primary-100"
+              ></span>
               <span
                 :class="{
                   'bg-accent-100 text-accent-800 dark:bg-accent-900 dark:text-accent-200': result.type === 'blog',
                   'bg-primary-100 text-primary-800 dark:bg-primary-800 dark:text-primary-200': result.type === 'wiki'
                 }"
                 class="text-xs px-2 py-1 rounded-full"
-                x-text="result.type"
-              ></span>
+                x-text="result.type"></span>
             </div>
-            <p x-text="result.description" class="mt-1 text-sm text-primary-600 dark:text-primary-300 line-clamp-2"></p>
+            <p
+              x-text="result.description"
+              class="mt-1 text-sm text-primary-600 dark:text-primary-300 line-clamp-2"
+            >
+            </p>
             <div class="mt-2 flex items-center gap-2">
-              <span class="text-xs text-primary-500 dark:text-primary-400" x-text="result.category"></span>
+              <span
+                class="text-xs text-primary-500 dark:text-primary-400"
+                x-text="result.category"></span>
               <template x-for="tag in result.tags.slice(0, 3)" :key="tag">
-                <span class="text-xs text-primary-500 dark:text-primary-400">#<span x-text="tag"></span></span>
+                <span class="text-xs text-primary-500 dark:text-primary-400"
+                  >#<span x-text="tag"></span></span
+                >
               </template>
             </div>
           </a>
