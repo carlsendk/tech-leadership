@@ -1,0 +1,191 @@
+---
+export interface Props {
+  headings: {
+    depth: number;
+    slug: string;
+    text: string;
+  }[];
+}
+
+const { headings } = Astro.props;
+---
+
+<div class="py-4" x-data="{ isOpen: true }">
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-semibold text-primary-900 dark:text-primary-100">
+      On this page
+    </h3>
+    <button 
+      @click="isOpen = !isOpen"
+      class="lg:hidden p-1 text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-200"
+      aria-label="Toggle table of contents"
+    >
+      <svg 
+        class="w-5 h-5 transition-transform"
+        :class="{ 'rotate-180': !isOpen }"
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+  </div>
+  
+  <nav 
+    class="toc transition-all duration-300"
+    :class="{ 'hidden lg:block': !isOpen }"
+  >
+    <ul class="space-y-1 text-sm">
+      {headings.map((heading) => (
+        <li class={`toc-item toc-depth-${heading.depth}`}>
+          <a 
+            href={`#${heading.slug}`}
+            class={`
+              group relative block py-2 pl-${(heading.depth - 1) * 4} pr-2
+              text-primary-600 dark:text-primary-300
+              hover:bg-primary-50 dark:hover:bg-primary-800/50
+              rounded-md transition-all duration-200
+              data-[active=true]:bg-accent-500/10 dark:data-[active=true]:bg-accent-500/20
+              data-[active=true]:text-accent-700 dark:data-[active=true]:text-accent-400
+              data-[active=true]:font-medium
+            `}
+            data-heading={heading.slug}
+          >
+            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-4/5 bg-accent-500 rounded-r opacity-0 transform scale-y-0 transition-all duration-200 origin-center"
+                 :class="{ 'opacity-100 scale-y-100': $el.dataset.active === 'true' }"></div>
+            <span class="relative">
+              {heading.text}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <button
+    id="back-to-top"
+    class="fixed bottom-4 right-4 p-2 bg-accent-500 text-white rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-accent-600 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 dark:focus:ring-offset-primary-950"
+    aria-label="Back to top"
+  >
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.getAttribute('id');
+        const link = document.querySelector(`.toc a[data-heading="${id}"]`);
+        
+        if (link) {
+          if (entry.isIntersecting) {
+            // Remove active state from all links
+            document.querySelectorAll('.toc a').forEach((el) => {
+              el.setAttribute('data-active', 'false');
+            });
+            
+            // Set active state for current link
+            link.setAttribute('data-active', 'true');
+            
+            // Ensure the active item is visible
+            const navContainer = link.closest('.toc');
+            if (navContainer) {
+              const linkRect = link.getBoundingClientRect();
+              const containerRect = navContainer.getBoundingClientRect();
+              
+              if (linkRect.bottom > containerRect.bottom || linkRect.top < containerRect.top) {
+                link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }
+            }
+          }
+        }
+      });
+    }, { 
+      rootMargin: '-80px 0px -80% 0px',
+      threshold: [0, 0.25, 0.5, 0.75, 1]
+    });
+
+    // Track all headers
+    document.querySelectorAll('article h2, article h3, article h4').forEach((heading) => {
+      observer.observe(heading);
+    });
+
+    // Smooth scroll handling
+    document.querySelectorAll('.toc a').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = link.getAttribute('href');
+        if (href) {
+          const target = document.querySelector(href);
+          if (target) {
+            const offset = 100;
+            const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+            
+            // Update URL hash without scrolling
+            history.pushState(null, '', href);
+          }
+        }
+      });
+    });
+
+    // Back to top button
+    const backToTopButton = document.getElementById('back-to-top');
+    if (backToTopButton) {
+      const toggleBackToTop = () => {
+        const scrolled = window.scrollY > 500;
+        backToTopButton.classList.toggle('opacity-0', !scrolled);
+        backToTopButton.classList.toggle('invisible', !scrolled);
+      };
+
+      window.addEventListener('scroll', toggleBackToTop);
+      toggleBackToTop();
+
+      backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+  });
+</script>
+
+<style>
+  .toc {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+  }
+
+  .toc::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .toc::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .toc::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius: 2px;
+  }
+
+  .toc-depth-2 { padding-left: 0; }
+  .toc-depth-3 { padding-left: 1rem; }
+  .toc-depth-4 { padding-left: 2rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toc a, .toc-item {
+      transition: none;
+    }
+  }
+</style>

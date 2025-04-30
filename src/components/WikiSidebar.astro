@@ -1,0 +1,77 @@
+---
+import { getCollection } from 'astro:content';
+
+export interface Props {
+  activeCategory?: string;
+}
+
+const { activeCategory } = Astro.props;
+
+const wikiEntries = await getCollection('wiki', ({ data }) => {
+  return !data.draft;
+});
+
+// Organize entries by category
+const categories = wikiEntries.reduce((acc, entry) => {
+  const category = entry.data.category;
+  if (!acc[category]) {
+    acc[category] = [];
+  }
+  acc[category].push(entry);
+  return acc;
+}, {} as Record<string, typeof wikiEntries>);
+
+// Sort categories alphabetically
+const sortedCategories = Object.keys(categories).sort();
+
+// Sort entries within each category by order if available, or by title
+for (const category of sortedCategories) {
+  categories[category].sort((a, b) => {
+    if (a.data.order !== undefined && b.data.order !== undefined) {
+      return a.data.order - b.data.order;
+    }
+    return a.data.title.localeCompare(b.data.title);
+  });
+}
+---
+
+<nav class="p-4">
+  <h2 class="font-bold text-xl text-primary-900 dark:text-primary-100 mb-4">
+    Wiki Navigation
+  </h2>
+
+  <div class="space-y-4">
+    {sortedCategories.map((category) => (
+      <div>
+        <h3 class={`
+          text-sm font-semibold mb-2 
+          ${activeCategory === category 
+            ? 'text-accent-600 dark:text-accent-400' 
+            : 'text-primary-700 dark:text-primary-300'}
+        `}>
+          <a href={`/categories/${category}`} class="hover:underline">
+            {category}
+          </a>
+        </h3>
+        
+        <ul class="space-y-1 pl-2 border-l border-primary-200 dark:border-primary-700">
+          {categories[category].map((entry) => (
+            <li>
+              <a 
+                href={`/wiki/${entry.slug}`}
+                class={`
+                  block py-1 text-sm 
+                  ${Astro.url.pathname === `/wiki/${entry.slug}` 
+                    ? 'text-accent-600 dark:text-accent-400 font-medium' 
+                    : 'text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100'}
+                `}
+              >
+                {entry.data.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</nav>

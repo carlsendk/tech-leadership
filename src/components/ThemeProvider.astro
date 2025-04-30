@@ -1,0 +1,31 @@
+---
+---
+
+<script is:inline>
+  // Check for stored theme preference or default to 'light'
+  const getTheme = () => {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      return localStorage.getItem('theme');
+    }
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  };
+
+  // Apply the theme to the document
+  const setTheme = (theme) => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    localStorage.setItem('theme', theme);
+  };
+
+  // Initial theme setup
+  setTheme(getTheme());
+
+  // Listen for theme toggle events
+  document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('theme-toggle', (e) => {
+      setTheme(e.detail.theme);
+    });
+  });
+</script>

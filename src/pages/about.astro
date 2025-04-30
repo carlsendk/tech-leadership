@@ -1,0 +1,178 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About | Knowledge Base" description="Learn more about the author and this knowledge base">
+  <div class="max-w-4xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h1 class="text-3xl font-bold text-primary-900 dark:text-primary-100 sm:text-4xl fade-in">
+        About Me
+      </h1>
+      <p class="mt-4 text-xl text-primary-600 dark:text-primary-300 slide-up">
+        Welcome to my personal knowledge repository
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+      <div class="md:col-span-1">
+        <div class="aspect-square rounded-xl bg-primary-100 dark:bg-primary-800 overflow-hidden relative">
+          <!-- You can replace this with an actual profile image -->
+          <div class="absolute inset-0 flex items-center justify-center text-primary-600 dark:text-primary-300 text-6xl font-bold">
+            JD
+          </div>
+        </div>
+      </div>
+      
+      <div class="md:col-span-2 prose dark:prose-dark prose-lg">
+        <h2>Hello, I'm John Doe</h2>
+        <p>
+          I'm a passionate writer, researcher and technologist with a deep interest in organizing and sharing knowledge. 
+          This website serves as my personal knowledge base where I document my learnings, share insights, and connect with others who share similar interests.
+        </p>
+        <p>
+          With over 10 years of experience in the tech industry, I've developed expertise in various domains including software development, 
+          design systems, and technical writing.
+        </p>
+      </div>
+    </div>
+    
+    <!-- Skills section -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
+        Skills & Expertise
+      </h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
+          <h3 class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2">Technical Writing</h3>
+          <p class="text-primary-600 dark:text-primary-300">
+            Creating clear, concise and comprehensive technical documentation.
+          </p>
+        </div>
+        
+        <div class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
+          <h3 class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2">Web Development</h3>
+          <p class="text-primary-600 dark:text-primary-300">
+            Building modern web applications with JavaScript, React, and various frameworks.
+          </p>
+        </div>
+        
+        <div class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
+          <h3 class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2">UX/UI Design</h3>
+          <p class="text-primary-600 dark:text-primary-300">
+            Creating user-centered designs with a focus on usability and accessibility.
+          </p>
+        </div>
+        
+        <div class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
+          <h3 class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2">Data Analysis</h3>
+          <p class="text-primary-600 dark:text-primary-300">
+            Extracting insights from data using statistical methods and visualization techniques.
+          </p>
+        </div>
+        
+        <div class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
+          <h3 class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2">Content Strategy</h3>
+          <p class="text-primary-600 dark:text-primary-300">
+            Developing content that aligns with audience needs and business goals.
+          </p>
+        </div>
+        
+        <div class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
+          <h3 class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2">Project Management</h3>
+          <p class="text-primary-600 dark:text-primary-300">
+            Leading projects from inception to completion, ensuring quality and timeliness.
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Experience section -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
+        Professional Experience
+      </h2>
+      
+      <div class="space-y-8">
+        <div class="border-l-4 border-accent-500 pl-4 py-1">
+          <div class="flex flex-wrap justify-between items-baseline mb-1">
+            <h3 class="text-xl font-semibold text-primary-900 dark:text-primary-100">Senior Technical Writer</h3>
+            <span class="text-sm text-primary-500 dark:text-primary-400">2020 - Present</span>
+          </div>
+          <h4 class="text-accent-600 dark:text-accent-400 mb-2">Tech Documentation Inc.</h4>
+          <p class="text-primary-600 dark:text-primary-300">
+            Lead the technical writing team in creating comprehensive documentation for enterprise software products. 
+            Developed style guides and established documentation workflows to ensure consistent quality.
+          </p>
+        </div>
+        
+        <div class="border-l-4 border-accent-500 pl-4 py-1">
+          <div class="flex flex-wrap justify-between items-baseline mb-1">
+            <h3 class="text-xl font-semibold text-primary-900 dark:text-primary-100">Frontend Developer</h3>
+            <span class="text-sm text-primary-500 dark:text-primary-400">2016 - 2020</span>
+          </div>
+          <h4 class="text-accent-600 dark:text-accent-400 mb-2">WebApp Solutions</h4>
+          <p class="text-primary-600 dark:text-primary-300">
+            Developed responsive web applications using modern JavaScript frameworks. 
+            Collaborated with designers and backend developers to implement features and ensure optimal user experience.
+          </p>
+        </div>
+        
+        <div class="border-l-4 border-accent-500 pl-4 py-1">
+          <div class="flex flex-wrap justify-between items-baseline mb-1">
+            <h3 class="text-xl font-semibold text-primary-900 dark:text-primary-100">Content Strategist</h3>
+            <span class="text-sm text-primary-500 dark:text-primary-400">2014 - 2016</span>
+          </div>
+          <h4 class="text-accent-600 dark:text-accent-400 mb-2">Digital Marketing Agency</h4>
+          <p class="text-primary-600 dark:text-primary-300">
+            Developed content strategies for various clients across different industries. 
+            Created editorial calendars and style guides to maintain brand consistency.
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Contact section -->
+    <section>
+      <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
+        Get in Touch
+      </h2>
+      
+      <div class="bg-white dark:bg-primary-900 p-6 rounded-lg border border-primary-200 dark:border-primary-800">
+        <p class="text-primary-600 dark:text-primary-300 mb-4">
+          I'm always open to interesting conversations and collaborations. Feel free to reach out through any of the channels below.
+        </p>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <a href="mailto:contact@example.com" class="flex items-center p-3 rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-accent-600 dark:text-accent-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            contact@example.com
+          </a>
+          
+          <a href="https://twitter.com/username" class="flex items-center p-3 rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">
+            <svg class="h-6 w-6 mr-3 text-accent-600 dark:text-accent-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+            </svg>
+            @username
+          </a>
+          
+          <a href="https://github.com/username" class="flex items-center p-3 rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">
+            <svg class="h-6 w-6 mr-3 text-accent-600 dark:text-accent-400" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+            </svg>
+            github.com/username
+          </a>
+          
+          <a href="https://linkedin.com/in/username" class="flex items-center p-3 rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">
+            <svg class="h-6 w-6 mr-3 text-accent-600 dark:text-accent-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+            </svg>
+            linkedin.com/in/username
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

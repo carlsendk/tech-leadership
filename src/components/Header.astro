@@ -1,0 +1,287 @@
+---
+import { getCollection } from 'astro:content';
+import ThemeToggle from './ThemeToggle.astro';
+import Search from './Search.astro';
+
+// Get all blog posts and wiki entries
+const blogPosts = await getCollection('blog', ({ data }) => !data.draft);
+const wikiEntries = await getCollection('wiki', ({ data }) => !data.draft);
+
+// Get unique categories and tags
+const blogCategories = [...new Set(blogPosts.map(post => post.data.category))].sort();
+const wikiCategories = [...new Set(wikiEntries.map(entry => entry.data.category))].sort();
+const blogTags = [...new Set(blogPosts.flatMap(post => post.data.tags))].sort();
+const wikiTags = [...new Set(wikiEntries.flatMap(entry => entry.data.tags))].sort();
+
+const githubUrl = "https://github.com/yourusername/content-driven-site";
+---
+
+<header class="sticky top-0 z-50 bg-white/90 dark:bg-primary-950/90 backdrop-blur-md border-b border-primary-200 dark:border-primary-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo and site name -->
+      <div class="flex items-center">
+        <a href="/" class="text-primary-900 dark:text-primary-100 font-semibold text-xl flex items-center gap-2" aria-label="Home">
+          <span class="text-accent-600 dark:text-accent-400">Knowledge</span>Base
+        </a>
+      </div>
+      
+      <!-- Search -->
+      <div class="hidden md:block flex-1 px-8">
+        <Search />
+      </div>
+      
+      <!-- Navigation links -->
+      <nav class="hidden md:flex items-center space-x-6" aria-label="Main navigation">
+        <a href="/" class="text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100 transition-colors">
+          Home
+        </a>
+
+        <!-- Wiki dropdown -->
+        <div class="relative group">
+          <button 
+            class="flex items-center text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100 transition-colors"
+            aria-expanded="false"
+            aria-controls="wiki-menu"
+          >
+            <span>Wiki</span>
+            <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div 
+            id="wiki-menu"
+            class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-primary-900 ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="wiki-menu-button"
+          >
+            <div class="py-1" role="none">
+              <a href="/wiki" class="block px-4 py-2 text-sm text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800" role="menuitem">
+                All Wiki Articles
+              </a>
+              <div class="border-t border-primary-200 dark:border-primary-700 my-1" role="separator"></div>
+              <div class="px-4 py-1 text-xs font-semibold text-primary-500 dark:text-primary-400" role="presentation">Categories</div>
+              {wikiCategories.map(category => (
+                <a 
+                  href={`/categories/${encodeURIComponent(category)}`}
+                  class="block px-4 py-2 text-sm text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800"
+                  role="menuitem"
+                >
+                  {category}
+                </a>
+              ))}
+              <div class="border-t border-primary-200 dark:border-primary-700 my-1" role="separator"></div>
+              <div class="px-4 py-1 text-xs font-semibold text-primary-500 dark:text-primary-400" role="presentation">Popular Tags</div>
+              {wikiTags.slice(0, 5).map(tag => (
+                <a 
+                  href={`/tags/${tag}`}
+                  class="block px-4 py-2 text-sm text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800"
+                  role="menuitem"
+                >
+                  #{tag}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Blog dropdown -->
+        <div class="relative group">
+          <button 
+            class="flex items-center text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100 transition-colors"
+            aria-expanded="false"
+            aria-controls="blog-menu"
+          >
+            <span>Blog</span>
+            <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div 
+            id="blog-menu"
+            class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-primary-900 ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="blog-menu-button"
+          >
+            <div class="py-1" role="none">
+              <a href="/blog" class="block px-4 py-2 text-sm text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800" role="menuitem">
+                All Blog Posts
+              </a>
+              <div class="border-t border-primary-200 dark:border-primary-700 my-1" role="separator"></div>
+              <div class="px-4 py-1 text-xs font-semibold text-primary-500 dark:text-primary-400" role="presentation">Categories</div>
+              {blogCategories.map(category => (
+                <a 
+                  href={`/categories/${encodeURIComponent(category)}`}
+                  class="block px-4 py-2 text-sm text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800"
+                  role="menuitem"
+                >
+                  {category}
+                </a>
+              ))}
+              <div class="border-t border-primary-200 dark:border-primary-700 my-1" role="separator"></div>
+              <div class="px-4 py-1 text-xs font-semibold text-primary-500 dark:text-primary-400" role="presentation">Popular Tags</div>
+              {blogTags.slice(0, 5).map(tag => (
+                <a 
+                  href={`/tags/${tag}`}
+                  class="block px-4 py-2 text-sm text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800"
+                  role="menuitem"
+                >
+                  #{tag}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <a href="/about" class="text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100 transition-colors">
+          About
+        </a>
+
+        <a 
+          href={githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100 transition-colors"
+          aria-label="View source on GitHub"
+        >
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+          </svg>
+        </a>
+      </nav>
+      
+      <!-- Theme toggle and mobile menu button -->
+      <div class="flex items-center space-x-4">
+        <ThemeToggle />
+        
+        <!-- Mobile search button -->
+        <button 
+          type="button" 
+          id="mobile-search-button"
+          class="md:hidden text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100"
+          aria-expanded="false"
+          aria-controls="mobile-search-panel"
+          aria-label="Toggle search"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+        
+        <!-- Mobile menu button -->
+        <button 
+          type="button" 
+          id="mobile-menu-button" 
+          class="md:hidden text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Toggle menu"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-16 6h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile search panel -->
+  <div 
+    id="mobile-search-panel" 
+    class="hidden md:hidden bg-white dark:bg-primary-950 border-b border-primary-200 dark:border-primary-800 p-4"
+    role="search"
+  >
+    <Search />
+  </div>
+  
+  <!-- Mobile menu -->
+  <div 
+    id="mobile-menu" 
+    class="hidden md:hidden bg-white dark:bg-primary-950 border-b border-primary-200 dark:border-primary-800"
+    role="navigation"
+    aria-label="Mobile navigation"
+  >
+    <div class="px-4 pt-2 pb-3 space-y-1">
+      <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-primary-600 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800">
+        Home
+      </a>
+      
+      <!-- Mobile Wiki section -->
+      <div class="space-y-1">
+        <a href="/wiki" class="block px-3 py-2 rounded-md text-base font-medium text-primary-600 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800">
+          Wiki
+        </a>
+        <div class="pl-6 space-y-1">
+          {wikiCategories.map(category => (
+            <a 
+              href={`/categories/${encodeURIComponent(category)}`}
+              class="block px-3 py-1 text-sm text-primary-600 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800 rounded-md"
+            >
+              {category}
+            </a>
+          ))}
+        </div>
+      </div>
+      
+      <!-- Mobile Blog section -->
+      <div class="space-y-1">
+        <a href="/blog" class="block px-3 py-2 rounded-md text-base font-medium text-primary-600 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800">
+          Blog
+        </a>
+        <div class="pl-6 space-y-1">
+          {blogCategories.map(category => (
+            <a 
+              href={`/categories/${encodeURIComponent(category)}`}
+              class="block px-3 py-1 text-sm text-primary-600 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800 rounded-md"
+            >
+              {category}
+            </a>
+          ))}
+        </div>
+      </div>
+      
+      <a href="/about" class="block px-3 py-2 rounded-md text-base font-medium text-primary-600 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800">
+        About
+      </a>
+
+      <a 
+        href={githubUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block px-3 py-2 rounded-md text-base font-medium text-primary-600 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800"
+      >
+        GitHub
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      const expanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+      mobileMenuButton.setAttribute('aria-expanded', (!expanded).toString());
+      mobileMenu.classList.toggle('hidden');
+      mobileSearchPanel?.classList.add('hidden');
+    });
+  }
+
+  // Mobile search toggle
+  const mobileSearchButton = document.getElementById('mobile-search-button');
+  const mobileSearchPanel = document.getElementById('mobile-search-panel');
+  
+  if (mobileSearchButton && mobileSearchPanel) {
+    mobileSearchButton.addEventListener('click', () => {
+      const expanded = mobileSearchButton.getAttribute('aria-expanded') === 'true' || false;
+      mobileSearchButton.setAttribute('aria-expanded', (!expanded).toString());
+      mobileSearchPanel.classList.toggle('hidden');
+      mobileMenu?.classList.add('hidden');
+    });
+  }
+</script>

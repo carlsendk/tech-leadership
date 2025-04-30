@@ -1,0 +1,120 @@
+---
+import { getCollection } from 'astro:content';
+import TagList from './TagList.astro';
+
+export interface Props {
+  currentSlug?: string;
+  currentCategory?: string;
+  currentTags?: string[];
+}
+
+const { currentSlug, currentCategory, currentTags = [] } = Astro.props;
+
+// Get all blog posts
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+
+// Get all categories and tags
+const categories = [...new Set(allPosts.map(post => post.data.category))].sort();
+const allTags = [...new Set(allPosts.flatMap(post => post.data.tags))].sort();
+
+// Get related posts if we have a current post
+let relatedPosts = [];
+if (currentSlug && currentCategory && currentTags.length > 0) {
+  relatedPosts = allPosts
+    .filter(post => 
+      post.slug !== currentSlug && // Exclude current post
+      (post.data.category === currentCategory || // Same category
+       post.data.tags.some(tag => currentTags.includes(tag))) // Shared tags
+    )
+    .sort((a, b) => {
+      // Count matching tags
+      const aMatches = a.data.tags.filter(tag => currentTags.includes(tag)).length;
+      const bMatches = b.data.tags.filter(tag => currentTags.includes(tag)).length;
+      return bMatches - aMatches; // Sort by most matching tags
+    })
+    .slice(0, 3); // Limit to 3 related posts
+}
+
+// Get recent posts
+const recentPosts = allPosts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .filter(post => post.slug !== currentSlug)
+  .slice(0, 5);
+---
+
+<aside class="space-y-8">
+  <!-- Categories -->
+  <div class="bg-white dark:bg-primary-900 rounded-xl shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-4">
+      Categories
+    </h2>
+    <div class="space-y-2">
+      {categories.map(category => (
+        <a 
+          href={`/blog?category=${encodeURIComponent(category)}`}
+          class={`block py-2 px-3 rounded-lg text-sm transition-colors ${
+            category === currentCategory
+              ? 'bg-accent-100 text-accent-900 dark:bg-accent-900 dark:text-accent-100'
+              : 'text-primary-700 hover:bg-primary-100 dark:text-primary-300 dark:hover:bg-primary-800'
+          }`}
+        >
+          {category}
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <!-- Popular Tags -->
+  <div class="bg-white dark:bg-primary-900 rounded-xl shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-4">
+      Popular Tags
+    </h2>
+    <TagList tags={allTags} />
+  </div>
+
+  <!-- Related Posts -->
+  {relatedPosts.length > 0 && (
+    <div class="bg-white dark:bg-primary-900 rounded-xl shadow-sm p-6">
+      <h2 class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-4">
+        Related Posts
+      </h2>
+      <div class="space-y-4">
+        {relatedPosts.map(post => (
+          <a 
+            href={`/blog/${post.slug}`}
+            class="block group"
+          >
+            <h3 class="text-primary-900 dark:text-primary-100 group-hover:text-accent-600 dark:group-hover:text-accent-400 font-medium transition-colors">
+              {post.data.title}
+            </h3>
+            <p class="text-sm text-primary-600 dark:text-primary-300 line-clamp-2 mt-1">
+              {post.data.description}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- Recent Posts -->
+  <div class="bg-white dark:bg-primary-900 rounded-xl shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-4">
+      Recent Posts
+    </h2>
+    <div class="space-y-4">
+      {recentPosts.map(post => (
+        <a 
+          href={`/blog/${post.slug}`}
+          class="block group"
+        >
+          <h3 class="text-primary-900 dark:text-primary-100 group-hover:text-accent-600 dark:group-hover:text-accent-400 font-medium transition-colors">
+            {post.data.title}
+          </h3>
+          <p class="text-sm text-primary-500 dark:text-primary-400 mt-1">
+            {post.data.date.toLocaleDateString()}
+          </p>
+        </a>
+      ))}
+    </div>
+  </div>
+</aside>
