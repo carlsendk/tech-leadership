@@ -1,7 +1,7 @@
 ---
 import { format } from "date-fns";
 import TagList from "./TagList.astro";
-import { getCategoryUrl } from "../utils/url";
+import { getCategoryUrl, getFullUrl } from "../utils/url";
 
 export interface Props {
   title: string;
@@ -26,6 +26,9 @@ const {
   author,
   isWiki = false,
 } = Astro.props;
+
+// Ensure URL has proper base path
+const fullUrl = url.startsWith("http") ? url : getFullUrl(url);
 ---
 
 <article
@@ -46,7 +49,7 @@ const {
         )
       }
 
-      <a href={url} class="block group-hover:no-underline">
+      <a href={fullUrl} class="block group-hover:no-underline">
         <h2
           class="text-xl font-semibold text-primary-900 dark:text-primary-100 group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors line-clamp-2 mb-2"
         >
@@ -95,7 +98,7 @@ const {
   </div>
 
   <a
-    href={url}
+    href={fullUrl}
     class="absolute inset-0 z-0 focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 dark:focus:ring-offset-primary-950 rounded-xl"
     aria-label={`Read more about ${title}`}></a>
 </article>

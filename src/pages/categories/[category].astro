@@ -1,83 +1,113 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ContentCard from '../../components/ContentCard.astro';
-import FilterBox from '../../components/FilterBox.astro';
-import { getCollection } from 'astro:content';
+import Layout from "../../layouts/Layout.astro";
+import ContentCard from "../../components/ContentCard.astro";
+import FilterBox from "../../components/FilterBox.astro";
+import { getCollection } from "astro:content";
+import {
+  getBlogUrl,
+  getWikiUrl,
+  getBlogIndexUrl,
+  getWikiIndexUrl,
+} from "../../utils/url";
+
+interface BlogPost {
+  slug: string;
+  data: {
+    title: string;
+    description: string;
+    date: Date;
+    category: string;
+    tags: string[];
+    author: {
+      name: string;
+      title?: string;
+      avatar?: string;
+    };
+  };
+}
+
+interface WikiEntry {
+  slug: string;
+  data: {
+    title: string;
+    description: string;
+    category: string;
+    tags: string[];
+  };
+}
 
 export async function getStaticPaths() {
-  const allBlogPosts = await getCollection('blog', ({ data }) => !data.draft);
-  const allWikiEntries = await getCollection('wiki', ({ data }) => !data.draft);
-  
-  // Extract all unique categories from both collections
-  const allCategories = new Set();
-  
-  allBlogPosts.forEach(post => {
-    allCategories.add(post.data.category);
-  });
-  
-  allWikiEntries.forEach(entry => {
-    allCategories.add(entry.data.category);
-  });
-  
-  return Array.from(allCategories).map(category => ({
+  const blogPosts = await getCollection("blog");
+  const wikiEntries = await getCollection("wiki");
+
+  // Get unique categories from both collections
+  const categories = new Set([
+    ...blogPosts.map((post) => post.data.category),
+    ...wikiEntries.map((entry) => entry.data.category),
+  ]);
+
+  return Array.from(categories).map((category) => ({
     params: { category },
-    props: { category },
+    props: {
+      category,
+      blogPosts: blogPosts.filter((post) => post.data.category === category),
+      wikiEntries: wikiEntries.filter(
+        (entry) => entry.data.category === category,
+      ),
+    },
   }));
 }
 
-const { category } = Astro.props;
+const { category, blogPosts, wikiEntries } = Astro.props;
 
-// Get all content in the specified category
-const blogPosts = await getCollection('blog', ({ data }) => {
-  return !data.draft && data.category === category;
-});
+// Get all categories and tags for the filter box
+const allBlogPosts = await getCollection("blog");
+const allWikiEntries = await getCollection("wiki");
 
-const wikiEntries = await getCollection('wiki', ({ data }) => {
-  return !data.draft && data.category === category;
-});
+const allCategories = [
+  ...new Set([
+    ...allBlogPosts.map((post) => post.data.category),
+    ...allWikiEntries.map((entry) => entry.data.category),
+  ]),
+].sort();
 
-// Sort blog posts by date (newest first)
-const sortedBlogPosts = blogPosts.sort((a, b) => {
-  return b.data.date.getTime() - a.data.date.getTime();
-});
+const allTags = [
+  ...new Set([
+    ...allBlogPosts.flatMap((post) => post.data.tags),
+    ...allWikiEntries.flatMap((entry) => entry.data.tags),
+  ]),
+].sort();
 
-// Sort wiki entries by title or order if available
-const sortedWikiEntries = wikiEntries.sort((a, b) => {
-  if (a.data.order !== undefined && b.data.order !== undefined) {
-    return a.data.order - b.data.order;
-  }
-  return a.data.title.localeCompare(b.data.title);
-});
+// Sort content by date (for blog posts) or title (for wiki entries)
+const sortedBlogPosts = [...blogPosts].sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
 
-// Get all categories and tags for filtering
-const allBlogPosts = await getCollection('blog', ({ data }) => !data.draft);
-const allWikiEntries = await getCollection('wiki', ({ data }) => !data.draft);
+const sortedWikiEntries = [...wikiEntries].sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
 
-const categories = [...new Set([
-  ...allBlogPosts.map(post => post.data.category),
-  ...allWikiEntries.map(entry => entry.data.category)
-])].sort();
-
-const allTags = [...new Set([
-  ...blogPosts.flatMap(post => post.data.tags),
-  ...wikiEntries.flatMap(entry => entry.data.tags)
-])].sort();
-
-// Calculate statistics
 const totalItems = sortedBlogPosts.length + sortedWikiEntries.length;
 const blogCount = sortedBlogPosts.length;
 const wikiCount = sortedWikiEntries.length;
 ---
 
-<Layout title={`${category} | Knowledge Base`} description={`All content in the ${category} category`}>
-  <div class="max-w-7xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
-    <!-- Hero section -->
-    <div class="bg-gradient-to-br from-primary-900 to-primary-950 rounded-2xl p-8 mb-12 text-white">
-      <h1 class="text-4xl font-bold mb-4">{category}</h1>
+<Layout
+  title={`${category} | Knowledge Base`}
+  description={`All content in the ${category} category`}
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Hero section with stats -->
+    <div
+      class="bg-gradient-to-br from-primary-900 to-primary-950 rounded-2xl p-8 mb-12 text-white"
+    >
+      <h1 class="text-4xl font-bold mb-4">
+        {category}
+      </h1>
       <p class="text-xl text-primary-200 mb-6">
         Browse all content in the {category} category
       </p>
-      
+
       <!-- Statistics -->
       <div class="grid grid-cols-3 gap-4 max-w-lg">
         <div class="text-center">
@@ -95,75 +125,83 @@ const wikiCount = sortedWikiEntries.length;
       </div>
     </div>
 
-    <!-- Filter box -->
-    <div class="mb-8">
-      <FilterBox
-        title="Browse Categories"
-        categories={categories}
-        activeCategory={category}
-        tags={allTags}
-        baseUrl="/categories"
-      />
-    </div>
-    
-    {sortedWikiEntries.length > 0 && (
-      <div class="mb-12">
-        <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
-          Wiki Articles
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sortedWikiEntries.map(entry => (
-            <ContentCard
-              title={entry.data.title}
-              description={entry.data.description}
-              url={`/wiki/${entry.slug}`}
-              tags={entry.data.tags}
-              category={entry.data.category}
-              isWiki={true}
-            />
-          ))}
+    <FilterBox
+      title="Filter by Category"
+      categories={allCategories}
+      activeCategory={category}
+      tags={allTags}
+      baseUrl="/categories"
+    />
+
+    {
+      sortedWikiEntries.length > 0 && (
+        <div class="mb-12">
+          <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
+            Wiki Articles
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {sortedWikiEntries.map((entry) => (
+              <ContentCard
+                title={entry.data.title}
+                description={entry.data.description}
+                url={getWikiUrl(entry.slug)}
+                tags={entry.data.tags}
+                category={entry.data.category}
+                isWiki={true}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    )}
-    
-    {sortedBlogPosts.length > 0 && (
-      <div class="mb-12">
-        <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
-          Blog Posts
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sortedBlogPosts.map(post => (
-            <ContentCard
-              title={post.data.title}
-              description={post.data.description}
-              url={`/blog/${post.slug}`}
-              tags={post.data.tags}
-              category={post.data.category}
-              date={post.data.date}
-              author={post.data.author}
-            />
-          ))}
+      )
+    }
+
+    {
+      sortedBlogPosts.length > 0 && (
+        <div class="mb-12">
+          <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
+            Blog Posts
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {sortedBlogPosts.map((post) => (
+              <ContentCard
+                title={post.data.title}
+                description={post.data.description}
+                url={getBlogUrl(post.slug)}
+                tags={post.data.tags}
+                category={post.data.category}
+                isWiki={false}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    )}
-    
-    {totalItems === 0 && (
-      <div class="text-center py-12">
-        <h3 class="text-lg font-medium text-primary-900 dark:text-primary-100">
-          No content found in the {category} category
-        </h3>
-        <p class="mt-2 text-primary-600 dark:text-primary-300">
-          Try browsing all content instead.
-        </p>
-        <div class="mt-4 flex justify-center gap-4">
-          <a href="/blog" class="text-accent-600 dark:text-accent-400 hover:underline">
-            View all blog posts
-          </a>
-          <a href="/wiki" class="text-accent-600 dark:text-accent-400 hover:underline">
-            View all wiki articles
-          </a>
+      )
+    }
+
+    {
+      totalItems === 0 && (
+        <div class="text-center py-12">
+          <h3 class="text-lg font-medium text-primary-900 dark:text-primary-100">
+            No content found in the {category} category
+          </h3>
+          <p class="mt-2 text-primary-600 dark:text-primary-300">
+            Try browsing all content instead.
+          </p>
+          <div class="mt-4 flex justify-center gap-4">
+            <a
+              href={getBlogIndexUrl()}
+              class="text-accent-600 dark:text-accent-400 hover:underline"
+            >
+              View all blog posts
+            </a>
+            <a
+              href={getWikiIndexUrl()}
+              class="text-accent-600 dark:text-accent-400 hover:underline"
+            >
+              View all wiki articles
+            </a>
+          </div>
         </div>
-      </div>
-    )}
+      )
+    }
   </div>
 </Layout>

@@ -2,19 +2,48 @@
  * Utility functions for handling URLs consistently across the project
  */
 
-const baseUrl = import.meta.env.BASE_URL;
+// Get base URL from environment, ensuring it starts with a slash and has no trailing slash
+const baseUrl = (import.meta.env.BASE_URL || '').replace(/^\/+|\/+$/g, '');
+
+// Debug log
+console.log('BASE_URL:', import.meta.env.BASE_URL);
+console.log('Cleaned baseUrl:', baseUrl);
+
+// Test cases:
+// baseUrl = "tech-leadership"
+// getFullUrl("")              -> "/tech-leadership/"
+// getFullUrl("/")            -> "/tech-leadership/"
+// getFullUrl("blog")         -> "/tech-leadership/blog/"
+// getFullUrl("/blog")        -> "/tech-leadership/blog/"
+// getFullUrl("blog/")        -> "/tech-leadership/blog/"
+// getFullUrl("/blog/")       -> "/tech-leadership/blog/"
 
 /**
- * Ensures a URL is properly prefixed with the base URL
+ * Ensures a URL is properly prefixed with the base URL and has a trailing slash
  */
 export function getFullUrl(path: string): string {
-  // Remove leading slash if present
-  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-  // If baseUrl is empty or '/', just return the path
-  if (!baseUrl || baseUrl === '/') {
-    return `/${cleanPath}`;
+  // Handle empty path or root path specially
+  if (!path || path === '/' || path === '') {
+    return baseUrl ? `/${baseUrl}/` : '/';
   }
-  return `${baseUrl}${cleanPath}`;
+
+  // Remove leading and trailing slashes if present
+  const cleanPath = path.replace(/^\/+|\/+$/g, '');
+  
+  // Check if the path already includes the base URL to prevent duplication
+  if (baseUrl && cleanPath.startsWith(baseUrl + '/')) {
+    return '/' + cleanPath + '/';
+  }
+  
+  // Return URL with proper base path and trailing slash
+  return baseUrl ? `/${baseUrl}/${cleanPath}/` : `/${cleanPath}/`;
+}
+
+/**
+ * Creates a URL for the home page
+ */
+export function getHomeUrl(): string {
+  return baseUrl ? `/${baseUrl}/` : '/';
 }
 
 /**
@@ -33,9 +62,10 @@ export function getWikiUrl(slug: string): string {
 
 /**
  * Creates a URL for a category
+ * Note: We don't encode the category here since Astro's dynamic routes expect the raw value
  */
 export function getCategoryUrl(category: string): string {
-  return getFullUrl(`categories/${encodeURIComponent(category)}`);
+  return getFullUrl(`categories/${category}`);
 }
 
 /**

@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import ContentCard from "../../components/ContentCard.astro";
 import FilterBox from "../../components/FilterBox.astro";
 import { getCollection } from "astro:content";
+import { getWikiUrl, getWikiIndexUrl } from "../../utils/url";
 
 // Get all wiki entries, excluding drafts
 const allWikiEntries = await getCollection("wiki", ({ data }) => {
@@ -110,7 +111,7 @@ const totalTags = allTags.length;
         activeCategory={decodedCategoryFilter}
         tags={allTags}
         activeTag={tagFilter}
-        baseUrl="/wiki"
+        baseUrl="wiki"
       />
     </div>
 
@@ -127,7 +128,7 @@ const totalTags = allTags.length;
                 <ContentCard
                   title={entry.data.title}
                   description={entry.data.description}
-                  url={`/wiki/${entry.slug}`}
+                  url={getWikiUrl(entry.slug)}
                   tags={entry.data.tags}
                   category={entry.data.category}
                   isWiki={true}
@@ -148,7 +149,7 @@ const totalTags = allTags.length;
           </p>
           {decodedCategoryFilter && (
             <a
-              href="/wiki"
+              href={getWikiIndexUrl()}
               class="mt-4 inline-block text-accent-600 dark:text-accent-400 hover:underline"
             >
               View all wiki entries

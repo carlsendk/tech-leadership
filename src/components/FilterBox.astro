@@ -1,4 +1,6 @@
 ---
+import { getTagUrl, getCategoryUrl, getFullUrl } from "../utils/url";
+
 export interface Props {
   title?: string;
   categories?: string[];
@@ -19,17 +21,18 @@ const {
 
 // Helper function to build URLs consistently
 const buildUrl = (base: string, params: Record<string, string>) => {
-  // For tag pages, use direct URLs
-  if (base === "/tags") {
-    return `/tags/${params.tag}`;
+  // For tag pages, use tag URL utility
+  if (params.tag) {
+    return getTagUrl(params.tag);
   }
 
-  // For category pages, use direct URLs
+  // For category pages, use category URL utility
   if (params.category) {
-    return `/categories/${encodeURIComponent(params.category)}`;
+    return getCategoryUrl(params.category);
   }
 
-  return base;
+  // For base URLs, ensure proper base path
+  return getFullUrl(base.replace(/^\/+/, ""));
 };
 ---
 
@@ -45,7 +48,7 @@ const buildUrl = (base: string, params: Record<string, string>) => {
 
         <div class="flex flex-wrap gap-2">
           <a
-            href={baseUrl}
+            href={buildUrl(baseUrl, {})}
             class={`inline-flex items-center text-sm px-4 py-2 rounded-lg transition-colors ${
               !activeCategory
                 ? "bg-accent-600 text-white hover:bg-accent-700"
@@ -85,7 +88,7 @@ const buildUrl = (base: string, params: Record<string, string>) => {
         <div class="flex flex-wrap gap-2">
           {tags.map((tag) => {
             const isActive = tag === activeTag;
-            const href = buildUrl("/tags", { tag });
+            const href = buildUrl(baseUrl, { tag });
 
             return (
               <a

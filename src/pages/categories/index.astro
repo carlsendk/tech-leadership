@@ -1,57 +1,98 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { getCategoryUrl, getTagUrl, getHomeUrl } from "../../utils/url";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import FilterBox from "../../components/FilterBox.astro";
 
 // Get all blog posts and wiki entries
-const allBlogPosts = await getCollection('blog', ({ data }) => !data.draft);
-const allWikiEntries = await getCollection('wiki', ({ data }) => !data.draft);
+const allBlogPosts = await getCollection("blog", ({ data }) => !data.draft);
+const allWikiEntries = await getCollection("wiki", ({ data }) => !data.draft);
 
-// Get all categories and count their items
-const categoryData = [...allBlogPosts, ...allWikiEntries].reduce((acc, item) => {
-  const category = item.data.category;
-  if (!acc[category]) {
-    acc[category] = {
-      name: category,
-      total: 0,
-      blogCount: 0,
-      wikiCount: 0,
-      tags: new Set()
-    };
-  }
-  acc[category].total++;
-  acc[category][item.collection + 'Count']++;
-  item.data.tags.forEach(tag => acc[category].tags.add(tag));
-  return acc;
-}, {} as Record<string, {
+interface CategoryData {
   name: string;
   total: number;
   blogCount: number;
   wikiCount: number;
   tags: Set<string>;
-}>);
+}
+
+// Get all categories and count their items
+const categoryData = [...allBlogPosts, ...allWikiEntries].reduce(
+  (acc, item) => {
+    const category = item.data.category;
+    if (!acc[category]) {
+      acc[category] = {
+        name: category,
+        total: 0,
+        blogCount: 0,
+        wikiCount: 0,
+        tags: new Set(),
+      };
+    }
+    acc[category].total++;
+    if (item.collection === "blog") {
+      acc[category].blogCount++;
+    } else if (item.collection === "wiki") {
+      acc[category].wikiCount++;
+    }
+    item.data.tags.forEach((tag) => acc[category].tags.add(tag));
+    return acc;
+  },
+  {} as Record<string, CategoryData>,
+);
 
 // Convert to array and sort by total items
-const categories = Object.values(categoryData).sort((a, b) => b.total - a.total);
+const categories = Object.values(categoryData).sort(
+  (a, b) => b.total - a.total,
+);
+
+// Get all categories and tags for the filter box
+const allCategories = categories.map((cat) => cat.name);
+const allTags = [
+  ...new Set([
+    ...allBlogPosts.flatMap((post) => post.data.tags),
+    ...allWikiEntries.flatMap((entry) => entry.data.tags),
+  ]),
+].sort();
 
 // Calculate total statistics
 const totalItems = categories.reduce((sum, cat) => sum + cat.total, 0);
 const totalBlogPosts = categories.reduce((sum, cat) => sum + cat.blogCount, 0);
-const totalWikiArticles = categories.reduce((sum, cat) => sum + cat.wikiCount, 0);
+const totalWikiArticles = categories.reduce(
+  (sum, cat) => sum + cat.wikiCount,
+  0,
+);
+
+// Breadcrumb items
+const breadcrumbItems = [
+  { label: "Home", href: getHomeUrl() },
+  { label: "Categories", href: "", current: true },
+];
 ---
 
-<Layout title="Categories | Knowledge Base" description="Browse all content categories">
+<Layout
+  title="Categories | Knowledge Base"
+  description="Browse all content categories"
+>
   <div class="max-w-7xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
+    <Breadcrumb items={breadcrumbItems} />
+
     <!-- Hero section -->
-    <div class="bg-gradient-to-br from-primary-900 to-primary-950 rounded-2xl p-8 mb-12 text-white">
+    <div
+      class="bg-gradient-to-br from-primary-900 to-primary-950 rounded-2xl p-8 mb-12 text-white"
+    >
       <h1 class="text-4xl font-bold mb-4">Categories</h1>
       <p class="text-xl text-primary-200 mb-6">
         Browse our content organized by topic
       </p>
-      
+
       <!-- Statistics -->
       <div class="grid grid-cols-3 gap-4 max-w-lg">
         <div class="text-center">
-          <div class="text-3xl font-bold text-accent-400">{categories.length}</div>
+          <div class="text-3xl font-bold text-accent-400">
+            {categories.length}
+          </div>
           <div class="text-primary-300 text-sm">Categories</div>
         </div>
         <div class="text-center">
@@ -59,57 +100,70 @@ const totalWikiArticles = categories.reduce((sum, cat) => sum + cat.wikiCount, 0
           <div class="text-primary-300 text-sm">Blog Posts</div>
         </div>
         <div class="text-center">
-          <div class="text-3xl font-bold text-accent-400">{totalWikiArticles}</div>
+          <div class="text-3xl font-bold text-accent-400">
+            {totalWikiArticles}
+          </div>
           <div class="text-primary-300 text-sm">Wiki Articles</div>
         </div>
       </div>
     </div>
 
-    <!-- Categories grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {categories.map(category => (
-        <a 
-          href={`/categories/${encodeURIComponent(category.name)}`}
-          class="group bg-white dark:bg-primary-900 rounded-xl border border-primary-200 dark:border-primary-800 p-6 hover:border-accent-500 dark:hover:border-accent-500 transition-all duration-300"
-        >
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl font-semibold text-primary-900 dark:text-primary-100 group-hover:text-accent-600 dark:group-hover:text-accent-400">
-              {category.name}
-            </h2>
-            <span class="text-2xl font-bold text-accent-600 dark:text-accent-400">
-              {category.total}
-            </span>
-          </div>
-          
-          <div class="space-y-2">
-            <div class="flex items-center text-sm text-primary-600 dark:text-primary-300">
-              <span class="w-1/2">Blog Posts:</span>
-              <span class="font-medium">{category.blogCount}</span>
-            </div>
-            <div class="flex items-center text-sm text-primary-600 dark:text-primary-300">
-              <span class="w-1/2">Wiki Articles:</span>
-              <span class="font-medium">{category.wikiCount}</span>
-            </div>
-          </div>
+    <FilterBox
+      title="Filter by Category"
+      categories={allCategories}
+      tags={allTags}
+      baseUrl="/categories"
+    />
 
-          {category.tags.size > 0 && (
-            <div class="mt-4">
-              <div class="flex flex-wrap gap-2">
-                {Array.from(category.tags).slice(0, 3).map(tag => (
-                  <span class="text-xs px-2 py-1 rounded-full bg-primary-100 text-primary-600 dark:bg-primary-800 dark:text-primary-300">
-                    #{tag}
-                  </span>
-                ))}
-                {category.tags.size > 3 && (
-                  <span class="text-xs px-2 py-1 rounded-full bg-primary-100 text-primary-600 dark:bg-primary-800 dark:text-primary-300">
-                    +{category.tags.size - 3} more
-                  </span>
-                )}
+    <!-- Categories grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+      {
+        categories.map((category) => (
+          <a
+            href={getCategoryUrl(category.name)}
+            class="group bg-white dark:bg-primary-900 rounded-xl border border-primary-200 dark:border-primary-800 p-6 hover:border-accent-500 dark:hover:border-accent-500 transition-all duration-300"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-xl font-semibold text-primary-900 dark:text-primary-100 group-hover:text-accent-600 dark:group-hover:text-accent-400">
+                {category.name}
+              </h2>
+              <span class="text-2xl font-bold text-accent-600 dark:text-accent-400">
+                {category.total}
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <div class="flex items-center text-sm text-primary-600 dark:text-primary-300">
+                <span class="w-1/2">Blog Posts:</span>
+                <span class="font-medium">{category.blogCount}</span>
+              </div>
+              <div class="flex items-center text-sm text-primary-600 dark:text-primary-300">
+                <span class="w-1/2">Wiki Articles:</span>
+                <span class="font-medium">{category.wikiCount}</span>
               </div>
             </div>
-          )}
-        </a>
-      ))}
+
+            {category.tags.size > 0 && (
+              <div class="mt-4">
+                <div class="flex flex-wrap gap-2">
+                  {Array.from(category.tags)
+                    .slice(0, 3)
+                    .map((tag) => (
+                      <span class="text-xs px-2 py-1 rounded-full bg-primary-100 text-primary-600 dark:bg-primary-800 dark:text-primary-300">
+                        #{tag}
+                      </span>
+                    ))}
+                  {category.tags.size > 3 && (
+                    <span class="text-xs px-2 py-1 rounded-full bg-primary-100 text-primary-600 dark:bg-primary-800 dark:text-primary-300">
+                      +{category.tags.size - 3} more
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+          </a>
+        ))
+      }
     </div>
   </div>
 </Layout>

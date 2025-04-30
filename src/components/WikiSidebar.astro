@@ -1,5 +1,6 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
+import { getCategoryUrl, getWikiUrl } from "../utils/url";
 
 export interface Props {
   activeCategory?: string;
@@ -7,19 +8,22 @@ export interface Props {
 
 const { activeCategory } = Astro.props;
 
-const wikiEntries = await getCollection('wiki', ({ data }) => {
+const wikiEntries = await getCollection("wiki", ({ data }) => {
   return !data.draft;
 });
 
 // Organize entries by category
-const categories = wikiEntries.reduce((acc, entry) => {
-  const category = entry.data.category;
-  if (!acc[category]) {
-    acc[category] = [];
-  }
-  acc[category].push(entry);
-  return acc;
-}, {} as Record<string, typeof wikiEntries>);
+const categories = wikiEntries.reduce(
+  (acc, entry) => {
+    const category = entry.data.category;
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(entry);
+    return acc;
+  },
+  {} as Record<string, typeof wikiEntries>,
+);
 
 // Sort categories alphabetically
 const sortedCategories = Object.keys(categories).sort();
@@ -41,37 +45,45 @@ for (const category of sortedCategories) {
   </h2>
 
   <div class="space-y-4">
-    {sortedCategories.map((category) => (
-      <div>
-        <h3 class={`
+    {
+      sortedCategories.map((category) => (
+        <div>
+          <h3
+            class={`
           text-sm font-semibold mb-2 
-          ${activeCategory === category 
-            ? 'text-accent-600 dark:text-accent-400' 
-            : 'text-primary-700 dark:text-primary-300'}
-        `}>
-          <a href={`/categories/${category}`} class="hover:underline">
-            {category}
-          </a>
-        </h3>
-        
-        <ul class="space-y-1 pl-2 border-l border-primary-200 dark:border-primary-700">
-          {categories[category].map((entry) => (
-            <li>
-              <a 
-                href={`/wiki/${entry.slug}`}
-                class={`
+          ${
+            activeCategory === category
+              ? "text-accent-600 dark:text-accent-400"
+              : "text-primary-700 dark:text-primary-300"
+          }
+        `}
+          >
+            <a href={getCategoryUrl(category)} class="hover:underline">
+              {category}
+            </a>
+          </h3>
+
+          <ul class="space-y-1 pl-2 border-l border-primary-200 dark:border-primary-700">
+            {categories[category].map((entry) => (
+              <li>
+                <a
+                  href={getWikiUrl(entry.slug)}
+                  class={`
                   block py-1 text-sm 
-                  ${Astro.url.pathname === `/wiki/${entry.slug}` 
-                    ? 'text-accent-600 dark:text-accent-400 font-medium' 
-                    : 'text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100'}
+                  ${
+                    Astro.url.pathname === `/wiki/${entry.slug}`
+                      ? "text-accent-600 dark:text-accent-400 font-medium"
+                      : "text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100"
+                  }
                 `}
-              >
-                {entry.data.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    ))}
+                >
+                  {entry.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
   </div>
 </nav>

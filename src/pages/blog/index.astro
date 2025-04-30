@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import ContentCard from "../../components/ContentCard.astro";
 import FilterBox from "../../components/FilterBox.astro";
 import { getCollection } from "astro:content";
+import { getBlogUrl, getFullUrl } from "../../utils/url";
 
 // Get all blog posts, excluding drafts
 const allBlogPosts = await getCollection("blog", ({ data }) => {
@@ -110,7 +111,7 @@ const totalTags = allTags.length;
         activeCategory={decodedCategoryFilter}
         tags={allTags}
         activeTag={tagFilter}
-        baseUrl="/blog"
+        baseUrl="blog"
       />
     </div>
 
@@ -128,7 +129,7 @@ const totalTags = allTags.length;
                   <ContentCard
                     title={post.data.title}
                     description={post.data.description}
-                    url={`/blog/${post.slug}`}
+                    url={getBlogUrl(post.slug)}
                     tags={post.data.tags}
                     category={post.data.category}
                     date={post.data.date}
@@ -152,7 +153,7 @@ const totalTags = allTags.length;
                 : "There are no blog posts available."}
           </p>
           <a
-            href="/blog"
+            href={getBlogUrl("")}
             class="mt-4 inline-block text-accent-600 dark:text-accent-400 hover:underline"
           >
             View all blog posts

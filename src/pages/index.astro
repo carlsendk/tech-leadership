@@ -2,6 +2,13 @@
 import Layout from "../layouts/Layout.astro";
 import ContentCard from "../components/ContentCard.astro";
 import { getCollection } from "astro:content";
+import {
+  getBlogUrl,
+  getWikiUrl,
+  getBlogIndexUrl,
+  getWikiIndexUrl,
+  getCategoryUrl,
+} from "../utils/url";
 
 // Get latest blog posts
 const blogPosts = await getCollection("blog", ({ data }) => {
@@ -55,7 +62,7 @@ const tags = [
         </p>
         <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
           <a
-            href="/wiki"
+            href={getWikiIndexUrl()}
             class="group w-full sm:w-auto px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary-900 bg-white hover:bg-primary-50 transition-all duration-300 flex items-center justify-center gap-2"
           >
             <span>Explore Wiki</span>
@@ -73,7 +80,7 @@ const tags = [
             </svg>
           </a>
           <a
-            href="/blog"
+            href={getBlogIndexUrl()}
             class="group w-full sm:w-auto px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-accent-600 hover:bg-accent-700 transition-all duration-300 flex items-center justify-center gap-2"
           >
             <span>Read Blog</span>
@@ -126,7 +133,7 @@ const tags = [
           </p>
         </div>
         <a
-          href="/blog"
+          href={getBlogIndexUrl()}
           class="group flex items-center gap-2 text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 font-medium"
         >
           View all posts
@@ -151,11 +158,10 @@ const tags = [
             <ContentCard
               title={post.data.title}
               description={post.data.description}
-              url={`/blog/${post.slug}`}
+              url={getBlogUrl(post.slug)}
               tags={post.data.tags}
               category={post.data.category}
-              date={post.data.date}
-              author={post.data.author}
+              isWiki={false}
             />
           ))
         }
@@ -176,7 +182,7 @@ const tags = [
           </p>
         </div>
         <a
-          href="/wiki"
+          href={getWikiIndexUrl()}
           class="group flex items-center gap-2 text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 font-medium"
         >
           Browse all wiki entries
@@ -201,7 +207,7 @@ const tags = [
             <ContentCard
               title={entry.data.title}
               description={entry.data.description}
-              url={`/wiki/${entry.slug}`}
+              url={getWikiUrl(entry.slug)}
               tags={entry.data.tags}
               category={entry.data.category}
               isWiki={true}
@@ -228,7 +234,7 @@ const tags = [
         {
           categories.map((category) => (
             <a
-              href={`/categories/${category}`}
+              href={getCategoryUrl(category)}
               class="group p-4 bg-white dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-800 hover:border-accent-500 dark:hover:border-accent-500 transition-all duration-300"
             >
               <h3 class="font-medium text-primary-900 dark:text-primary-100 group-hover:text-accent-600 dark:group-hover:text-accent-400">

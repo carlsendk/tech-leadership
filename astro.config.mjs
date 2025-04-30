@@ -15,9 +15,13 @@ const repositoryName = pkg.name;
 const isProduction = process.env.NODE_ENV === 'production';
 
 export default defineConfig({
-  site: isProduction ? 'https://carlsendk.github.io' : undefined,
-  base: isProduction ? '/tech-leadership' : undefined,
+  site: 'https://carlsendk.github.io',
+  base: '/tech-leadership',
+  trailingSlash: 'always',
   output: 'static',
+  build: {
+    format: 'directory',
+  },
   integrations: [
     tailwind(),
     mdx(),
