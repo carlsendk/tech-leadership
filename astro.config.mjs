@@ -12,8 +12,9 @@ const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
 const repositoryName = pkg.name;
 
 export default defineConfig({
-  site: `https://${process.env.GITHUB_REPOSITORY_OWNER || 'your-username'}.github.io`,
-  base: `/${repositoryName}`,
+  site: 'https://carlsendk.github.io',
+  base: '/tech-leadership',
+  output: 'static',
   integrations: [
     tailwind(),
     mdx(),
