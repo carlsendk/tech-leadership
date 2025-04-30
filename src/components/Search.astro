@@ -1,25 +1,51 @@
 ---
 import { getCollection } from "astro:content";
 
+interface ContentEntry {
+  data: {
+    draft?: boolean;
+    title: string;
+    description: string;
+    category: string;
+    tags: string[];
+  };
+  slug: string;
+}
+
+interface SearchItem {
+  title: string;
+  description: string;
+  url: string;
+  type: "blog" | "wiki";
+  category: string;
+  tags: string[];
+}
+
 // Get all blog posts and wiki entries
-const blogPosts = await getCollection("blog", ({ data }) => !data.draft);
-const wikiEntries = await getCollection("wiki", ({ data }) => !data.draft);
+const blogPosts = await getCollection(
+  "blog",
+  ({ data }: { data: ContentEntry["data"] }) => !data.draft,
+);
+const wikiEntries = await getCollection(
+  "wiki",
+  ({ data }: { data: ContentEntry["data"] }) => !data.draft,
+);
 
 // Combine and format the content for search
-const searchContent = [
-  ...blogPosts.map((post) => ({
+const searchContent: SearchItem[] = [
+  ...blogPosts.map((post: ContentEntry) => ({
     title: post.data.title,
     description: post.data.description,
     url: post.slug,
-    type: "blog",
+    type: "blog" as const,
     category: post.data.category,
     tags: post.data.tags,
   })),
-  ...wikiEntries.map((entry) => ({
+  ...wikiEntries.map((entry: ContentEntry) => ({
     title: entry.data.title,
     description: entry.data.description,
     url: entry.slug,
-    type: "wiki",
+    type: "wiki" as const,
     category: entry.data.category,
     tags: entry.data.tags,
   })),
@@ -28,20 +54,20 @@ const searchContent = [
 const baseUrl = import.meta.env.BASE_URL;
 
 // Prepare search data
-const searchData = [
-  ...blogPosts.map((post) => ({
+const searchData: SearchItem[] = [
+  ...blogPosts.map((post: ContentEntry) => ({
     title: post.data.title,
     description: post.data.description,
     url: `/blog/${post.slug}`,
-    type: "blog",
+    type: "blog" as const,
     category: post.data.category,
     tags: post.data.tags,
   })),
-  ...wikiEntries.map((entry) => ({
+  ...wikiEntries.map((entry: ContentEntry) => ({
     title: entry.data.title,
     description: entry.data.description,
     url: `/wiki/${entry.slug}`,
-    type: "wiki",
+    type: "wiki" as const,
     category: entry.data.category,
     tags: entry.data.tags,
   })),
@@ -55,46 +81,46 @@ const searchData = [
 <div
   class="relative"
   x-data="{ 
-  open: false, 
-  search: '', 
-  results: [],
-  selectedIndex: -1,
-  init() {
-    this.$watch('search', value => {
-      if (!value.trim()) {
-        this.results = [];
-        return;
-      }
-      
-      const searchTerm = value.toLowerCase();
-      this.results = window.searchData.filter(item => 
-        item.title.toLowerCase().includes(searchTerm) ||
-        item.description.toLowerCase().includes(searchTerm) ||
-        item.category.toLowerCase().includes(searchTerm) ||
-        item.tags.some(tag => tag.toLowerCase().includes(searchTerm))
-      ).slice(0, 8);
-    });
+    open: false, 
+    search: '', 
+    results: [],
+    selectedIndex: -1,
+    init() {
+      this.$watch('search', value => {
+        if (!value.trim()) {
+          this.results = [];
+          return;
+        }
+        
+        const searchTerm = value.toLowerCase();
+        this.results = window.searchData.filter(item => 
+          item.title.toLowerCase().includes(searchTerm) ||
+          item.description.toLowerCase().includes(searchTerm) ||
+          item.category.toLowerCase().includes(searchTerm) ||
+          item.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+        ).slice(0, 8);
+      });
 
-    // Keyboard navigation
-    window.addEventListener('keydown', (e) => {
-      if (!this.open) return;
-      
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        this.selectedIndex = Math.min(this.selectedIndex + 1, this.results.length - 1);
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        this.selectedIndex = Math.max(this.selectedIndex - 1, -1);
-      } else if (e.key === 'Enter' && this.selectedIndex >= 0) {
-        e.preventDefault();
-        window.location.href = this.results[this.selectedIndex].url;
-      } else if (e.key === 'Escape') {
-        this.open = false;
-        this.search = '';
-      }
-    });
-  }
-}"
+      // Keyboard navigation
+      window.addEventListener('keydown', (e) => {
+        if (!this.open) return;
+        
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          this.selectedIndex = Math.min(this.selectedIndex + 1, this.results.length - 1);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          this.selectedIndex = Math.max(this.selectedIndex - 1, -1);
+        } else if (e.key === 'Enter' && this.selectedIndex >= 0) {
+          e.preventDefault();
+          window.location.href = this.results[this.selectedIndex].url;
+        } else if (e.key === 'Escape') {
+          this.open = false;
+          this.search = '';
+        }
+      });
+    }
+  }"
 >
   <!-- Search input -->
   <div class="relative">
@@ -176,9 +202,9 @@ const searchData = [
                 class="text-xs text-primary-500 dark:text-primary-400"
                 x-text="result.category"></span>
               <template x-for="tag in result.tags.slice(0, 3)" :key="tag">
-                <span class="text-xs text-primary-500 dark:text-primary-400"
-                  >#<span x-text="tag"></span></span
-                >
+                <span class="text-xs text-primary-500 dark:text-primary-400">
+                  #<span x-text="tag"></span>
+                </span>
               </template>
             </div>
           </a>

@@ -3,22 +3,36 @@ import { getCollection } from "astro:content";
 import ThemeToggle from "./ThemeToggle.astro";
 import Search from "./Search.astro";
 
+interface ContentEntry {
+  data: {
+    draft?: boolean;
+    category: string;
+    tags: string[];
+  };
+}
+
 // Get all blog posts and wiki entries
-const blogPosts = await getCollection("blog", ({ data }) => !data.draft);
-const wikiEntries = await getCollection("wiki", ({ data }) => !data.draft);
+const blogPosts = await getCollection(
+  "blog",
+  ({ data }: { data: ContentEntry["data"] }) => !data.draft,
+);
+const wikiEntries = await getCollection(
+  "wiki",
+  ({ data }: { data: ContentEntry["data"] }) => !data.draft,
+);
 
 // Get unique categories and tags
 const blogCategories = [
-  ...new Set(blogPosts.map((post) => post.data.category)),
-].sort();
+  ...new Set(blogPosts.map((post: ContentEntry) => post.data.category)),
+].sort() as string[];
 const wikiCategories = [
-  ...new Set(wikiEntries.map((entry) => entry.data.category)),
-].sort();
+  ...new Set(wikiEntries.map((entry: ContentEntry) => entry.data.category)),
+].sort() as string[];
 const blogTags = [
-  ...new Set(blogPosts.flatMap((post) => post.data.tags)),
+  ...new Set(blogPosts.flatMap((post: ContentEntry) => post.data.tags)),
 ].sort();
 const wikiTags = [
-  ...new Set(wikiEntries.flatMap((entry) => entry.data.tags)),
+  ...new Set(wikiEntries.flatMap((entry: ContentEntry) => entry.data.tags)),
 ].sort();
 
 const githubUrl = "https://github.com/carlsendk/tech-leadership";
