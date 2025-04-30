@@ -11,9 +11,12 @@ import { readFileSync } from 'fs';
 const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
 const repositoryName = pkg.name;
 
+// Determine if we're in production (GitHub Pages) or development
+const isProduction = process.env.NODE_ENV === 'production';
+
 export default defineConfig({
-  site: 'https://carlsendk.github.io',
-  base: '/tech-leadership',
+  site: isProduction ? 'https://carlsendk.github.io' : undefined,
+  base: isProduction ? '/tech-leadership' : undefined,
   output: 'static',
   integrations: [
     tailwind(),

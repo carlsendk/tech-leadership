@@ -10,6 +10,10 @@ const baseUrl = import.meta.env.BASE_URL;
 export function getFullUrl(path: string): string {
   // Remove leading slash if present
   const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  // If baseUrl is empty or '/', just return the path
+  if (!baseUrl || baseUrl === '/') {
+    return `/${cleanPath}`;
+  }
   return `${baseUrl}${cleanPath}`;
 }
 
