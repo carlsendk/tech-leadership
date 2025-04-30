@@ -1,0 +1,63 @@
+---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import WikiLayout from "../../layouts/WikiLayout.astro";
+
+interface Props {
+  entry: CollectionEntry<"wiki">;
+}
+
+export async function getStaticPaths() {
+  const wikiEntries = await getCollection(
+    "wiki",
+    ({ data }: CollectionEntry<"wiki">) => {
+      return !data.draft;
+    },
+  );
+
+  return wikiEntries.map((entry: CollectionEntry<"wiki">) => ({
+    params: {
+      // Join the slug segments with forward slashes
+      slug: entry.slug.split(/[/\\]/).join("/"),
+    },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props as Props;
+const { Content, headings } = await entry.render();
+---
+
+<WikiLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  tags={entry.data.tags}
+  category={entry.data.category}
+  headings={headings}
+>
+  <div class="prose prose-primary dark:prose-invert max-w-none">
+    <Content />
+  </div>
+</WikiLayout>
+
+<script>
+  import mermaid from "mermaid";
+
+  // Wait for the page to be fully loaded
+  document.addEventListener("astro:page-load", async () => {
+    try {
+      // Initialize mermaid with dark theme support
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: document.documentElement.classList.contains("dark")
+          ? "dark"
+          : "default",
+      });
+
+      // Render all mermaid diagrams
+      await mermaid.run();
+    } catch (error) {
+      console.error("Error initializing mermaid:", error);
+    }
+  });
+</script>

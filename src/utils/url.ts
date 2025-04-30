@@ -57,7 +57,9 @@ export function getBlogUrl(slug: string): string {
  * Creates a URL for a wiki entry
  */
 export function getWikiUrl(slug: string): string {
-  return getFullUrl(`wiki/${slug}`);
+  // Replace any backslashes with forward slashes and ensure no double slashes
+  const cleanSlug = slug.replace(/\\/g, '/').replace(/\/+/g, '/');
+  return getFullUrl(`wiki/${cleanSlug}`);
 }
 
 /**
