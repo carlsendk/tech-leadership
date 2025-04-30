@@ -8,94 +8,100 @@ export interface Props {
   baseUrl: string;
 }
 
-const { 
+const {
   title = "Browse Content",
   categories = [],
   activeCategory,
   tags = [],
   activeTag,
-  baseUrl
+  baseUrl,
 } = Astro.props;
 
 // Helper function to build URLs consistently
 const buildUrl = (base: string, params: Record<string, string>) => {
   // For tag pages, use direct URLs
-  if (base === '/tags') {
+  if (base === "/tags") {
     return `/tags/${params.tag}`;
   }
-  
+
   // For category pages, use direct URLs
   if (params.category) {
     return `/categories/${encodeURIComponent(params.category)}`;
   }
-  
+
   return base;
 };
 ---
 
-<div class="bg-primary-900 rounded-xl p-6 space-y-6">
-  {categories.length > 0 && (
-    <div>
-      <h2 class="text-lg font-semibold text-white mb-4">
-        {title}
-      </h2>
-      
-      <div class="flex flex-wrap gap-2">
-        <a 
-          href={baseUrl} 
-          class={`inline-flex items-center text-sm px-4 py-2 rounded-lg transition-colors ${
-            !activeCategory 
-              ? 'bg-accent-600 text-white hover:bg-accent-700' 
-              : 'bg-primary-800 text-primary-300 hover:bg-primary-700'
-          }`}
-        >
-          All
-        </a>
-        {categories.map(category => {
-          const isActive = category === activeCategory;
-          const href = buildUrl(baseUrl, { category });
-          
-          return (
-            <a 
-              href={href}
-              class={`inline-flex items-center text-sm px-4 py-2 rounded-lg transition-colors ${
-                isActive
-                  ? 'bg-accent-600 text-white hover:bg-accent-700' 
-                  : 'bg-primary-800 text-primary-300 hover:bg-primary-700'
-              }`}
-            >
-              {category}
-            </a>
-          );
-        })}
-      </div>
-    </div>
-  )}
+<div
+  class="bg-white dark:bg-primary-900 rounded-xl p-6 space-y-6 border border-primary-200 dark:border-primary-800"
+>
+  {
+    categories.length > 0 && (
+      <div>
+        <h2 class="text-lg font-semibold text-primary-900 dark:text-white mb-4">
+          {title}
+        </h2>
 
-  {tags.length > 0 && (
-    <div>
-      <h3 class="text-sm font-medium text-white mb-3">
-        Popular Tags
-      </h3>
-      <div class="flex flex-wrap gap-2">
-        {tags.map(tag => {
-          const isActive = tag === activeTag;
-          const href = buildUrl('/tags', { tag });
-          
-          return (
-            <a 
-              href={href}
-              class={`inline-flex items-center text-sm px-3 py-1.5 rounded-full transition-colors ${
-                isActive
-                  ? 'bg-accent-600 text-white hover:bg-accent-700'
-                  : 'bg-primary-800 text-primary-300 hover:bg-primary-700'
-              }`}
-            >
-              #{tag}
-            </a>
-          );
-        })}
+        <div class="flex flex-wrap gap-2">
+          <a
+            href={baseUrl}
+            class={`inline-flex items-center text-sm px-4 py-2 rounded-lg transition-colors ${
+              !activeCategory
+                ? "bg-accent-600 text-white hover:bg-accent-700"
+                : "bg-primary-100 dark:bg-primary-800 text-primary-700 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-700"
+            }`}
+          >
+            All
+          </a>
+          {categories.map((category) => {
+            const isActive = category === activeCategory;
+            const href = buildUrl(baseUrl, { category });
+
+            return (
+              <a
+                href={href}
+                class={`inline-flex items-center text-sm px-4 py-2 rounded-lg transition-colors ${
+                  isActive
+                    ? "bg-accent-600 text-white hover:bg-accent-700"
+                    : "bg-primary-100 dark:bg-primary-800 text-primary-700 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-700"
+                }`}
+              >
+                {category}
+              </a>
+            );
+          })}
+        </div>
       </div>
-    </div>
-  )}
+    )
+  }
+
+  {
+    tags.length > 0 && (
+      <div>
+        <h3 class="text-sm font-medium text-primary-900 dark:text-white mb-3">
+          Popular Tags
+        </h3>
+        <div class="flex flex-wrap gap-2">
+          {tags.map((tag) => {
+            const isActive = tag === activeTag;
+            const href = buildUrl("/tags", { tag });
+
+            return (
+              <a
+                href={href}
+                class={`inline-flex items-center text-sm px-3 py-1.5 rounded-full transition-colors ${
+                  isActive
+                    ? "bg-accent-600 text-white hover:bg-accent-700"
+                    : "bg-primary-100 dark:bg-primary-800 text-primary-700 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-700"
+                }`}
+              >
+                #{tag}
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    )
+  }
 </div>

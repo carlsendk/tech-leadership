@@ -72,13 +72,28 @@ export default {
               padding: '0.25rem 0.4rem',
               borderRadius: '0.25rem',
               fontWeight: '400',
+              '&.language-mermaid': {
+                backgroundColor: 'transparent',
+                padding: 0,
+              },
             },
             pre: {
               backgroundColor: theme('colors.primary.900'),
-              code: {
+              'code.language-mermaid': {
                 backgroundColor: 'transparent',
-                padding: '0',
-                color: theme('colors.primary.100'),
+                padding: 0,
+              },
+              '&:has(code.language-mermaid)': {
+                backgroundColor: 'transparent',
+                padding: 0,
+              },
+            },
+            '.mermaid': {
+              backgroundColor: 'transparent',
+              margin: '2rem 0',
+              textAlign: 'center',
+              '& > svg': {
+                margin: '0 auto',
               },
             },
             blockquote: {
@@ -87,18 +102,56 @@ export default {
               padding: '1rem',
               borderRadius: '0.25rem',
             },
+            strong: {
+              color: theme('colors.primary.900'),
+            },
+            hr: {
+              borderColor: theme('colors.primary.200'),
+            },
+            'ul > li::before': {
+              backgroundColor: theme('colors.primary.600'),
+            },
+            'ol > li::before': {
+              color: theme('colors.primary.600'),
+            },
+            dl: {
+              dt: {
+                color: theme('colors.primary.900'),
+              },
+              dd: {
+                color: theme('colors.primary.700'),
+              },
+            },
+            table: {
+              thead: {
+                color: theme('colors.primary.900'),
+                borderBottomColor: theme('colors.primary.400'),
+              },
+              'tbody tr': {
+                borderBottomColor: theme('colors.primary.200'),
+              },
+            },
           },
         },
         dark: {
           css: {
-            color: theme('colors.primary.200'),
-            '--tw-prose-body': theme('colors.primary.200'),
-            '--tw-prose-headings': theme('colors.primary.100'),
+            color: theme('colors.primary.100'),
+            '--tw-prose-body': theme('colors.primary.100'),
+            '--tw-prose-headings': theme('colors.primary.50'),
             '--tw-prose-links': theme('colors.accent.400'),
-            '--tw-prose-bold': theme('colors.primary.100'),
+            '--tw-prose-bold': theme('colors.primary.50'),
             '--tw-prose-code': theme('colors.primary.100'),
-            '--tw-prose-quotes': theme('colors.primary.200'),
+            '--tw-prose-quotes': theme('colors.primary.100'),
             '--tw-prose-pre-bg': theme('colors.primary.800'),
+            p: {
+              color: theme('colors.primary.100'),
+            },
+            'ul, ol': {
+              color: theme('colors.primary.100'),
+            },
+            li: {
+              color: theme('colors.primary.100'),
+            },
             a: {
               color: theme('colors.accent.400'),
               '&:hover': {
@@ -106,21 +159,82 @@ export default {
               },
             },
             'h1, h2, h3, h4, h5, h6': {
-              color: theme('colors.primary.100'),
+              color: theme('colors.primary.50'),
             },
             code: {
               backgroundColor: theme('colors.primary.800'),
+              color: theme('colors.primary.100'),
+              '&.language-mermaid': {
+                backgroundColor: 'transparent',
+                padding: 0,
+              },
             },
             pre: {
               backgroundColor: theme('colors.primary.800'),
               code: {
                 color: theme('colors.primary.100'),
               },
+              'code.language-mermaid': {
+                backgroundColor: 'transparent',
+                padding: 0,
+              },
+              '&:has(code.language-mermaid)': {
+                backgroundColor: 'transparent',
+                padding: 0,
+              },
+            },
+            '.mermaid': {
+              backgroundColor: 'transparent',
+              margin: '2rem 0',
+              textAlign: 'center',
+              '& > svg': {
+                margin: '0 auto',
+              },
             },
             blockquote: {
               borderLeftColor: theme('colors.accent.600'),
               backgroundColor: theme('colors.primary.900'),
-              color: theme('colors.primary.200'),
+              color: theme('colors.primary.100'),
+              'p': {
+                color: theme('colors.primary.100'),
+              },
+            },
+            strong: {
+              color: theme('colors.primary.50'),
+            },
+            hr: {
+              borderColor: theme('colors.primary.700'),
+            },
+            'ul > li::before': {
+              backgroundColor: theme('colors.primary.400'),
+            },
+            'ol > li::before': {
+              color: theme('colors.primary.400'),
+            },
+            dl: {
+              dt: {
+                color: theme('colors.primary.50'),
+              },
+              dd: {
+                color: theme('colors.primary.100'),
+              },
+            },
+            table: {
+              thead: {
+                color: theme('colors.primary.50'),
+                borderBottomColor: theme('colors.primary.600'),
+                th: {
+                  color: theme('colors.primary.50'),
+                },
+              },
+              tbody: {
+                tr: {
+                  borderBottomColor: theme('colors.primary.700'),
+                  td: {
+                    color: theme('colors.primary.100'),
+                  },
+                },
+              },
             },
           },
         },

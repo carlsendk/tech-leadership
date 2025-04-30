@@ -1,0 +1,60 @@
+---
+interface Props {
+    diagram: string;
+    id?: string;
+}
+
+const { diagram, id = crypto.randomUUID() } = Astro.props;
+---
+
+<div class="mermaid-container my-8">
+    <div class="mermaid" id={id}>
+        {diagram}
+    </div>
+</div>
+
+<script>
+    import mermaid from "mermaid";
+
+    // Initialize mermaid
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: "default",
+        securityLevel: "loose",
+        themeVariables: {
+            fontFamily: "system-ui, -apple-system, sans-serif",
+            fontSize: "16px",
+        },
+    });
+
+    // Function to render mermaid diagrams
+    function renderMermaid() {
+        const diagrams = document.querySelectorAll(".mermaid");
+        diagrams.forEach((diagram) => {
+            if (!diagram.hasAttribute("data-processed")) {
+                mermaid
+                    .render(diagram.id, diagram.textContent || "")
+                    .then(({ svg }) => {
+                        diagram.innerHTML = svg;
+                    });
+            }
+        });
+    }
+
+    // Initial render
+    renderMermaid();
+
+    // Re-render on theme changes
+    document.addEventListener("astro:after-swap", renderMermaid);
+</script>
+
+<style>
+    .mermaid-container {
+        @apply overflow-x-auto;
+    }
+
+    .mermaid {
+        @apply text-center;
+    }
+</style>
+

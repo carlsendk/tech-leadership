@@ -34,6 +34,24 @@ export default defineConfig({
     shikiConfig: {
       theme: 'github-dark',
       wrap: true,
+      transformers: [{
+        pre(node) {
+          // Check if this is a Mermaid code block
+          const [codeEl] = node.children;
+          if (codeEl?.properties?.className?.[0] === 'language-mermaid') {
+            // Transform the pre element to remove Shiki's styling
+            node.properties.className = [];
+            codeEl.properties.className = ['language-mermaid'];
+            // Remove all Shiki spans and preserve only the text content
+            const content = codeEl.children?.[0]?.children?.[0]?.value || '';
+            codeEl.children = [{
+              type: 'text',
+              value: content
+            }];
+          }
+          return node;
+        }
+      }]
     },
   },
 });

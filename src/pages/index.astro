@@ -1,44 +1,57 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ContentCard from '../components/ContentCard.astro';
-import { getCollection } from 'astro:content';
+import Layout from "../layouts/Layout.astro";
+import ContentCard from "../components/ContentCard.astro";
+import { getCollection } from "astro:content";
 
 // Get latest blog posts
-const blogPosts = await getCollection('blog', ({ data }) => {
+const blogPosts = await getCollection("blog", ({ data }) => {
   return !data.draft;
-}).then(posts => posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()).slice(0, 3));
+}).then((posts) =>
+  posts
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .slice(0, 3),
+);
 
 // Get latest wiki entries
-const wikiEntries = await getCollection('wiki', ({ data }) => {
+const wikiEntries = await getCollection("wiki", ({ data }) => {
   return !data.draft;
-}).then(entries => entries.slice(0, 3));
+}).then((entries) => entries.slice(0, 3));
 
 // Get categories and tags for stats
-const allBlogPosts = await getCollection('blog', ({ data }) => !data.draft);
-const allWikiEntries = await getCollection('wiki', ({ data }) => !data.draft);
+const allBlogPosts = await getCollection("blog", ({ data }) => !data.draft);
+const allWikiEntries = await getCollection("wiki", ({ data }) => !data.draft);
 
-const categories = [...new Set([
-  ...allBlogPosts.map(post => post.data.category),
-  ...allWikiEntries.map(entry => entry.data.category)
-])];
+const categories = [
+  ...new Set([
+    ...allBlogPosts.map((post) => post.data.category),
+    ...allWikiEntries.map((entry) => entry.data.category),
+  ]),
+];
 
-const tags = [...new Set([
-  ...allBlogPosts.flatMap(post => post.data.tags),
-  ...allWikiEntries.flatMap(entry => entry.data.tags)
-])];
+const tags = [
+  ...new Set([
+    ...allBlogPosts.flatMap((post) => post.data.tags),
+    ...allWikiEntries.flatMap((entry) => entry.data.tags),
+  ]),
+];
 ---
 
 <Layout title="Knowledge Base - Home">
   <!-- Hero Section -->
-  <div class="relative overflow-hidden py-24 bg-gradient-to-br from-primary-900 to-primary-950">
+  <div
+    class="relative overflow-hidden py-24 bg-gradient-to-br from-primary-900 to-primary-950"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="text-center">
-        <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl fade-in">
-          <span class="block text-accent-400">Knowledge Base</span>
-          <span class="block text-white">Blog & Wiki</span>
+        <h1
+          class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl fade-in"
+        >
+          <span class="block text-accent-400">Tech Leadership</span>
+          <span class="block text-white">Insights & Knowledge</span>
         </h1>
         <p class="mt-6 max-w-2xl mx-auto text-xl text-primary-200 slide-up">
-          Discover insights, tutorials, and comprehensive documentation all in one place
+          Exploring engineering leadership, team building, and technology
+          strategy through practical experiences and proven methodologies
         </p>
         <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
           <a
@@ -46,8 +59,17 @@ const tags = [...new Set([
             class="group w-full sm:w-auto px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary-900 bg-white hover:bg-primary-50 transition-all duration-300 flex items-center justify-center gap-2"
           >
             <span>Explore Wiki</span>
-            <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            <svg
+              class="w-5 h-5 transition-transform group-hover:translate-x-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
             </svg>
           </a>
           <a
@@ -55,42 +77,42 @@ const tags = [...new Set([
             class="group w-full sm:w-auto px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-accent-600 hover:bg-accent-700 transition-all duration-300 flex items-center justify-center gap-2"
           >
             <span>Read Blog</span>
-            <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            <svg
+              class="w-5 h-5 transition-transform group-hover:translate-x-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
             </svg>
           </a>
         </div>
       </div>
+    </div>
 
-      <!-- Stats -->
-      <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-        <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
-          <div class="text-3xl font-bold text-accent-400">{allBlogPosts.length}</div>
-          <div class="text-sm text-primary-200">Blog Posts</div>
-        </div>
-        <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
-          <div class="text-3xl font-bold text-accent-400">{allWikiEntries.length}</div>
-          <div class="text-sm text-primary-200">Wiki Articles</div>
-        </div>
-        <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
-          <div class="text-3xl font-bold text-accent-400">{categories.length}</div>
-          <div class="text-sm text-primary-200">Categories</div>
-        </div>
-        <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
-          <div class="text-3xl font-bold text-accent-400">{tags.length}</div>
-          <div class="text-sm text-primary-200">Topics</div>
-        </div>
+    <!-- Decorative blob shapes -->
+    <div
+      class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20"
+    >
+      <div
+        class="absolute -top-[40%] -left-[10%] w-[70%] h-[70%] rounded-full bg-accent-500 mix-blend-screen blur-3xl"
+      >
+      </div>
+      <div
+        class="absolute top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-primary-700 mix-blend-screen blur-3xl"
+      >
+      </div>
+      <div
+        class="absolute -bottom-[30%] left-[20%] w-[60%] h-[60%] rounded-full bg-accent-700 mix-blend-screen blur-3xl"
+      >
       </div>
     </div>
-    
-    <!-- Decorative blob shapes -->
-    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
-      <div class="absolute -top-[40%] -left-[10%] w-[70%] h-[70%] rounded-full bg-accent-500 mix-blend-screen blur-3xl"></div>
-      <div class="absolute top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-primary-700 mix-blend-screen blur-3xl"></div>
-      <div class="absolute -bottom-[30%] left-[20%] w-[60%] h-[60%] rounded-full bg-accent-700 mix-blend-screen blur-3xl"></div>
-    </div>
   </div>
-  
+
   <!-- Latest Blog Posts -->
   <section class="py-16 bg-primary-50 dark:bg-primary-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -103,33 +125,44 @@ const tags = [...new Set([
             Stay updated with our newest articles and insights
           </p>
         </div>
-        <a 
-          href="/blog" 
+        <a
+          href="/blog"
           class="group flex items-center gap-2 text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 font-medium"
         >
           View all posts
-          <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          <svg
+            class="w-4 h-4 transition-transform group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
           </svg>
         </a>
       </div>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {blogPosts.map(post => (
-          <ContentCard
-            title={post.data.title}
-            description={post.data.description}
-            url={`/blog/${post.slug}`}
-            tags={post.data.tags}
-            category={post.data.category}
-            date={post.data.date}
-            author={post.data.author}
-          />
-        ))}
+        {
+          blogPosts.map((post) => (
+            <ContentCard
+              title={post.data.title}
+              description={post.data.description}
+              url={`/blog/${post.slug}`}
+              tags={post.data.tags}
+              category={post.data.category}
+              date={post.data.date}
+              author={post.data.author}
+            />
+          ))
+        }
       </div>
     </div>
   </section>
-  
+
   <!-- Featured Wiki Entries -->
   <section class="py-16 bg-white dark:bg-primary-950">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -142,28 +175,39 @@ const tags = [...new Set([
             Explore our comprehensive documentation and guides
           </p>
         </div>
-        <a 
-          href="/wiki" 
+        <a
+          href="/wiki"
           class="group flex items-center gap-2 text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 font-medium"
         >
           Browse all wiki entries
-          <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          <svg
+            class="w-4 h-4 transition-transform group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
           </svg>
         </a>
       </div>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {wikiEntries.map(entry => (
-          <ContentCard
-            title={entry.data.title}
-            description={entry.data.description}
-            url={`/wiki/${entry.slug}`}
-            tags={entry.data.tags}
-            category={entry.data.category}
-            isWiki={true}
-          />
-        ))}
+        {
+          wikiEntries.map((entry) => (
+            <ContentCard
+              title={entry.data.title}
+              description={entry.data.description}
+              url={`/wiki/${entry.slug}`}
+              tags={entry.data.tags}
+              category={entry.data.category}
+              isWiki={true}
+            />
+          ))
+        }
       </div>
     </div>
   </section>
@@ -181,20 +225,91 @@ const tags = [...new Set([
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {categories.map(category => (
-          <a 
-            href={`/categories/${category}`}
-            class="group p-4 bg-white dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-800 hover:border-accent-500 dark:hover:border-accent-500 transition-all duration-300"
+        {
+          categories.map((category) => (
+            <a
+              href={`/categories/${category}`}
+              class="group p-4 bg-white dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-800 hover:border-accent-500 dark:hover:border-accent-500 transition-all duration-300"
+            >
+              <h3 class="font-medium text-primary-900 dark:text-primary-100 group-hover:text-accent-600 dark:group-hover:text-accent-400">
+                {category}
+              </h3>
+              <p class="mt-1 text-sm text-primary-600 dark:text-primary-300">
+                {allBlogPosts.filter((post) => post.data.category === category)
+                  .length +
+                  allWikiEntries.filter(
+                    (entry) => entry.data.category === category,
+                  ).length}{" "}
+                items
+              </p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-16 bg-white dark:bg-primary-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-primary-900 dark:text-primary-100">
+          Knowledge Base Stats
+        </h2>
+        <p class="mt-2 text-lg text-primary-600 dark:text-primary-300">
+          Growing collection of tech leadership resources
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+        <div
+          class="bg-primary-50 dark:bg-primary-900 rounded-lg p-6 text-center"
+        >
+          <div class="text-4xl font-bold text-accent-600 dark:text-accent-400">
+            {allBlogPosts.length}
+          </div>
+          <div
+            class="mt-2 text-sm font-medium text-primary-600 dark:text-primary-300"
           >
-            <h3 class="font-medium text-primary-900 dark:text-primary-100 group-hover:text-accent-600 dark:group-hover:text-accent-400">
-              {category}
-            </h3>
-            <p class="mt-1 text-sm text-primary-600 dark:text-primary-300">
-              {allBlogPosts.filter(post => post.data.category === category).length +
-               allWikiEntries.filter(entry => entry.data.category === category).length} items
-            </p>
-          </a>
-        ))}
+            Blog Posts
+          </div>
+        </div>
+        <div
+          class="bg-primary-50 dark:bg-primary-900 rounded-lg p-6 text-center"
+        >
+          <div class="text-4xl font-bold text-accent-600 dark:text-accent-400">
+            {allWikiEntries.length}
+          </div>
+          <div
+            class="mt-2 text-sm font-medium text-primary-600 dark:text-primary-300"
+          >
+            Wiki Articles
+          </div>
+        </div>
+        <div
+          class="bg-primary-50 dark:bg-primary-900 rounded-lg p-6 text-center"
+        >
+          <div class="text-4xl font-bold text-accent-600 dark:text-accent-400">
+            {categories.length}
+          </div>
+          <div
+            class="mt-2 text-sm font-medium text-primary-600 dark:text-primary-300"
+          >
+            Categories
+          </div>
+        </div>
+        <div
+          class="bg-primary-50 dark:bg-primary-900 rounded-lg p-6 text-center"
+        >
+          <div class="text-4xl font-bold text-accent-600 dark:text-accent-400">
+            {tags.length}
+          </div>
+          <div
+            class="mt-2 text-sm font-medium text-primary-600 dark:text-primary-300"
+          >
+            Topics
+          </div>
+        </div>
       </div>
     </div>
   </section>

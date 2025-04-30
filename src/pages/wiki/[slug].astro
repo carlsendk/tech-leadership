@@ -3,10 +3,17 @@ import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import WikiLayout from "../../layouts/WikiLayout.astro";
 
+interface Props {
+  entry: CollectionEntry<"wiki">;
+}
+
 export async function getStaticPaths() {
-  const wikiEntries = await getCollection("wiki", ({ data }) => {
-    return !data.draft;
-  });
+  const wikiEntries = await getCollection(
+    "wiki",
+    ({ data }: CollectionEntry<"wiki">) => {
+      return !data.draft;
+    },
+  );
 
   return wikiEntries.map((entry: CollectionEntry<"wiki">) => ({
     params: { slug: entry.slug },
@@ -14,8 +21,8 @@ export async function getStaticPaths() {
   }));
 }
 
-const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { entry } = Astro.props as Props;
+const { Content, headings } = await entry.render();
 ---
 
 <WikiLayout
@@ -23,60 +30,95 @@ const { Content } = await entry.render();
   description={entry.data.description}
   tags={entry.data.tags}
   category={entry.data.category}
+  headings={headings}
 >
   <div class="prose prose-primary dark:prose-invert max-w-none">
-    <Content
-      components={{
-        pre: ({ children }) => {
-          const content = children[0]?.props?.children?.[0] || "";
-          if (content.startsWith("mermaid")) {
-            const diagram = content.replace("mermaid\n", "");
-            return `<div class="mermaid">${diagram}</div>`;
-          }
-          return `<pre>${children}</pre>`;
-        },
-      }}
-    />
+    <Content />
   </div>
 </WikiLayout>
 
 <script>
   import mermaid from "mermaid";
 
-  // Initialize mermaid
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: "default",
-    securityLevel: "loose",
-    themeVariables: {
-      fontFamily: "system-ui, -apple-system, sans-serif",
-      fontSize: "16px",
-    },
-  });
+  // Wait for the page to be fully loaded
+  document.addEventListener("astro:page-load", async () => {
+    try {
+      // Initialize mermaid with dark mode detection
+      const isDarkMode = document.documentElement.classList.contains("dark");
+      await mermaid.initialize({
+        startOnLoad: false,
+        theme: isDarkMode ? "dark" : "default",
+        securityLevel: "loose",
+        themeVariables: {
+          fontFamily: "system-ui, -apple-system, sans-serif",
+          fontSize: "16px",
+        },
+      });
 
-  // Function to render mermaid diagrams
-  function renderMermaid() {
-    const diagrams = document.querySelectorAll(".mermaid");
-    diagrams.forEach((diagram) => {
-      if (!diagram.hasAttribute("data-processed")) {
-        mermaid
-          .render(diagram.id || crypto.randomUUID(), diagram.textContent || "")
-          .then(({ svg }) => {
-            diagram.innerHTML = svg;
-          });
+      // Function to render mermaid diagrams
+      async function renderMermaid() {
+        const diagrams = document.querySelectorAll(
+          "pre > code.language-mermaid",
+        );
+        console.log("Found diagrams:", diagrams.length); // Debug log
+
+        for (const diagram of diagrams) {
+          try {
+            const container = diagram.parentElement;
+            if (container && !container.hasAttribute("data-processed")) {
+              const content = diagram.textContent?.trim() || "";
+              console.log("Diagram content:", content); // Debug log
+
+              // Create a new div for the diagram
+              const mermaidDiv = document.createElement("div");
+              mermaidDiv.className = "mermaid";
+              mermaidDiv.textContent = content;
+
+              // Create a unique ID for the diagram
+              const id = `mermaid-${crypto.randomUUID()}`;
+              mermaidDiv.id = id;
+
+              try {
+                // Try to render the diagram
+                const { svg } = await mermaid.render(id, content);
+                mermaidDiv.innerHTML = svg;
+                container.replaceWith(mermaidDiv);
+                console.log("Diagram rendered successfully"); // Debug log
+              } catch (renderError) {
+                console.error("Failed to render diagram:", renderError);
+                // Keep the original code block if rendering fails
+                container.classList.add("render-failed");
+              }
+            }
+          } catch (error) {
+            console.error("Error processing diagram:", error);
+          }
+        }
       }
-    });
-  }
 
-  // Initial render
-  renderMermaid();
+      // Initial render
+      await renderMermaid();
 
-  // Re-render on theme changes
-  document.addEventListener("astro:after-swap", renderMermaid);
+      // Re-render on theme changes
+      document.addEventListener("astro:after-swap", async () => {
+        const isDarkMode = document.documentElement.classList.contains("dark");
+        await mermaid.initialize({
+          theme: isDarkMode ? "dark" : "default",
+        });
+        await renderMermaid();
+      });
+    } catch (error) {
+      console.error("Failed to initialize Mermaid:", error);
+    }
+  });
 </script>
 
 <style>
   :global(.mermaid) {
-    @apply my-8 text-center;
+    @apply my-8 text-center bg-white dark:bg-primary-900 rounded-lg p-4;
+  }
+
+  :global(pre.render-failed) {
+    @apply border-l-4 border-red-500;
   }
 </style>

@@ -1,175 +1,395 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="About | Knowledge Base" description="Learn more about the author and this knowledge base">
+<Layout
+  title="About | Knowledge Base"
+  description="Learn more about Jon Carlsen and this knowledge base"
+>
   <div class="max-w-4xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
     <div class="text-center mb-12">
-      <h1 class="text-3xl font-bold text-primary-900 dark:text-primary-100 sm:text-4xl fade-in">
+      <h1
+        class="text-3xl font-bold text-primary-900 dark:text-primary-100 sm:text-4xl fade-in"
+      >
         About Me
       </h1>
       <p class="mt-4 text-xl text-primary-600 dark:text-primary-300 slide-up">
         Welcome to my personal knowledge repository
       </p>
     </div>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
       <div class="md:col-span-1">
-        <div class="aspect-square rounded-xl bg-primary-100 dark:bg-primary-800 overflow-hidden relative">
-          <!-- You can replace this with an actual profile image -->
-          <div class="absolute inset-0 flex items-center justify-center text-primary-600 dark:text-primary-300 text-6xl font-bold">
-            JD
-          </div>
+        <div
+          class="aspect-square rounded-xl bg-primary-100 dark:bg-primary-800 overflow-hidden relative"
+        >
+          <!-- Replace initials with actual profile image -->
+          <img
+            src="/profilepicture.jpg"
+            alt="Jon Carlsen"
+            class="w-full h-full object-cover"
+          />
         </div>
       </div>
-      
+
       <div class="md:col-span-2 prose dark:prose-dark prose-lg">
-        <h2>Hello, I'm John Doe</h2>
+        <h2>Hello, I'm Jon Carlsen</h2>
         <p>
-          I'm a passionate writer, researcher and technologist with a deep interest in organizing and sharing knowledge. 
-          This website serves as my personal knowledge base where I document my learnings, share insights, and connect with others who share similar interests.
+          I'm a highly analytical and technically astute professional with an
+          exceptional talent for planning and coordinating engineering
+          activities to improve overall business efficiency. With a successful
+          background in leading product strategy and technology initiatives, I
+          specialize in developing and implementing innovative solutions that
+          drive business growth, enhance customer experience, and increase
+          operational efficiency.
         </p>
         <p>
-          With over 10 years of experience in the tech industry, I've developed expertise in various domains including software development, 
-          design systems, and technical writing.
+          With over 17 years of experience in the tech industry, I've developed
+          expertise in various domains including software development, team
+          leadership, and technical architecture. I'm passionate about building
+          and leading high-performing teams, fostering a culture of innovation,
+          collaboration, and continuous improvement.
         </p>
       </div>
     </div>
-    
+
     <!-- Skills section -->
     <section class="mb-16">
-      <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
+      <h2
+        class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6"
+      >
         Skills & Expertise
       </h2>
-      
+
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
-          <h3 class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2">Technical Writing</h3>
+        <div
+          class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800"
+        >
+          <h3
+            class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2"
+          >
+            Technical Leadership
+          </h3>
           <p class="text-primary-600 dark:text-primary-300">
-            Creating clear, concise and comprehensive technical documentation.
+            Leading engineering teams, technical strategy, and architecture
+            implementation.
           </p>
         </div>
-        
-        <div class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
-          <h3 class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2">Web Development</h3>
+
+        <div
+          class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800"
+        >
+          <h3
+            class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2"
+          >
+            Cloud & Platform
+          </h3>
           <p class="text-primary-600 dark:text-primary-300">
-            Building modern web applications with JavaScript, React, and various frameworks.
+            Cloud-native architecture, Kubernetes, microservices, and platform
+            engineering.
           </p>
         </div>
-        
-        <div class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
-          <h3 class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2">UX/UI Design</h3>
+
+        <div
+          class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800"
+        >
+          <h3
+            class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2"
+          >
+            Agile & DevOps
+          </h3>
           <p class="text-primary-600 dark:text-primary-300">
-            Creating user-centered designs with a focus on usability and accessibility.
+            Implementing agile methodologies, continuous delivery, and DevOps
+            practices.
           </p>
         </div>
-        
-        <div class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
-          <h3 class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2">Data Analysis</h3>
+
+        <div
+          class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800"
+        >
+          <h3
+            class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2"
+          >
+            Product Strategy
+          </h3>
           <p class="text-primary-600 dark:text-primary-300">
-            Extracting insights from data using statistical methods and visualization techniques.
+            Product development, market analysis, and strategic planning.
           </p>
         </div>
-        
-        <div class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
-          <h3 class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2">Content Strategy</h3>
+
+        <div
+          class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800"
+        >
+          <h3
+            class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2"
+          >
+            Team Development
+          </h3>
           <p class="text-primary-600 dark:text-primary-300">
-            Developing content that aligns with audience needs and business goals.
+            Building and scaling high-performing teams, mentoring, and
+            leadership development.
           </p>
         </div>
-        
-        <div class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
-          <h3 class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2">Project Management</h3>
+
+        <div
+          class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800"
+        >
+          <h3
+            class="font-semibold text-lg text-primary-900 dark:text-primary-100 mb-2"
+          >
+            System Architecture
+          </h3>
           <p class="text-primary-600 dark:text-primary-300">
-            Leading projects from inception to completion, ensuring quality and timeliness.
+            Designing scalable systems, API development, and service-oriented
+            architecture.
           </p>
         </div>
       </div>
     </section>
-    
+
     <!-- Experience section -->
     <section class="mb-16">
-      <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
+      <h2
+        class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6"
+      >
         Professional Experience
       </h2>
-      
+
       <div class="space-y-8">
         <div class="border-l-4 border-accent-500 pl-4 py-1">
           <div class="flex flex-wrap justify-between items-baseline mb-1">
-            <h3 class="text-xl font-semibold text-primary-900 dark:text-primary-100">Senior Technical Writer</h3>
-            <span class="text-sm text-primary-500 dark:text-primary-400">2020 - Present</span>
+            <h3
+              class="text-xl font-semibold text-primary-900 dark:text-primary-100"
+            >
+              Director of Engineering – Europe
+            </h3>
+            <span class="text-sm text-primary-500 dark:text-primary-400"
+              >2023 - Present</span
+            >
           </div>
-          <h4 class="text-accent-600 dark:text-accent-400 mb-2">Tech Documentation Inc.</h4>
+          <h4 class="text-accent-600 dark:text-accent-400 mb-2">
+            AXON Networks, Copenhagen
+          </h4>
           <p class="text-primary-600 dark:text-primary-300">
-            Lead the technical writing team in creating comprehensive documentation for enterprise software products. 
-            Developed style guides and established documentation workflows to ensure consistent quality.
+            Leading teams around AXON Orchestrator platform, a high data
+            ingestion platform for network ingest. Setting up engineering
+            culture, insourcing external development, and building AI/ML
+            capabilities.
           </p>
         </div>
-        
+
         <div class="border-l-4 border-accent-500 pl-4 py-1">
           <div class="flex flex-wrap justify-between items-baseline mb-1">
-            <h3 class="text-xl font-semibold text-primary-900 dark:text-primary-100">Frontend Developer</h3>
-            <span class="text-sm text-primary-500 dark:text-primary-400">2016 - 2020</span>
+            <h3
+              class="text-xl font-semibold text-primary-900 dark:text-primary-100"
+            >
+              Director of Technology
+            </h3>
+            <span class="text-sm text-primary-500 dark:text-primary-400"
+              >2022 - 2023</span
+            >
           </div>
-          <h4 class="text-accent-600 dark:text-accent-400 mb-2">WebApp Solutions</h4>
+          <h4 class="text-accent-600 dark:text-accent-400 mb-2">
+            Lunar A/S, Copenhagen
+          </h4>
           <p class="text-primary-600 dark:text-primary-300">
-            Developed responsive web applications using modern JavaScript frameworks. 
-            Collaborated with designers and backend developers to implement features and ensure optimal user experience.
+            Led Developer & Platform Experience, implementing self-services and
+            x-as-a-services for developers, data engineers, and security teams.
+            Built outcome-driven department with clear measurements.
           </p>
         </div>
-        
+
         <div class="border-l-4 border-accent-500 pl-4 py-1">
           <div class="flex flex-wrap justify-between items-baseline mb-1">
-            <h3 class="text-xl font-semibold text-primary-900 dark:text-primary-100">Content Strategist</h3>
-            <span class="text-sm text-primary-500 dark:text-primary-400">2014 - 2016</span>
+            <h3
+              class="text-xl font-semibold text-primary-900 dark:text-primary-100"
+            >
+              Vice President of Services Operation
+            </h3>
+            <span class="text-sm text-primary-500 dark:text-primary-400"
+              >2021 - 2022</span
+            >
           </div>
-          <h4 class="text-accent-600 dark:text-accent-400 mb-2">Digital Marketing Agency</h4>
+          <h4 class="text-accent-600 dark:text-accent-400 mb-2">
+            Scrive, Copenhagen
+          </h4>
           <p class="text-primary-600 dark:text-primary-300">
-            Developed content strategies for various clients across different industries. 
-            Created editorial calendars and style guides to maintain brand consistency.
+            Led multiple teams including Firefighters, QA, DevOps, and
+            e-signature teams. Managed infrastructure migration to containers
+            and Kubernetes, achieving ISO 27001 and ISAE 3000 certifications.
+          </p>
+        </div>
+
+        <div class="border-l-4 border-accent-500 pl-4 py-1">
+          <div class="flex flex-wrap justify-between items-baseline mb-1">
+            <h3
+              class="text-xl font-semibold text-primary-900 dark:text-primary-100"
+            >
+              Chief Technology Officer
+            </h3>
+            <span class="text-sm text-primary-500 dark:text-primary-400"
+              >2021 - 2022</span
+            >
+          </div>
+          <h4 class="text-accent-600 dark:text-accent-400 mb-2">
+            eSignatur (acquired by Scrive), Copenhagen
+          </h4>
+          <p class="text-primary-600 dark:text-primary-300">
+            Led development, QA, and support teams. Managed security,
+            compliance, and technical roadmap. Implemented cloud adoption
+            strategy and improved team collaboration through agile
+            methodologies.
+          </p>
+        </div>
+
+        <div class="border-l-4 border-accent-500 pl-4 py-1">
+          <div class="flex flex-wrap justify-between items-baseline mb-1">
+            <h3
+              class="text-xl font-semibold text-primary-900 dark:text-primary-100"
+            >
+              Department Manager
+            </h3>
+            <span class="text-sm text-primary-500 dark:text-primary-400"
+              >2017 - 2021</span
+            >
+          </div>
+          <h4 class="text-accent-600 dark:text-accent-400 mb-2">
+            DFDS, Copenhagen
+          </h4>
+          <p class="text-primary-600 dark:text-primary-300">
+            Led Developer & Platform Experience, overseeing cloud operations and
+            building cloud-native platforms. Scaled department from three to 20
+            people, managing 500+ microservices in Kubernetes.
+          </p>
+        </div>
+
+        <div class="border-l-4 border-accent-500 pl-4 py-1">
+          <div class="flex flex-wrap justify-between items-baseline mb-1">
+            <h3
+              class="text-xl font-semibold text-primary-900 dark:text-primary-100"
+            >
+              Department Manager of Customer Experience
+            </h3>
+            <span class="text-sm text-primary-500 dark:text-primary-400"
+              >2014 - 2017</span
+            >
+          </div>
+          <h4 class="text-accent-600 dark:text-accent-400 mb-2">
+            DFDS, Copenhagen
+          </h4>
+          <p class="text-primary-600 dark:text-primary-300">
+            Increased productivity and developed architecture while facilitating
+            competence development. Integrated design and UX into development
+            teams, implemented continuous delivery, and scaled department from 5
+            to 25 people.
           </p>
         </div>
       </div>
     </section>
-    
+
+    <!-- Education section -->
+    <section class="mb-16">
+      <h2
+        class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6"
+      >
+        Education & Certifications
+      </h2>
+
+      <div class="space-y-4">
+        <div
+          class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800"
+        >
+          <h3
+            class="font-semibold text-lg text-primary-900 dark:text-primary-100"
+          >
+            Master of Science in Engineering
+          </h3>
+          <p class="text-primary-600 dark:text-primary-300">
+            Computer Science, Technical University of Denmark
+          </p>
+        </div>
+
+        <div
+          class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800"
+        >
+          <h3
+            class="font-semibold text-lg text-primary-900 dark:text-primary-100"
+          >
+            Bachelor of Engineering
+          </h3>
+          <p class="text-primary-600 dark:text-primary-300">
+            Information Technology, Technical University of Denmark
+          </p>
+        </div>
+
+        <div
+          class="bg-white dark:bg-primary-900 p-4 rounded-lg border border-primary-200 dark:border-primary-800"
+        >
+          <h3
+            class="font-semibold text-lg text-primary-900 dark:text-primary-100"
+          >
+            Professional Certifications
+          </h3>
+          <ul
+            class="text-primary-600 dark:text-primary-300 list-disc list-inside"
+          >
+            <li>Certified SCRUM Product Owner (CSPO)</li>
+            <li>Certified ScrumMaster (CSM)</li>
+            <li>IT Architecture Foundation (DIT)</li>
+            <li>Management 3.0 (Agile leadership)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- Contact section -->
     <section>
-      <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
+      <h2
+        class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6"
+      >
         Get in Touch
       </h2>
-      
-      <div class="bg-white dark:bg-primary-900 p-6 rounded-lg border border-primary-200 dark:border-primary-800">
+
+      <div
+        class="bg-white dark:bg-primary-900 p-6 rounded-lg border border-primary-200 dark:border-primary-800"
+      >
         <p class="text-primary-600 dark:text-primary-300 mb-4">
-          I'm always open to interesting conversations and collaborations. Feel free to reach out through any of the channels below.
+          I'm always open to interesting conversations and collaborations. Feel
+          free to reach out through any of the channels below.
         </p>
-        
+
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <a href="mailto:contact@example.com" class="flex items-center p-3 rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-accent-600 dark:text-accent-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          <a
+            href="https://github.com/carlsendk"
+            class="flex items-center p-3 rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors"
+          >
+            <svg
+              class="h-6 w-6 mr-3 text-accent-600 dark:text-accent-400"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                clip-rule="evenodd"></path>
             </svg>
-            contact@example.com
+            github.com/carlsendk
           </a>
-          
-          <a href="https://twitter.com/username" class="flex items-center p-3 rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">
-            <svg class="h-6 w-6 mr-3 text-accent-600 dark:text-accent-400" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+
+          <a
+            href="https://linkedin.com/in/joncarlsen"
+            class="flex items-center p-3 rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors"
+          >
+            <svg
+              class="h-6 w-6 mr-3 text-accent-600 dark:text-accent-400"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+              ></path>
             </svg>
-            @username
-          </a>
-          
-          <a href="https://github.com/username" class="flex items-center p-3 rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">
-            <svg class="h-6 w-6 mr-3 text-accent-600 dark:text-accent-400" fill="currentColor" viewBox="0 0 24 24">
-              <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
-            </svg>
-            github.com/username
-          </a>
-          
-          <a href="https://linkedin.com/in/username" class="flex items-center p-3 rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">
-            <svg class="h-6 w-6 mr-3 text-accent-600 dark:text-accent-400" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
-            </svg>
-            linkedin.com/in/username
+            linkedin.com/in/joncarlsen
           </a>
         </div>
       </div>
