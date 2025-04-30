@@ -72,29 +72,9 @@ export default {
               padding: '0.25rem 0.4rem',
               borderRadius: '0.25rem',
               fontWeight: '400',
-              '&.language-mermaid': {
-                backgroundColor: 'transparent',
-                padding: 0,
-              },
             },
             pre: {
               backgroundColor: theme('colors.primary.900'),
-              'code.language-mermaid': {
-                backgroundColor: 'transparent',
-                padding: 0,
-              },
-              '&:has(code.language-mermaid)': {
-                backgroundColor: 'transparent',
-                padding: 0,
-              },
-            },
-            '.mermaid': {
-              backgroundColor: 'transparent',
-              margin: '2rem 0',
-              textAlign: 'center',
-              '& > svg': {
-                margin: '0 auto',
-              },
             },
             blockquote: {
               borderLeftColor: theme('colors.accent.500'),
@@ -164,76 +144,11 @@ export default {
             code: {
               backgroundColor: theme('colors.primary.800'),
               color: theme('colors.primary.100'),
-              '&.language-mermaid': {
-                backgroundColor: 'transparent',
-                padding: 0,
-              },
             },
             pre: {
               backgroundColor: theme('colors.primary.800'),
               code: {
                 color: theme('colors.primary.100'),
-              },
-              'code.language-mermaid': {
-                backgroundColor: 'transparent',
-                padding: 0,
-              },
-              '&:has(code.language-mermaid)': {
-                backgroundColor: 'transparent',
-                padding: 0,
-              },
-            },
-            '.mermaid': {
-              backgroundColor: 'transparent',
-              margin: '2rem 0',
-              textAlign: 'center',
-              '& > svg': {
-                margin: '0 auto',
-              },
-            },
-            blockquote: {
-              borderLeftColor: theme('colors.accent.600'),
-              backgroundColor: theme('colors.primary.900'),
-              color: theme('colors.primary.100'),
-              'p': {
-                color: theme('colors.primary.100'),
-              },
-            },
-            strong: {
-              color: theme('colors.primary.50'),
-            },
-            hr: {
-              borderColor: theme('colors.primary.700'),
-            },
-            'ul > li::before': {
-              backgroundColor: theme('colors.primary.400'),
-            },
-            'ol > li::before': {
-              color: theme('colors.primary.400'),
-            },
-            dl: {
-              dt: {
-                color: theme('colors.primary.50'),
-              },
-              dd: {
-                color: theme('colors.primary.100'),
-              },
-            },
-            table: {
-              thead: {
-                color: theme('colors.primary.50'),
-                borderBottomColor: theme('colors.primary.600'),
-                th: {
-                  color: theme('colors.primary.50'),
-                },
-              },
-              tbody: {
-                tr: {
-                  borderBottomColor: theme('colors.primary.700'),
-                  td: {
-                    color: theme('colors.primary.100'),
-                  },
-                },
               },
             },
           },
@@ -243,6 +158,5 @@ export default {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    require('@tailwindcss/line-clamp'),
   ],
 };

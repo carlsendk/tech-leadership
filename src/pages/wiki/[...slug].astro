@@ -39,25 +39,3 @@ const { Content, headings } = await entry.render();
     <Content />
   </div>
 </WikiLayout>
-
-<script>
-  import mermaid from "mermaid";
-
-  // Wait for the page to be fully loaded
-  document.addEventListener("astro:page-load", async () => {
-    try {
-      // Initialize mermaid with dark theme support
-      mermaid.initialize({
-        startOnLoad: true,
-        theme: document.documentElement.classList.contains("dark")
-          ? "dark"
-          : "default",
-      });
-
-      // Render all mermaid diagrams
-      await mermaid.run();
-    } catch (error) {
-      console.error("Error initializing mermaid:", error);
-    }
-  });
-</script>

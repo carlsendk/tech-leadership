@@ -5,6 +5,8 @@ import alpinejs from '@astrojs/alpinejs';
 import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeMermaid from 'rehype-mermaid';
+import addMermaidClass from './src/plugins/add-mermaid-class.js';
 
 // Get the repository name from package.json for GitHub Pages
 import { readFileSync } from 'fs';
@@ -13,6 +15,25 @@ const repositoryName = pkg.name;
 
 // Determine if we're in production (GitHub Pages) or development
 const isProduction = process.env.NODE_ENV === 'production';
+
+// Common configuration for markdown processing
+const markdownConfig = {
+  syntaxHighlight: {
+    type: 'shiki',
+    excludeLangs: ['mermaid', 'math'],  // Shiki leaves these alone
+  },
+  remarkPlugins: [
+    [remarkToc, { heading: "Contents" }],
+  ],
+  rehypePlugins: [
+    addMermaidClass,  // 1. restore <pre class="mermaid">
+    [rehypeMermaid, { 
+      strategy: 'pre-mermaid'  // Start with simpler strategy
+    }],
+    rehypeSlug,
+    [rehypeAutolinkHeadings, { behavior: 'append' }]
+  ],
+};
 
 export default defineConfig({
   site: 'https://carlsendk.github.io',
@@ -24,38 +45,10 @@ export default defineConfig({
   },
   integrations: [
     tailwind(),
-    mdx(),
+    mdx({
+      ...markdownConfig,
+    }),
     alpinejs(),
   ],
-  markdown: {
-    remarkPlugins: [
-      [remarkToc, { heading: "Contents" }],
-    ],
-    rehypePlugins: [
-      rehypeSlug,
-      [rehypeAutolinkHeadings, { behavior: 'append' }],
-    ],
-    shikiConfig: {
-      theme: 'github-dark',
-      wrap: true,
-      transformers: [{
-        pre(node) {
-          // Check if this is a Mermaid code block
-          const [codeEl] = node.children;
-          if (codeEl?.properties?.className?.[0] === 'language-mermaid') {
-            // Transform the pre element to remove Shiki's styling
-            node.properties.className = [];
-            codeEl.properties.className = ['language-mermaid'];
-            // Remove all Shiki spans and preserve only the text content
-            const content = codeEl.children?.[0]?.children?.[0]?.value || '';
-            codeEl.children = [{
-              type: 'text',
-              value: content
-            }];
-          }
-          return node;
-        }
-      }]
-    },
-  },
+  markdown: markdownConfig,
 });
