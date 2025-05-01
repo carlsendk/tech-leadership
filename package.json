@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "npm install @rollup/rollup-linux-x64-gnu --no-save",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
