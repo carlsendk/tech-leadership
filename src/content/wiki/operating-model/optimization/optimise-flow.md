@@ -15,41 +15,14 @@ date: 2025-04-30
 
 ```mermaid
 graph TD
-    subgraph "Flow Metrics"
-        A[DORA Metrics]
-        B[Value Stream]
-        C[Quality Gates]
-    end
-    
-    subgraph "Optimization Areas"
-        D[Build & Test]
-        E[Deploy & Release]
-        F[Monitor & Learn]
-    end
-    
-    subgraph "Outcomes"
-        G[Speed]
-        H[Stability]
-        I[Quality]
-    end
-    
-    A --> D & E & F
-    B --> D & E & F
-    C --> D & E & F
-    
-    D --> G & H & I
-    E --> G & H & I
-    F --> G & H & I
-    
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
-    style E fill:#d6f9f9
-    style F fill:#f9d6f9
-    style G fill:#f9d6d5
-    style H fill:#d6e9f9
-    style I fill:#d6f9e0
+    A[Flow Analysis] --> B[Optimization]
+    B --> C[Implementation]
+    C --> D[Monitoring]
+    D --> E[Feedback]
+    E --> F[Adjustment]
+    F --> G[Results]
+    G --> H[Review]
+    H --> I[Next Steps]
 ```
 
 ## DORA Metrics Framework
@@ -94,11 +67,30 @@ pipeline:
 
 ### 2. Value Stream Mapping
 ```mermaid
+%%{
+  init: {
+    'theme': 'dark',
+    'themeVariables': {
+      'primaryColor': '#0d9488',
+      'primaryTextColor': '#f1f5f9',
+      'primaryBorderColor': '#475569',
+      'lineColor': '#94a3b8',
+      'secondaryColor': '#2dd4bf',
+      'tertiaryColor': '#14b8a6'
+    }
+  }
+}%%
 graph LR
     A[Development] --> B[Testing]
     B --> C[Staging]
     C --> D[Production]
     D --> E[Monitoring]
+
+    style A fill:#0d9488,stroke:#475569,color:#f1f5f9
+    style B fill:#0f766e,stroke:#475569,color:#f1f5f9
+    style C fill:#14b8a6,stroke:#475569,color:#f1f5f9
+    style D fill:#2dd4bf,stroke:#475569,color:#f1f5f9
+    style E fill:#115e59,stroke:#475569,color:#f1f5f9
 ```
 
 ## Implementation Guide

@@ -15,38 +15,9 @@ date: 2025-04-30
 
 ```mermaid
 graph TD
-    subgraph "Strategic Level"
-        A[Strategy Review]
-        B[OKR/Mission Alignment]
-        C[Quarterly Planning]
-    end
-    
-    subgraph "Tactical Level"
-        D[Monthly Health Check]
-        E[Sprint Reviews]
-        F[Retros]
-    end
-    
-    subgraph "Operational Level"
-        G[Daily Stand-ups]
-        H[Deployment Metrics]
-        I[Incident Reviews]
-    end
-    
-    A --> B --> C
-    C --> D --> E --> F
-    F --> G --> H --> I
-    I --> A
-    
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
-    style E fill:#d6f9f9
-    style F fill:#f9d6f9
-    style G fill:#f9d6d5
-    style H fill:#d6e9f9
-    style I fill:#d6f9e0
+    A[Strategy] --> B[Objectives]
+    B --> C[Execution]
+    C --> D[Feedback]
 ```
 
 ## Feedback Cadences

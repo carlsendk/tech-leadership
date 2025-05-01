@@ -15,39 +15,15 @@ date: 2025-04-30
 
 ```mermaid
 graph TD
-    subgraph "Evolution Stages"
-        A[Genesis]
-        B[Custom Built]
-        C[Product]
-        D[Commodity]
-    end
-    
-    subgraph "Mapping Elements"
-        E[User Needs]
-        F[Components]
-        G[Dependencies]
-    end
-    
-    subgraph "Strategic Actions"
-        H[Build]
-        I[Buy]
-        J[Outsource]
-    end
-    
-    A --> B --> C --> D
-    E --> F --> G
-    F --> H & I & J
-    
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
-    style E fill:#d6f9f9
-    style F fill:#f9d6f9
-    style G fill:#f9d6d5
-    style H fill:#d6e9f9
-    style I fill:#d6f9e0
-    style J fill:#f9f9d6
+    A[Company Mission] --> B[Product Vision]
+    B --> C[Team Mission]
+    C --> D[OKRs]
+    D --> E[Key Results]
+    E --> F[Daily Metrics]
+    F --> G[Actions]
+    G --> H[Outcomes]
+    H --> I[Impact]
+    I --> J[Strategy]
 ```
 
 ## Mapping Process

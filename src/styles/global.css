@@ -25,13 +25,11 @@ img {
     height: auto;
 }
 
-/* Mermaid diagram styles */
+/* Mermaid container styles */
 .mermaid {
-    @apply my-8 text-center bg-white dark:bg-primary-900 rounded-lg p-4;
-}
-
-.mermaid svg {
-    @apply mx-auto;
+    @apply my-8 rounded-lg p-6;
+    @apply max-w-full;
+    @apply overflow-x-auto;
 }
 
 /* Animation classes */

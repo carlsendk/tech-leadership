@@ -16,37 +16,14 @@ date: 2025-04-30
 
 ```mermaid
 graph TD
-    subgraph "Business Domain"
-        A[Core Domain]
-        B[Supporting Domains]
-        C[Generic Domains]
-    end
-    
-    subgraph "Team Structure"
-        D[Stream-Aligned Teams]
-        E[Enabling Teams]
-        F[Platform Teams]
-    end
-    
-    subgraph "System Architecture"
-        G[Core Services]
-        H[Supporting Services]
-        I[Platform Services]
-    end
-    
-    A --> D --> G
-    B --> E --> H
-    C --> F --> I
-    
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
-    style E fill:#d6f9f9
-    style F fill:#f9d6f9
-    style G fill:#f9d6d5
-    style H fill:#d6e9f9
-    style I fill:#d6f9e0
+    A[Domain] --> B[Subdomains]
+    B --> C[Contexts]
+    C --> D[Models]
+    D --> E[Entities]
+    E --> F[Value Objects]
+    F --> G[Aggregates]
+    G --> H[Services]
+    H --> I[Repositories]
 ```
 
 ## Core DDD Concepts
@@ -58,15 +35,28 @@ graph TD
 
 ### 2. Context Map
 ```mermaid
+%%{
+  init: {
+    'theme': 'dark',
+    'themeVariables': {
+      'primaryColor': '#0d9488',
+      'primaryTextColor': '#f1f5f9',
+      'primaryBorderColor': '#475569',
+      'lineColor': '#94a3b8',
+      'secondaryColor': '#2dd4bf',
+      'tertiaryColor': '#14b8a6'
+    }
+  }
+}%%
 graph LR
     A[Orders Context] -->|Customer Info| B[Customer Context]
     B -->|Shared Kernel| C[Auth Context]
     A -->|Conformist| D[Shipping Context]
     
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
+    style A fill:#0d9488,stroke:#475569,color:#f1f5f9
+    style B fill:#0f766e,stroke:#475569,color:#f1f5f9
+    style C fill:#14b8a6,stroke:#475569,color:#f1f5f9
+    style D fill:#2dd4bf,stroke:#475569,color:#f1f5f9
 ```
 
 ### 3. Domain Events

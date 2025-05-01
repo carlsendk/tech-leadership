@@ -81,9 +81,22 @@ export default {
               backgroundColor: theme('colors.primary.50'),
               padding: '1rem',
               borderRadius: '0.25rem',
+              color: theme('colors.primary.700'),
+              fontStyle: 'normal',
+              p: {
+                margin: 0,
+                color: 'inherit',
+              },
+              'p:first-of-type::before': {
+                content: 'none',
+              },
+              'p:last-of-type::after': {
+                content: 'none',
+              },
             },
             strong: {
               color: theme('colors.primary.900'),
+              fontWeight: '600',
             },
             hr: {
               borderColor: theme('colors.primary.200'),
@@ -106,9 +119,16 @@ export default {
               thead: {
                 color: theme('colors.primary.900'),
                 borderBottomColor: theme('colors.primary.400'),
+                th: {
+                  color: 'inherit',
+                  fontWeight: '600',
+                },
               },
               'tbody tr': {
                 borderBottomColor: theme('colors.primary.200'),
+              },
+              td: {
+                color: theme('colors.primary.700'),
               },
             },
           },
@@ -132,6 +152,18 @@ export default {
             li: {
               color: theme('colors.primary.100'),
             },
+            strong: {
+              color: theme('colors.primary.50'),
+              fontWeight: '600',
+            },
+            blockquote: {
+              borderLeftColor: theme('colors.accent.500'),
+              backgroundColor: theme('colors.primary.800'),
+              color: theme('colors.primary.100'),
+              p: {
+                color: 'inherit',
+              },
+            },
             a: {
               color: theme('colors.accent.400'),
               '&:hover': {
@@ -149,6 +181,38 @@ export default {
               backgroundColor: theme('colors.primary.800'),
               code: {
                 color: theme('colors.primary.100'),
+              },
+            },
+            hr: {
+              borderColor: theme('colors.primary.700'),
+            },
+            'ul > li::before': {
+              backgroundColor: theme('colors.primary.400'),
+            },
+            'ol > li::before': {
+              color: theme('colors.primary.400'),
+            },
+            table: {
+              thead: {
+                color: theme('colors.primary.50'),
+                borderBottomColor: theme('colors.primary.600'),
+                th: {
+                  color: 'inherit',
+                },
+              },
+              'tbody tr': {
+                borderBottomColor: theme('colors.primary.700'),
+              },
+              td: {
+                color: theme('colors.primary.100'),
+              },
+            },
+            dl: {
+              dt: {
+                color: theme('colors.primary.50'),
+              },
+              dd: {
+                color: theme('colors.primary.300'),
               },
             },
           },

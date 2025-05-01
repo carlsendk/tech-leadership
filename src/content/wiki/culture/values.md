@@ -16,41 +16,14 @@ date: 2025-04-30
 
 ```mermaid
 graph TD
-    subgraph "Values Layer"
-        A[Core Values]
-        B[Principles]
-        C[Behaviors]
-    end
-    
-    subgraph "Application Layer"
-        D[Daily Decisions]
-        E[Team Interactions]
-        F[Customer Impact]
-    end
-    
-    subgraph "Measurement Layer"
-        G[Value Alignment]
-        H[Culture Health]
-        I[Business Outcomes]
-    end
-    
-    A --> D & E & F
-    B --> D & E & F
-    C --> D & E & F
-    
-    D --> G
-    E --> H
-    F --> I
-    
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
-    style E fill:#d6f9f9
-    style F fill:#f9d6f9
-    style G fill:#f9d6d5
-    style H fill:#d6e9f9
-    style I fill:#d6f9e0
+    A[Values] --> B[Behaviors]
+    B --> C[Practices]
+    C --> D[Artifacts]
+    D --> E[Environment]
+    E --> F[Outcomes]
+    F --> G[Feedback]
+    G --> H[Learning]
+    H --> I[Evolution]
 ```
 
 ## Core Values in Practice

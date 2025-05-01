@@ -15,44 +15,15 @@ date: 2025-04-30
 
 ```mermaid
 graph TD
-    subgraph "Team Types"
-        A[Stream-Aligned]
-        B[Platform]
-        C[Enabling]
-        D[Complicated Subsystem]
-    end
-    
-    subgraph "Interaction Modes"
-        E[Collaboration]
-        F[X-as-a-Service]
-        G[Facilitation]
-    end
-    
-    subgraph "Evolution"
-        H[Team API]
-        I[Team Cognitive Load]
-        J[Team Boundaries]
-    end
-    
-    A --> E & F & G
-    B --> E & F & G
-    C --> E & F & G
-    D --> E & F & G
-    
-    E --> H & I & J
-    F --> H & I & J
-    G --> H & I & J
-    
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
-    style E fill:#d6f9f9
-    style F fill:#f9d6f9
-    style G fill:#f9d6d5
-    style H fill:#d6e9f9
-    style I fill:#d6f9e0
-    style J fill:#f9f9d6
+    A[Stream-Aligned] --> B[Enabling]
+    B --> C[Platform]
+    C --> D[Complicated-Subsystem]
+    D --> E[Core]
+    E --> F[Support]
+    F --> G[Infrastructure]
+    G --> H[Security]
+    H --> I[Quality]
+    I --> J[Operations]
 ```
 
 ## Core Team Types

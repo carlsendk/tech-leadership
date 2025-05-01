@@ -38,16 +38,6 @@ graph TD
     C --> D --> E --> F
     F --> G --> H --> I
     I -.->|Feedback| C
-    
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
-    style E fill:#d6f9f9
-    style F fill:#f9d6f9
-    style G fill:#f9d6d5
-    style H fill:#d6e9f9
-    style I fill:#d6f9e0
 ```
 
 ## Mission Statement Structure
@@ -108,13 +98,6 @@ graph TD
     C --> D[OKRs]
     D --> E[Key Results]
     E --> F[Daily Metrics]
-    
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
-    style E fill:#d6f9f9
-    style F fill:#f9d6f9
 ```
 
 ### 2. Example Cascade

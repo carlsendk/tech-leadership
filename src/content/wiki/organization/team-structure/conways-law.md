@@ -20,28 +20,9 @@ date: 2025-04-30
 
 ```mermaid
 graph TD
-    subgraph "Traditional Organization"
-        A[Frontend Team]
-        B[Backend Team]
-        C[Database Team]
-    end
-    
-    subgraph "System Architecture"
-        D[Frontend Monolith]
-        E[Backend Monolith]
-        F[Monolithic Database]
-    end
-    
-    A --> D
-    B --> E
-    C --> F
-    
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9d6d5
-    style E fill:#d6e9f9
-    style F fill:#d6f9e0
+    A[Organization] --> B[Communication]
+    B --> C[Architecture]
+    C --> D[Outcomes]
 ```
 
 ## Impact on System Design

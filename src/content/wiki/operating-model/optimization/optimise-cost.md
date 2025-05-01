@@ -15,41 +15,14 @@ date: 2025-04-30
 
 ```mermaid
 graph TD
-    subgraph "Cost Categories"
-        A[Infrastructure]
-        B[Engineering]
-        C[Operational]
-    end
-    
-    subgraph "Optimization Levers"
-        D[Resource Rightsizing]
-        E[Process Efficiency]
-        F[Technology Choices]
-    end
-    
-    subgraph "Measurement"
-        G[Unit Economics]
-        H[ROI Metrics]
-        I[Efficiency KPIs]
-    end
-    
-    A --> D
-    B --> E
-    C --> F
-    
-    D --> G
-    E --> H
-    F --> I
-    
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
-    style E fill:#d6f9f9
-    style F fill:#f9d6f9
-    style G fill:#f9d6d5
-    style H fill:#d6e9f9
-    style I fill:#d6f9e0
+    A[Cost Analysis] --> B[Optimization]
+    B --> C[Implementation]
+    C --> D[Monitoring]
+    D --> E[Feedback]
+    E --> F[Adjustment]
+    F --> G[Results]
+    G --> H[Review]
+    H --> I[Next Steps]
 ```
 
 ## Core Metrics

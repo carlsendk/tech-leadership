@@ -41,15 +41,6 @@ graph TD
     E --> G & H & I
     F --> G & H & I
     
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
-    style E fill:#d6f9f9
-    style F fill:#f9d6f9
-    style G fill:#f9d6d5
-    style H fill:#d6e9f9
-    style I fill:#d6f9e0
 ```
 
 ## Core Metrics

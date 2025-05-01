@@ -15,41 +15,14 @@ date: 2025-04-30
 
 ```mermaid
 graph TD
-    subgraph "Strategic Layer"
-        A[Why]
-        B[Vision]
-        C[Mission]
-    end
-    
-    subgraph "Tactical Layer"
-        D[Objectives]
-        E[Strategy]
-        F[Initiatives]
-    end
-    
-    subgraph "Execution Layer"
-        G[Roadmap]
-        H[Success Metrics]
-        I[Feedback Loops]
-    end
-    
-    A --> D & E & F
-    B --> D & E & F
-    C --> D & E & F
-    
-    D --> G & H & I
-    E --> G & H & I
-    F --> G & H & I
-    
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
-    style E fill:#d6f9f9
-    style F fill:#f9d6f9
-    style G fill:#f9d6d5
-    style H fill:#d6e9f9
-    style I fill:#d6f9e0
+    A[Why] --> B[What]
+    B --> C[How]
+    C --> D[When]
+    D --> E[Where]
+    E --> F[Who]
+    F --> G[Impact]
+    G --> H[Outcomes]
+    H --> I[Success]
 ```
 
 ## Why It Matters

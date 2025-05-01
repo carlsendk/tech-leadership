@@ -16,47 +16,14 @@ date: 2025-04-30
 
 ```mermaid
 graph TD
-    subgraph "Culture Layer"
-        A[Shared Values]
-        B[Decision Principles]
-        C[Engineering Rituals]
-    end
-    
-    subgraph "Behavior Layer"
-        D[Daily Decisions]
-        E[Team Interactions]
-        F[Technical Choices]
-    end
-    
-    subgraph "Outcome Layer"
-        G[Speed]
-        H[Quality]
-        I[Innovation]
-    end
-    
-    A --> D
-    B --> D
-    C --> D
-    A --> E
-    B --> E
-    C --> E
-    A --> F
-    B --> F
-    C --> F
-    
-    D --> G
-    E --> H
-    F --> I
-    
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
-    style E fill:#d6f9f9
-    style F fill:#f9d6f9
-    style G fill:#f9d6d5
-    style H fill:#d6e9f9
-    style I fill:#d6f9e0
+    A[Values] --> B[Behaviors]
+    B --> C[Practices]
+    C --> D[Artifacts]
+    D --> E[Environment]
+    E --> F[Outcomes]
+    F --> G[Feedback]
+    G --> H[Learning]
+    H --> I[Evolution]
 ```
 
 ## Core Decision Principles

@@ -4,7 +4,6 @@ import WikiSidebar from "../components/WikiSidebar.astro";
 import TableOfContents from "../components/TableOfContents.astro";
 import TagList from "../components/TagList.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
-import MermaidInit from "../components/MermaidInit.astro";
 
 export interface Props {
   title: string;
@@ -108,18 +107,3 @@ const editUrl = `${githubUrl}/edit/main/src/content/wiki/${currentPath.split("/"
     </aside>
   </div>
 </Layout>
-
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
-    <title>{title}</title>
-  </head>
-  <body>
-    <slot />
-    <MermaidInit />
-  </body>
-</html>
