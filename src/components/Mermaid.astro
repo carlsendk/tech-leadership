@@ -1,0 +1,26 @@
+---
+// Mermaid.astro
+---
+
+<script src="../scripts/mermaid-theme.js"></script>
+
+<slot />
+
+<style is:global>
+    /* Hide diagrams until Mermaid processes them */
+    .mermaid:not(:has(svg)) {
+        display: none;
+    }
+
+    /* Show diagrams once they contain SVG */
+    .mermaid:has(svg) {
+        display: block;
+    }
+
+    /* Ensure SVGs take full width */
+    .mermaid svg {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
