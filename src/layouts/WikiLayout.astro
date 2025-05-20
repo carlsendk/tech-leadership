@@ -16,7 +16,7 @@ export interface Props {
 const { title, description, tags, category, headings } = Astro.props;
 
 // GitHub edit URL - replace with your repository URL
-const githubUrl = "https://github.com/yourusername/content-driven-site";
+const githubUrl = "https://github.com/carlsendk/tech-leadership";
 const currentPath = Astro.url.pathname;
 const editUrl = `${githubUrl}/edit/main/src/content/wiki/${currentPath.split("/").pop()}.md`;
 ---

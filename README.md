@@ -23,8 +23,8 @@ A modern, content-focused personal website built with Astro, featuring a blog an
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/content-driven-site.git
-cd content-driven-site
+git clone https://github.com/carlsendk/tech-leadership.git
+cd tech-leadership
 ```
 
 2. Install dependencies:

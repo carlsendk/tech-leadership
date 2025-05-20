@@ -35,7 +35,7 @@ Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/tech-leadership.git
+git clone https://github.com/carlsendk/tech-leadership.git
 cd tech-leadership
 ```
 
