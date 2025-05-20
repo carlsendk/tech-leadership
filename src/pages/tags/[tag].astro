@@ -3,6 +3,12 @@ import Layout from '../../layouts/Layout.astro';
 import ContentCard from '../../components/ContentCard.astro';
 import FilterBox from '../../components/FilterBox.astro';
 import { getCollection } from 'astro:content';
+import {
+  getBlogUrl,
+  getWikiUrl,
+  getBlogIndexUrl,
+  getWikiIndexUrl,
+} from '../../utils/url';
 
 export async function getStaticPaths() {
   const allBlogPosts = await getCollection('blog', ({ data }) => !data.draft);
@@ -109,7 +115,7 @@ const wikiCount = sortedWikiEntries.length;
             <ContentCard
               title={post.data.title}
               description={post.data.description}
-              url={`/blog/${post.slug}`}
+              url={getBlogUrl(post.slug)}
               tags={post.data.tags}
               category={post.data.category}
               date={post.data.date}
@@ -130,7 +136,7 @@ const wikiCount = sortedWikiEntries.length;
             <ContentCard
               title={entry.data.title}
               description={entry.data.description}
-              url={`/wiki/${entry.slug}`}
+              url={getWikiUrl(entry.slug)}
               tags={entry.data.tags}
               category={entry.data.category}
               isWiki={true}
@@ -149,10 +155,16 @@ const wikiCount = sortedWikiEntries.length;
           Try browsing all content instead.
         </p>
         <div class="mt-4 flex justify-center gap-4">
-          <a href="/blog" class="text-accent-600 dark:text-accent-400 hover:underline">
+          <a
+            href={getBlogIndexUrl()}
+            class="text-accent-600 dark:text-accent-400 hover:underline"
+          >
             View all blog posts
           </a>
-          <a href="/wiki" class="text-accent-600 dark:text-accent-400 hover:underline">
+          <a
+            href={getWikiIndexUrl()}
+            class="text-accent-600 dark:text-accent-400 hover:underline"
+          >
             View all wiki articles
           </a>
         </div>
