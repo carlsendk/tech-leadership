@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import { getWikiUrl } from "../../utils/url";
 
 // Get all wiki entries
 const wikiEntries = await getCollection(
@@ -50,7 +51,7 @@ Object.keys(categories).forEach((category) => {
                 .replace(/\/+/g, "/");
               return (
                 <a
-                  href={`/wiki/${cleanSlug}`}
+                  href={getWikiUrl(cleanSlug)}
                   class="block p-6 bg-white dark:bg-primary-900 rounded-lg shadow-md hover:shadow-lg transition-shadow"
                 >
                   <h3 class="text-xl font-semibold mb-2">{entry.data.title}</h3>
