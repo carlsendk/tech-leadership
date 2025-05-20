@@ -3,7 +3,8 @@
  */
 
 // Get base URL from environment, ensuring it starts with a slash and has no trailing slash
-const baseUrl = (import.meta.env.BASE_URL || '').replace(/^\/+|\/+$/g, '');
+const rawBase = typeof import.meta !== 'undefined' ? import.meta.env.BASE_URL : process.env.BASE_URL || '';
+const baseUrl = (rawBase || '').replace(/^\/+|\/+$/g, '');
 
 
 // Test cases:
