@@ -2,9 +2,13 @@
  * Utility functions for handling URLs consistently across the project
  */
 
-// Get base URL from environment, ensuring it starts with a slash and has no trailing slash
-const rawBase = typeof import.meta !== 'undefined' ? import.meta.env.BASE_URL : process.env.BASE_URL || '';
-const baseUrl = (rawBase || '').replace(/^\/+|\/+$/g, '');
+// Get base URL from environment on demand. When running in Vitest or Node, `import.meta.env`
+// is typically undefined, so we fall back to `process.env.BASE_URL`.
+function getBaseUrl(): string {
+  const envBase = typeof import.meta !== 'undefined' ? (import.meta as any).env?.BASE_URL : undefined;
+  const rawBase = envBase && envBase !== '/' ? envBase : process.env.BASE_URL ?? '';
+  return (rawBase || '').replace(/^\/+|\/+$/g, '');
+}
 
 
 // Test cases:
@@ -20,6 +24,7 @@ const baseUrl = (rawBase || '').replace(/^\/+|\/+$/g, '');
  * Ensures a URL is properly prefixed with the base URL and has a trailing slash
  */
 export function getFullUrl(path: string): string {
+  const baseUrl = getBaseUrl();
   // Handle empty path or root path specially
   if (!path || path === '/' || path === '') {
     return baseUrl ? `/${baseUrl}/` : '/';
@@ -41,6 +46,7 @@ export function getFullUrl(path: string): string {
  * Creates a URL for the home page
  */
 export function getHomeUrl(): string {
+  const baseUrl = getBaseUrl();
   return baseUrl ? `/${baseUrl}/` : '/';
 }
 
