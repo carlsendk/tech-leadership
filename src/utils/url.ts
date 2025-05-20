@@ -63,6 +63,10 @@ export function getBlogUrl(slug: string): string {
 export function getWikiUrl(slug: string): string {
   // Replace any backslashes with forward slashes and ensure no double slashes
   const cleanSlug = slug.replace(/\\/g, '/').replace(/\/+/g, '/');
+  // Handle _index files specially
+  if (cleanSlug.endsWith('/_index')) {
+    return getFullUrl(`wiki/${cleanSlug.replace('/_index', '')}`);
+  }
   return getFullUrl(`wiki/${cleanSlug}`);
 }
 
