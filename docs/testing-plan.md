@@ -1,6 +1,7 @@
 # Testing Plan
 
-This project lacks automated tests. To ensure reliable deployments, we will introduce both unit and integration tests.
+This project now includes a growing automated test suite to ensure reliable deployments.
+Unit tests cover URL helpers and custom markdown plugins, while end-to-end tests are planned for the future.
 
 ## Frameworks
 
@@ -17,6 +18,11 @@ This project lacks automated tests. To ensure reliable deployments, we will intr
    ```bash
    npm test
    ```
+
+### Existing Tests
+
+- URL helper utilities (`tests/url.test.ts`)
+- Markdown plugin for Mermaid diagrams (`tests/add-mermaid-class.test.ts`)
 
 ## Continuous Integration
 
