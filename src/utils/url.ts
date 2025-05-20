@@ -5,9 +5,6 @@
 // Get base URL from environment, ensuring it starts with a slash and has no trailing slash
 const baseUrl = (import.meta.env.BASE_URL || '').replace(/^\/+|\/+$/g, '');
 
-// Debug log
-console.log('BASE_URL:', import.meta.env.BASE_URL);
-console.log('Cleaned baseUrl:', baseUrl);
 
 // Test cases:
 // baseUrl = "tech-leadership"
