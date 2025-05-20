@@ -3,7 +3,9 @@
  */
 
 // Get base URL from environment, ensuring it starts with a slash and has no trailing slash
-const baseUrl = (import.meta.env.BASE_URL || '').replace(/^\/+|\/+$/g, '');
+// Supports `import.meta.env` used by Astro and falls back to `process.env` for tests
+const envBase = (import.meta as any)?.env?.BASE_URL || process.env.BASE_URL || '';
+const baseUrl = envBase.replace(/^\/+|\/+$/g, '');
 
 
 // Test cases:
