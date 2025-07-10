@@ -8,6 +8,7 @@ tags:
   - organization
   - structure
 category: "Organisation Design"
+subcategory: "Team Structure"
 date: 2025-04-30
 ---
 

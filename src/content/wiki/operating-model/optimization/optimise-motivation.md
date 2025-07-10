@@ -8,6 +8,7 @@ tags:
   - culture
   - engagement
 category: "Organisation Design"
+subcategory: "Optimization"
 date: 2025-04-30
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: Decoupling Teams & Inverse Organisation
 description: A pragmatic rationale for engineering leaders explaining why decoupling teams, removing dependencies, and designing inverse organisations boosts flow, quality, and autonomy.
-date: 2025-04-30
 tags:
   - team_topologies
   - inverse_conway
@@ -9,6 +8,8 @@ tags:
   - decoupling
   - dependencies
 category: "Organisation Design"
+subcategory: "Team Structure"
+date: 2025-04-30
 ---
 
 ### Decoupling Teams & Inverse Organisation  
