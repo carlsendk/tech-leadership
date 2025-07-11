@@ -1,152 +1,57 @@
-// Function to update Mermaid theme based on current color scheme
-// Light theme variables (using your app's teal color scheme)
+// Mermaid theme configuration for your app's teal color scheme
+
+// Light theme variables
 const lightTheme = {
-  // Core colors using your app's teal palette
-  primaryColor: '#0d9488',        // Primary teal from your app
-  primaryTextColor: '#0f172a',    // Dark text for high contrast
-  primaryBorderColor: '#64748b',  // Medium gray for borders
-  secondaryColor: '#14b8a6',      // Secondary teal
-  tertiaryColor: '#2dd4bf',       // Light teal
-  
-  // Background colors
-  mainBkg: '#ffffff',             // Pure white background
-  nodeBkg: '#f8fafc',            // Very light gray for nodes
-  clusterBkg: '#fefefe',         // Very light background for subgraphs (arrow visibility)
-  
-  // Text and borders
-  nodeTextColor: '#0f172a',       // Dark text for readability
-  nodeBorder: '#475569',          // Darker border for definition
-  clusterBorder: '#64748b',       // Medium border for subgraphs
-  titleColor: '#0f172a',          // Dark titles
-  border2: '#475569',             // Secondary borders
-  fontWeight: '500',              // Medium weight for readability
-  lineColor: '#334155',           // Dark arrows for light background
-  edgeLabelBackground: '#f8fafc', // Light background for edge labels
-  
-  // Node variety (your teal scale + grays)
-  node1: '#0d9488',               // Primary teal
-  node2: '#14b8a6',               // Secondary teal
-  node3: '#2dd4bf',               // Light teal  
-  node4: '#0f766e',               // Dark teal
-  node5: '#115e59',               // Darker teal
-  node6: '#475569',               // Medium gray
-  node7: '#1e293b',               // Dark gray
-  
-  // Component-specific colors
-  labelBackgroundColor: '#f8fafc',
-  compositeBackground: '#fefefe', // Very light for subgraphs
-  noteBkgColor: '#f0fdfa',        // Light teal for notes
-  noteTextColor: '#0f172a',
-  noteBorderColor: '#14b8a6',     // Teal border for notes
-  classText: '#0f172a',
-  
-  // Actor/sequence diagram colors
-  actorBkg: '#f8fafc',
-  actorBorder: '#64748b',
-  actorTextColor: '#0f172a',
-  messageBorderColor: '#64748b',
-  messageTextColor: '#0f172a',
-  
-  // Gantt/timeline colors
-  sectionBkgColor: '#f8fafc',
-  altSectionBkgColor: '#f1f5f9',
-  taskBorderColor: '#64748b',
-  taskTextColor: '#0f172a',
-  taskTextOutsideColor: '#0f172a',
-  taskTextLightColor: '#0f172a',
-  sectionBkgColor2: '#0d9488',
-  gridColor: '#e2e8f0',           // Lighter grid
-  doneTaskBkgColor: '#14b8a6',
-  doneTaskBorderColor: '#0d9488',
-  activeTaskBorderColor: '#2dd4bf',
-  activeTaskBkgColor: '#14b8a6',
-  
-  // Pie chart colors (your teal scale)
-  pie1: '#0d9488',
-  pie2: '#14b8a6',
-  pie3: '#2dd4bf',
-  pie4: '#0f766e',
-  pie5: '#115e59',
-  pie6: '#475569',
-  pie7: '#1e293b',
-  pieTitleTextSize: '25px',
-  pieTitleTextColor: '#0f172a',
-  journeyHover: '#2dd4bf'
+  primaryColor: '#0d9488',
+  primaryTextColor: '#0f172a',
+  primaryBorderColor: '#64748b',
+  secondaryColor: '#14b8a6',
+  tertiaryColor: '#2dd4bf',
+  mainBkg: '#ffffff',
+  nodeBkg: '#f8fafc',
+  clusterBkg: '#fefefe',
+  nodeTextColor: '#0f172a',
+  nodeBorder: '#475569',
+  clusterBorder: '#64748b',
+  titleColor: '#0f172a',
+  border2: '#475569',
+  fontWeight: '500',
+  lineColor: '#334155',
+  edgeLabelBackground: '#f8fafc',
+  node1: '#0d9488',
+  node2: '#14b8a6',
+  node3: '#2dd4bf',
+  node4: '#0f766e',
+  node5: '#115e59',
+  node6: '#475569',
+  node7: '#1e293b'
 };
 
-// Dark theme variables (using your app's light teal palette for dark mode)
+// Dark theme variables
 const darkTheme = {
-  // Core colors using your app's light teal palette for dark mode
-  primaryColor: '#2dd4bf',        // Light teal for dark backgrounds
-  primaryTextColor: '#f1f5f9',    // Light text for high contrast
-  primaryBorderColor: '#64748b',  // Medium gray - visible on dark
-  secondaryColor: '#5eead4',      // Lighter teal
-  tertiaryColor: '#99f6e4',       // Very light teal
-  
-  // Background colors
-  mainBkg: '#0f172a',             // Dark navy background
-  nodeBkg: '#1e293b',            // Lighter dark for nodes
-  clusterBkg: '#334155',         // Medium dark for subgraphs (light arrow visibility)
-  
-  // Text and borders  
-  nodeTextColor: '#f1f5f9',       // Light text for readability
-  nodeBorder: '#64748b',          // Medium border visible on dark
-  clusterBorder: '#64748b',       // Consistent border for subgraphs
-  titleColor: '#f1f5f9',          // Light titles
-  border2: '#64748b',             // Secondary borders
-  fontWeight: '500',              // Medium weight for readability
-  lineColor: '#cbd5e1',           // Light arrows for dark background
-  edgeLabelBackground: '#1e293b', // Dark background for edge labels
-  
-  // Node variety (your light teal scale for dark mode)
-  node1: '#2dd4bf',               // Primary light teal
-  node2: '#5eead4',               // Lighter teal
-  node3: '#99f6e4',               // Very light teal
-  node4: '#14b8a6',               // Medium teal
-  node5: '#0d9488',               // Darker teal
-  node6: '#64748b',               // Medium gray
-  node7: '#94a3b8',               // Light gray
-  
-  // Component-specific colors
-  labelBackgroundColor: '#1e293b',
-  compositeBackground: '#334155', // Medium dark for subgraphs
-  noteBkgColor: '#134e4a',        // Dark teal for notes
-  noteTextColor: '#f1f5f9',
-  noteBorderColor: '#2dd4bf',     // Light teal border for notes
-  classText: '#f1f5f9',
-  
-  // Actor/sequence diagram colors
-  actorBkg: '#1e293b',
-  actorBorder: '#64748b',
-  actorTextColor: '#f1f5f9',
-  messageBorderColor: '#64748b',
-  messageTextColor: '#f1f5f9',
-  
-  // Gantt/timeline colors
-  sectionBkgColor: '#1e293b',
-  altSectionBkgColor: '#334155',
-  taskBorderColor: '#64748b',
-  taskTextColor: '#f1f5f9',
-  taskTextOutsideColor: '#f1f5f9',
-  taskTextLightColor: '#f1f5f9',
-  sectionBkgColor2: '#2dd4bf',
-  gridColor: '#475569',           // Darker grid for dark mode
-  doneTaskBkgColor: '#14b8a6',
-  doneTaskBorderColor: '#0d9488',
-  activeTaskBorderColor: '#5eead4',
-  activeTaskBkgColor: '#2dd4bf',
-  
-  // Pie chart colors (your light teal scale for dark mode)
-  pie1: '#2dd4bf',
-  pie2: '#5eead4',
-  pie3: '#99f6e4',
-  pie4: '#14b8a6',
-  pie5: '#0d9488',
-  pie6: '#64748b',
-  pie7: '#94a3b8',
-  pieTitleTextSize: '25px',
-  pieTitleTextColor: '#f1f5f9',
-  journeyHover: '#5eead4'
+  primaryColor: '#2dd4bf',
+  primaryTextColor: '#f1f5f9',
+  primaryBorderColor: '#64748b',
+  secondaryColor: '#5eead4',
+  tertiaryColor: '#99f6e4',
+  mainBkg: '#0f172a',
+  nodeBkg: '#1e293b',
+  clusterBkg: '#334155',
+  nodeTextColor: '#f1f5f9',
+  nodeBorder: '#64748b',
+  clusterBorder: '#64748b',
+  titleColor: '#f1f5f9',
+  border2: '#64748b',
+  fontWeight: '500',
+  lineColor: '#cbd5e1',
+  edgeLabelBackground: '#1e293b',
+  node1: '#2dd4bf',
+  node2: '#5eead4',
+  node3: '#99f6e4',
+  node4: '#14b8a6',
+  node5: '#0d9488',
+  node6: '#64748b',
+  node7: '#94a3b8'
 };
 
 const commonConfig = {
@@ -195,85 +100,114 @@ const commonConfig = {
   }
 };
 
-function updateMermaidTheme(isDark) {
-  if (typeof window.mermaid !== 'undefined') {
-    const config = {
-      ...commonConfig,
-      themeVariables: isDark ? darkTheme : lightTheme
-    };
-    window.mermaid.initialize(config);
-    
-    // Force re-render all diagrams with new theme
-    document.querySelectorAll('.mermaid').forEach(async (element) => {
-      let graphCode = element.getAttribute('data-graph-code');
-      
-      // If no stored code, extract from existing SVG or text content
-      if (!graphCode) {
-        const svgElement = element.querySelector('svg');
-        if (svgElement) {
-          // Try to find original code in data attributes or extract from title
-          graphCode = element.getAttribute('data-original-code') || 
-                     element.textContent.trim() ||
-                     svgElement.getAttribute('aria-labelledby');
-        } else {
-          graphCode = element.textContent.trim();
-        }
-        
-        if (graphCode) {
-          element.setAttribute('data-graph-code', graphCode);
-        }
-      }
-      
-      if (graphCode && graphCode.trim() && !graphCode.includes('<svg')) {
-        try {
-          const { svg } = await window.mermaid.render(`mermaid-${Date.now()}-${Math.random()}`, graphCode);
-          element.innerHTML = svg;
-        } catch (error) {
-          console.error('Failed to render Mermaid diagram:', error, 'Code:', graphCode);
-        }
-      }
-    });
-  }
-}
+let isInitialized = false;
 
-// Initialize when both DOM and mermaid are ready
-function initializeMermaidWithTheme() {
+function applyMermaidTheme(isDark = false) {
+  // Wait for mermaid to be available
   if (typeof window.mermaid === 'undefined') {
-    // Wait for mermaid to be available
-    setTimeout(initializeMermaidWithTheme, 100);
+    console.log('Mermaid not yet available, retrying...');
+    setTimeout(() => applyMermaidTheme(isDark), 100);
     return;
   }
 
-  // Store original graph code before first render
-  document.querySelectorAll('.mermaid').forEach((element) => {
-    if (!element.getAttribute('data-graph-code')) {
-      element.setAttribute('data-graph-code', element.textContent);
+  console.log('Applying Mermaid theme:', isDark ? 'dark' : 'light');
+
+  const config = {
+    ...commonConfig,
+    themeVariables: isDark ? darkTheme : lightTheme
+  };
+
+  // Initialize mermaid with new config
+  window.mermaid.initialize(config);
+
+  // Re-render all diagrams
+  document.querySelectorAll('.mermaid').forEach(async (element, index) => {
+    try {
+      // Get original source code
+      let source = element.getAttribute('data-mermaid-source') || 
+                  element.getAttribute('data-graph-code') ||
+                  element.textContent;
+
+      // Skip if no source or already contains SVG
+      if (!source || source.includes('<svg') || source.includes('</svg>')) {
+        return;
+      }
+
+      source = source.trim();
+      if (!source) return;
+
+      console.log(`Rendering diagram ${index + 1}:`, source.substring(0, 50) + '...');
+
+      // Generate unique ID for this render
+      const id = `mermaid-${Date.now()}-${index}`;
+      
+      // Render the diagram
+      const { svg } = await window.mermaid.render(id, source);
+      
+      // Replace content with new SVG
+      element.innerHTML = svg;
+      
+      console.log(`Successfully rendered diagram ${index + 1}`);
+      
+    } catch (error) {
+      console.error(`Failed to render diagram ${index + 1}:`, error);
     }
   });
+
+  isInitialized = true;
+}
+
+// Function to detect current theme
+function detectTheme() {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches || 
+         document.documentElement.classList.contains('dark');
+}
+
+// Initialize when page loads
+function initializeMermaid() {
+  console.log('Initializing Mermaid theme system...');
   
-  // Initial render with appropriate theme
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches || 
-                 document.documentElement.classList.contains('dark');
-  updateMermaidTheme(isDark);
+  // Store original source code for all diagrams
+  document.querySelectorAll('.mermaid').forEach((element, index) => {
+    if (!element.getAttribute('data-mermaid-source')) {
+      const source = element.textContent || element.innerText;
+      if (source && !source.includes('<svg')) {
+        element.setAttribute('data-mermaid-source', source.trim());
+        console.log(`Stored source for diagram ${index + 1}`);
+      }
+    }
+  });
+
+  // Apply initial theme
+  const isDark = detectTheme();
+  applyMermaidTheme(isDark);
 }
 
-// Start initialization when DOM is ready
+// Wait for DOM and run initialization
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializeMermaidWithTheme);
+  document.addEventListener('DOMContentLoaded', initializeMermaid);
 } else {
-  initializeMermaidWithTheme();
+  initializeMermaid();
 }
 
-// Watch for system color scheme changes
+// Watch for theme changes
 const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-mediaQuery.addEventListener('change', (e) => updateMermaidTheme(e.matches));
+mediaQuery.addEventListener('change', (e) => {
+  console.log('System theme changed to:', e.matches ? 'dark' : 'light');
+  if (isInitialized) {
+    applyMermaidTheme(e.matches);
+  }
+});
 
-// Watch for manual theme toggles (assuming a 'dark' class on html element)
+// Watch for manual theme toggles
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     if (mutation.attributeName === 'class') {
       const isDark = document.documentElement.classList.contains('dark');
-      updateMermaidTheme(isDark);
+      console.log('Manual theme changed to:', isDark ? 'dark' : 'light');
+      if (isInitialized) {
+        applyMermaidTheme(isDark);
+      }
     }
   });
 });
@@ -281,4 +215,6 @@ const observer = new MutationObserver((mutations) => {
 observer.observe(document.documentElement, {
   attributes: true,
   attributeFilter: ['class']
-}); 
+});
+
+console.log('Mermaid theme script loaded');
