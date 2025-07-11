@@ -7,23 +7,45 @@ tags:
   - objectives
   - wardley
 category: "Organisation Design"
-subcategory: "Alignment"
+subcategory: "Core Elements"
 date: 2025-04-30
+order: 2
 ---
 
 ## Wardley Mapping Framework
 
 ```mermaid
-graph TD
-    A[Company Mission] --> B[Product Vision]
-    B --> C[Team Mission]
-    C --> D[OKRs]
-    D --> E[Key Results]
-    E --> F[Daily Metrics]
-    F --> G[Actions]
-    G --> H[Outcomes]
-    H --> I[Impact]
-    I --> J[Strategy]
+flowchart TD
+    %% Strategic Context
+    USER_NEEDS["👥 User Needs<br/>Jobs to be done<br/>& pain points"]
+    
+    %% Mapping Process
+    COMPONENTS["🧩 Component Mapping<br/>Plot on evolution axis<br/>Identify dependencies"]
+    
+    EVOLUTION["📈 Evolution Analysis<br/>Genesis → Custom<br/>Product → Commodity"]
+    
+    %% Strategic Decisions
+    DECISIONS["⚖️ Strategic Decisions<br/>🏗️ Build differentiators<br/>💰 Buy commodities<br/>🤝 Outsource utilities"]
+    
+    %% Objectives & Results
+    OBJECTIVES["🎯 OKRs<br/>Measurable objectives<br/>& key results"]
+    
+    %% Implementation
+    ACTIONS["⚡ Actions<br/>Daily execution<br/>& metrics tracking"]
+    
+    %% Flow
+    USER_NEEDS --> COMPONENTS
+    COMPONENTS --> EVOLUTION
+    EVOLUTION --> DECISIONS
+    DECISIONS --> OBJECTIVES
+    OBJECTIVES --> ACTIONS
+    
+    %% Learning loop
+    ACTIONS -.->|"Market Learning"| USER_NEEDS
+    
+    class USER_NEEDS val1
+    class COMPONENTS,EVOLUTION val2
+    class DECISIONS,OBJECTIVES,ACTIONS val3
 ```
 
 ## Mapping Process
@@ -80,9 +102,9 @@ graph TD
 ## Integration Points
 
 ### With Other Practices
-- Informs [Mission & Objectives](mission-objectives)
-- Guides [Team Structure](decoupling_teams)
-- Supports [Cost Optimization](optimise-cost)
+- Informs [Mission & Objectives](../advanced/mission-objectives)
+- Guides [Team Structure](../advanced/decoupling_teams)
+- Supports [Cost Optimization](../optimization/optimise-cost)
 
 ### With Tools & Systems
 - Mapping software
@@ -90,9 +112,9 @@ graph TD
 - Decision tracking
 
 ## Related Topics
-- [Operating Model Overview](operating_alignment_model_wiki)
-- [Product Strategy](why-purpose)
-- [Team Structure](decoupling_teams)
+- [Operating Model Overview](../operating-model-framework)
+- [Product Strategy](../foundation/why-purpose)
+- [Team Structure](../advanced/decoupling_teams)
 
 > **Pro Tip:** Focus on the movement of components and the implications for your strategy, not just their current position.
 

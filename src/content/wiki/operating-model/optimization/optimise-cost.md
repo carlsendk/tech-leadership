@@ -10,6 +10,7 @@ tags:
 category: "Organisation Design"
 subcategory: "Optimization"
 date: 2025-04-30
+order: 4
 ---
 
 ## Cost Optimization Framework
@@ -101,8 +102,8 @@ graph TD
 
 ### With Other Practices
 - Aligns with [Flow Optimization](optimise-flow)
-- Supports [Mission & Objectives](mission-objectives)
-- Complements [Team Structure](decoupling_teams)
+- Supports [Mission & Objectives](../advanced/mission-objectives)
+- Complements [Team Structure](../advanced/decoupling_teams)
 
 ### With Tools & Systems
 - Cloud cost management tools
@@ -110,7 +111,7 @@ graph TD
 - Financial reporting platforms
 
 ## Related Topics
-- [Operating Model Overview](operating_alignment_model_wiki)
+- [Operating Model Overview](../operating-model-framework)
 - [Flow Optimization](optimise-flow)
 - [Motivation Optimization](optimise-motivation)
 

@@ -155,8 +155,16 @@ const isWikiLanding = currentSlug === "wiki" || currentSlug === undefined;
             {/* Subcategories - show as proper sections */}
             {Object.entries(content.subcategories).length > 0 && (
               <div class="space-y-3">
-                {Object.entries(content.subcategories).map(
-                  ([subcategory, subContent]) => (
+                {Object.entries(content.subcategories)
+                  .sort(([, a], [, b]) => {
+                    const orderA = a.index?.data.order ?? 999;
+                    const orderB = b.index?.data.order ?? 999;
+                    if (orderA !== orderB) {
+                      return orderA - orderB;
+                    }
+                    return 0;
+                  })
+                  .map(([subcategory, subContent]) => (
                     <div class="subcategory-section border-l-2 border-primary-200 dark:border-primary-700 pl-3">
                       {/* Subcategory overview - show as main heading if exists, otherwise show category name */}
                       {subContent.index ? (

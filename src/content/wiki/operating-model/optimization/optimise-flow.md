@@ -10,6 +10,7 @@ tags:
 category: "Organisation Design"
 subcategory: "Optimization"
 date: 2025-04-30
+order: 3
 ---
 
 ## Flow Optimization Framework
@@ -125,7 +126,7 @@ graph LR
 ### With Other Practices
 - Supports [Cost Optimization](optimise-cost)
 - Enables [Motivation](optimise-motivation)
-- Drives [Mission Delivery](mission-objectives)
+- Drives [Mission Delivery](../advanced/mission-objectives)
 
 ### With Tools & Systems
 - CI/CD platforms
@@ -133,7 +134,7 @@ graph LR
 - Incident management
 
 ## Related Topics
-- [Operating Model Overview](operating_alignment_model_wiki)
+- [Operating Model Overview](../operating-model-framework)
 - [Cost Optimization](optimise-cost)
 - [Motivation Optimization](optimise-motivation)
 

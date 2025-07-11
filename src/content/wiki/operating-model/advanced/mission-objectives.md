@@ -8,8 +8,9 @@ tags:
   - objectives
   - strategy
 category: "Organisation Design"
-subcategory: "Alignment"
+subcategory: "Advanced"
 date: 2025-04-30
+order: 3
 ---
 
 ## Mission & Objectives Framework
@@ -207,9 +208,9 @@ daily_metrics:
 ## Integration Points
 
 ### With Other Practices
-- Informs [Product Canvas](mission-product-canvas)
-- Guides [Wardley Mapping](objectives-wardley)
-- Feeds [Alignment & Feedback](alignment-feedback)
+- Informs [Product Canvas](../core-elements/mission-product-canvas)
+- Guides [Wardley Mapping](../core-elements/objectives-wardley)
+- Feeds [Alignment & Feedback](../optimization/alignment-feedback)
 
 ### With Tools & Systems
 - OKR tracking software
@@ -217,9 +218,9 @@ daily_metrics:
 - Documentation system
 
 ## Related Topics
-- [Operating Model Overview](operating_alignment_model_wiki)
-- [Culture Guide](culture)
-- [Values Framework](values)
+- [Operating Model Overview](../operating-model-framework)
+- [Culture Guide](../foundation/culture-framework)
+- [Values Framework](../foundation/values)
 
 > **Pro Tip:** OKRs should be ambitious but not impossible. Aim for about 70% achievement rate - if you're hitting 100%, you're not stretching enough.
 

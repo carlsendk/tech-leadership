@@ -78,52 +78,52 @@ Each layer of our operating model has its own detailed wiki page. Below is an ov
 ### Foundation Layer
 | Layer | Purpose | Key Practices | Detailed Guide |
 |-------|---------|---------------|----------------|
-| **Why & Purpose – Product Strategy** | Sets the North‑Star: *why we exist* and *where we play*. | * Product Vision Board<br>* Quarterly strategy review | [Why & Purpose Deep-Dive](why-purpose) |
-| **Govern with Culture** | Scales behaviour through principles rather than rules. | * Decision principles<br>* Engineering rituals | [Culture Guide](culture) |
-| **Values** | Shared beliefs that guide day‑to‑day trade‑offs. | * Hire & fire by values<br>* Explicit behaviors | [Values Framework](values) |
+| **Why & Purpose – Product Strategy** | Sets the North‑Star: *why we exist* and *where we play*. | * Product Vision Board<br>* Quarterly strategy review | [Why & Purpose Deep-Dive](foundation/why-purpose) |
+| **Govern with Culture** | Scales behaviour through principles rather than rules. | * Decision principles<br>* Engineering rituals | [Culture Guide](foundation/culture-framework) |
+| **Values** | Shared beliefs that guide day‑to‑day trade‑offs. | * Hire & fire by values<br>* Explicit behaviors | [Values Framework](foundation/values) |
 
 ### Core Elements
 | Layer | Purpose | Key Practices | Detailed Guide |
 |-------|---------|---------------|----------------|
-| **Mission (Product Canvas)** | Captures *who, what, why* for a product slice. | * Product Canvas<br>* Assumption mapping | [Mission & Product Canvas](mission-product-canvas) |
-| **Objectives (Wardley Mapping)** | Stress‑test bets against landscape evolution. | * User‑need mapping<br>* Strategic decisions | [Objectives & Wardley Mapping](objectives-wardley) |
-| **Organization (DDD)** | Mirror domain boundaries in team topology. | * Context mapping<br>* Team boundaries | [Organization & DDD](organization-ddd) |
+| **Mission (Product Canvas)** | Captures *who, what, why* for a product slice. | * Product Canvas<br>* Assumption mapping | [Mission & Product Canvas](core-elements/mission-product-canvas) |
+| **Objectives (Wardley Mapping)** | Stress‑test bets against landscape evolution. | * User‑need mapping<br>* Strategic decisions | [Objectives & Wardley Mapping](core-elements/objectives-wardley) |
+| **Organization (DDD)** | Mirror domain boundaries in team topology. | * Context mapping<br>* Team boundaries | [Organization & DDD](core-elements/organization-ddd) |
 
 ### Optimization & Feedback
 | Layer | Purpose | Key Practices | Detailed Guide |
 |-------|---------|---------------|----------------|
-| **Alignment & Feedback** | Close strategy-execution gap. | * Health checks<br>* Retros | [Alignment & Feedback Loops](alignment-feedback) |
-| **Optimise for Motivation** | Keep humans engaged and creative. | * eNPS tracking<br>* Squad health | [Motivation Deep-Dive](optimise-motivation) |
-| **Optimise for Flow** | Ship value quickly & safely. | * CI/CD<br>* DORA metrics | [Flow Optimization](optimise-flow) |
-| **Optimise for Cost** | Sustain profitability at scale. | * FinOps<br>* Unit economics | [Cost Optimization](optimise-cost) |
+| **Alignment & Feedback** | Close strategy-execution gap. | * Health checks<br>* Retros | [Alignment & Feedback Loops](optimization/alignment-feedback) |
+| **Optimise for Motivation** | Keep humans engaged and creative. | * eNPS tracking<br>* Squad health | [Motivation Deep-Dive](optimization/optimise-motivation) |
+| **Optimise for Flow** | Ship value quickly & safely. | * CI/CD<br>* DORA metrics | [Flow Optimization](optimization/optimise-flow) |
+| **Optimise for Cost** | Sustain profitability at scale. | * FinOps<br>* Unit economics | [Cost Optimization](optimization/optimise-cost) |
 
 ### Advanced Topics
-- [Conway's Law & Team Design](conways-law)
-- [Decoupling Teams & Dependencies](decoupling_teams)
-- [Mission & Objectives Alignment](mission-objectives)
+- [Conway's Law & Team Design](advanced/conways-law)
+- [Decoupling Teams & Dependencies](advanced/decoupling_teams)
+- [Mission & Objectives Alignment](advanced/mission-objectives)
 
 ---
 
 ## Implementation Guide
 
 1. **Start with Why**
-   - Begin with [Why & Purpose](why-purpose)
-   - Establish [Cultural Foundations](culture)
-   - Define [Core Values](values)
+   - Begin with [Why & Purpose](foundation/why-purpose)
+   - Establish [Cultural Foundations](foundation/culture-framework)
+   - Define [Core Values](foundation/values)
 
 2. **Build Core Elements**
-   - Create [Product Canvas](mission-product-canvas)
-   - Map [Strategic Objectives](objectives-wardley)
-   - Design [Team Structure](organization-ddd)
+   - Create [Product Canvas](core-elements/mission-product-canvas)
+   - Map [Strategic Objectives](core-elements/objectives-wardley)
+   - Design [Team Structure](core-elements/organization-ddd)
 
 3. **Optimize & Align**
-   - Implement [Feedback Loops](alignment-feedback)
-   - Balance [Motivation](optimise-motivation), [Flow](optimise-flow), and [Cost](optimise-cost)
-   - Monitor [Team Dependencies](decoupling_teams)
+   - Implement [Feedback Loops](optimization/alignment-feedback)
+   - Balance [Motivation](optimization/optimise-motivation), [Flow](optimization/optimise-flow), and [Cost](optimization/optimise-cost)
+   - Monitor [Team Dependencies](advanced/decoupling_teams)
 
 4. **Advanced Implementation**
-   - Apply [Conway's Law](conways-law)
-   - Align [Missions & Objectives](mission-objectives)
+   - Apply [Conway's Law](advanced/conways-law)
+   - Align [Missions & Objectives](advanced/mission-objectives)
 
 ---
 
@@ -141,9 +141,9 @@ Each layer of our operating model has its own detailed wiki page. Below is an ov
 ## Further Reading & Resources
 
 ### Internal References
-- [Team Topologies Implementation](decoupling_teams)
-- [Domain-Driven Design Guide](organization-ddd)
-- [Feedback Loop Design](alignment-feedback)
+- [Team Topologies Implementation](advanced/decoupling_teams)
+- [Domain-Driven Design Guide](core-elements/organization-ddd)
+- [Feedback Loop Design](optimization/alignment-feedback)
 
 ### External References
 * **Product Canvas** – Roman Pichler  

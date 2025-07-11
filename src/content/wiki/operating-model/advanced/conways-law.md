@@ -8,8 +8,9 @@ tags:
   - inverse_conway
   - system_design
 category: "Organisation Design"
-subcategory: "Team Structure"
+subcategory: "Advanced"
 date: 2025-04-30
+order: 1
 ---
 
 ## Conway's Law Explained
@@ -92,12 +93,12 @@ graph TD
 
 ## Related Topics
 - [Team Decoupling Guide](decoupling_teams)
-- [Domain-Driven Design](organization-ddd)
-- [Operating Model Overview](operating_alignment_model_wiki)
+- [Domain-Driven Design](../core-elements/organization-ddd)
+- [Operating Model Overview](../operating-model-framework)
 
 ## Further Reading
 - "Team Topologies" by Matthew Skelton & Manuel Pais
 - "Building Evolutionary Architectures" by Neal Ford
 - "Accelerate" by Nicole Forsgren
 
-> **Pro Tip:** Use the team dependency metrics from this guide in conjunction with the [Alignment & Feedback](alignment-feedback) process to continuously improve team boundaries.
+> **Pro Tip:** Use the team dependency metrics from this guide in conjunction with the [Alignment & Feedback](../optimization/alignment-feedback) process to continuously improve team boundaries.

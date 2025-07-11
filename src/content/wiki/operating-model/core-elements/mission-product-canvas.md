@@ -7,22 +7,38 @@ tags:
   - product
   - canvas
 category: "Organisation Design"
-subcategory: "Alignment"
+subcategory: "Core Elements"
 date: 2025-04-30
+order: 1
 ---
 
 ## Product Canvas Framework
 
 ```mermaid
-graph TD
-    A[Vision] --> B[Strategy]
-    B --> C[Goals]
-    C --> D[Features]
-    D --> E[User Stories]
-    E --> F[Tasks]
-    F --> G[Implementation]
-    G --> H[Testing]
-    H --> I[Deployment]
+flowchart LR
+    %% Product Canvas Structure
+    VISION["🎯 Vision<br/>Long-term change<br/>in the world"]
+    
+    TARGET["👥 Target Group<br/>Primary users<br/>& personas"]
+    
+    NEEDS["💡 Needs<br/>User problems<br/>& pain points"]
+    
+    PRODUCT["📦 Product<br/>Key features<br/>& solutions"]
+    
+    BUSINESS["💰 Business Goals<br/>Revenue model<br/>& success metrics"]
+    
+    %% Canvas flow
+    VISION --> TARGET
+    TARGET --> NEEDS
+    NEEDS --> PRODUCT
+    PRODUCT --> BUSINESS
+    
+    %% Validation loop
+    BUSINESS -.->|"Market Feedback"| VISION
+    
+    class VISION val1
+    class TARGET,NEEDS val2
+    class PRODUCT,BUSINESS val3
 ```
 
 ## Canvas Sections
@@ -91,9 +107,9 @@ graph TD
 ## Integration Points
 
 ### With Other Practices
-- Informs [Mission & Objectives](mission-objectives)
-- Guides [Team Structure](decoupling_teams)
-- Supports [Flow Optimization](optimise-flow)
+- Informs [Mission & Objectives](../advanced/mission-objectives)
+- Guides [Team Structure](../advanced/decoupling_teams)
+- Supports [Flow Optimization](../optimization/optimise-flow)
 
 ### With Tools & Systems
 - Product management tools
@@ -101,9 +117,9 @@ graph TD
 - Analytics systems
 
 ## Related Topics
-- [Operating Model Overview](operating_alignment_model_wiki)
-- [Product Strategy](why-purpose)
-- [Team Structure](decoupling_teams)
+- [Operating Model Overview](../operating-model-framework)
+- [Product Strategy](../foundation/why-purpose)
+- [Team Structure](../advanced/decoupling_teams)
 
 > **Pro Tip:** Keep the canvas visible on the team wall (or Miro) and revisit monthly. Focus on the connections between sections, not just filling them in.
 

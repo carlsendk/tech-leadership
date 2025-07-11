@@ -8,8 +8,9 @@ tags:
   - organization
   - structure
 category: "Organisation Design"
-subcategory: "Team Structure"
+subcategory: "Advanced"
 date: 2025-04-30
+order: 4
 ---
 
 ## Team Topologies Framework
@@ -127,8 +128,8 @@ graph TD
 ## Integration Points
 
 ### With Other Practices
-- Supports [Flow Optimization](optimise-flow)
-- Enables [Cost Efficiency](optimise-cost)
+- Supports [Flow Optimization](../optimization/optimise-flow)
+- Enables [Cost Efficiency](../optimization/optimise-cost)
 - Drives [Mission Delivery](mission-objectives)
 
 ### With Tools & Systems
@@ -137,9 +138,9 @@ graph TD
 - Monitoring platforms
 
 ## Related Topics
-- [Operating Model Overview](operating_alignment_model_wiki)
+- [Operating Model Overview](../operating-model-framework)
 - [Team Structure](decoupling_teams)
-- [Flow Optimization](optimise-flow)
+- [Flow Optimization](../optimization/optimise-flow)
 
 > **Pro Tip:** Focus on team cognitive load and clear boundaries. A team that's doing too much will struggle to deliver effectively.
 

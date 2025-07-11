@@ -9,22 +9,38 @@ tags:
   - behavior
   - decision-making
 category: "Organisation Design"
-subcategory: "Culture"
+subcategory: "Foundation"
 date: 2025-04-30
+order: 3
 ---
 
 ## Values Framework
 
 ```mermaid
-graph TD
-    A[Values] --> B[Behaviors]
-    B --> C[Practices]
-    C --> D[Artifacts]
-    D --> E[Environment]
-    E --> F[Outcomes]
-    F --> G[Feedback]
-    G --> H[Learning]
-    H --> I[Evolution]
+flowchart TD
+    %% Core Values Layer
+    VALUES["💎 Core Values<br/>🎯 Customer Obsession<br/>🏆 Ownership<br/>📚 Learn & Be Curious"]
+    
+    %% Daily Actions Layer  
+    ACTIONS["⚖️ Daily Actions<br/>👥 Observable Behaviors<br/>🎯 Value-Based Decisions"]
+    
+    %% Organizational Results
+    CULTURE["🌟 Strong Culture"]
+    PERFORMANCE["⚡ High Performance"] 
+    GROWTH["📈 Sustainable Growth"]
+    
+    %% Clean flow
+    VALUES --> ACTIONS
+    ACTIONS --> CULTURE
+    CULTURE --> PERFORMANCE
+    PERFORMANCE --> GROWTH
+    
+    %% Simple feedback loop
+    GROWTH -.->|"Refinement"| VALUES
+    
+    class VALUES val1
+    class ACTIONS val2
+    class CULTURE,PERFORMANCE,GROWTH val3
 ```
 
 ## Core Values in Practice
@@ -188,9 +204,9 @@ assessment:
 ## Integration Points
 
 ### With Other Practices
-- Guides [Culture](culture)
-- Informs [Mission & Objectives](mission-objectives)
-- Shapes [Team Decoupling](decoupling_teams)
+- Guides [Culture](culture-framework)
+- Informs [Mission & Objectives](../advanced/mission-objectives)
+- Shapes [Team Decoupling](../advanced/decoupling_teams)
 
 ### With Tools & Systems
 - HR systems
@@ -198,9 +214,9 @@ assessment:
 - Recognition platforms
 
 ## Related Topics
-- [Operating Model Overview](operating_alignment_model_wiki)
-- [Culture Guide](culture)
-- [Alignment & Feedback](alignment-feedback)
+- [Operating Model Overview](../operating-model-framework)
+- [Culture Guide](culture-framework)
+- [Alignment & Feedback](../optimization/alignment-feedback)
 
 > **Pro Tip:** Values should be verbs, not nouns. They should describe how we act, not just what we believe.
 

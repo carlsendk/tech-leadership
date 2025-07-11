@@ -8,8 +8,9 @@ tags:
   - decoupling
   - dependencies
 category: "Organisation Design"
-subcategory: "Team Structure"
+subcategory: "Advanced"
 date: 2025-04-30
+order: 2
 ---
 
 ### Decoupling Teams & Inverse Organisation  

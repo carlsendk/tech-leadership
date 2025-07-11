@@ -9,10 +9,11 @@ tags:
   - engineering-practices
   - rituals
 category: "Organisation Design"
-subcategory: "Culture"
+subcategory: "Foundation"
 displayMode: "category"
 isIndex: true
 date: 2025-04-30
+order: 2
 ---
 
 ## Culture as Operating System
@@ -155,9 +156,9 @@ on_call:
 ## Integration Points
 
 ### With Other Practices
-- Feeds into [Alignment & Feedback](alignment-feedback)
-- Supports [Team Decoupling](decoupling_teams)
-- Enables [Flow Optimization](optimise-flow)
+- Feeds into [Alignment & Feedback](../optimization/alignment-feedback)
+- Supports [Team Decoupling](../advanced/decoupling_teams)
+- Enables [Flow Optimization](../optimization/optimise-flow)
 
 ### With Tools & Systems
 - Confluence/Notion for documentation
@@ -166,8 +167,8 @@ on_call:
 
 ## Related Topics
 - [Values Framework](values)
-- [Operating Model Overview](operating_alignment_model_wiki)
-- [Mission & Objectives](mission-objectives)
+- [Operating Model Overview](../operating-model-framework)
+- [Mission & Objectives](../advanced/mission-objectives)
 
 > **Pro Tip:** Culture needs constant gardening. Schedule regular "culture health checks" to ensure principles and rituals evolve with your team's needs.
 

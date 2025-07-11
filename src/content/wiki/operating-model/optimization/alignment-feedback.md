@@ -7,8 +7,9 @@ tags:
   - feedback
   - loops
 category: "Organisation Design"
-subcategory: "Alignment"
+subcategory: "Optimization"
 date: 2025-04-30
+order: 1
 ---
 
 ## Feedback Loop Overview
@@ -25,7 +26,7 @@ graph TD
 ### Strategic (Quarterly)
 | Activity | Purpose | Key Outputs |
 |----------|---------|-------------|
-| Strategy Review | Validate direction | Updated [Wardley Maps](objectives-wardley) |
+| Strategy Review | Validate direction | Updated [Wardley Maps](../core-elements/objectives-wardley) |
 | OKR/Mission Check | Assess progress | OKR health scorecard |
 | Planning | Resource alignment | Team roadmaps |
 
@@ -125,9 +126,9 @@ outputs:
 ## Integration Points
 
 ### With Other Practices
-- Links to [Team Decoupling](decoupling_teams)
-- Feeds into [Culture](culture)
-- Informs [Mission & Objectives](mission-objectives)
+- Links to [Team Decoupling](../advanced/decoupling_teams)
+- Feeds into [Culture](../foundation/culture-framework)
+- Informs [Mission & Objectives](../advanced/mission-objectives)
 
 ### With Tools & Systems
 - JIRA/Linear for tracking
@@ -166,9 +167,9 @@ outputs:
    - Regular review cycles
 
 ## Related Topics
-- [Operating Model Overview](operating_alignment_model_wiki)
-- [Team Decoupling](decoupling_teams)
-- [Culture Guide](culture)
+- [Operating Model Overview](../operating-model-framework)
+- [Team Decoupling](../advanced/decoupling_teams)
+- [Culture Guide](../foundation/culture-framework)
 - [Flow Optimization](optimise-flow)
 
 > **Pro Tip:** Use the health check template as a starting point, but customize the categories and metrics based on your team's specific needs and challenges.
