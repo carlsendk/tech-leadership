@@ -9,7 +9,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "postinstall": "playwright install chromium --with-deps"
+    "postinstall": "playwright install chromium --with-deps",
+    "test": "vitest",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@astrojs/alpinejs": "^0.4.8",
@@ -32,6 +34,17 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "playwright": "^1.44.0"
-  }
+    "playwright": "^1.44.0",
+    "vitest": "^1.5.0",
+    "husky": "^9.0.0"
+  },
+  "description": "A modern, content-focused personal website built with Astro, featuring a blog and wiki system with unified tagging and categorization.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
