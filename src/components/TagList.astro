@@ -6,7 +6,7 @@ export interface Props {
   currentTag?: string;
 }
 
-const { tags, currentTag } = Astro.props;
+const { tags } = Astro.props;
 ---
 
 <div class="flex flex-wrap gap-2">
@@ -15,7 +15,7 @@ const { tags, currentTag } = Astro.props;
       <a
         href={getTagUrl(tag)}
         class="inline-flex items-center text-xs px-2 py-1 rounded-md bg-primary-100 text-primary-700 hover:bg-primary-200 dark:bg-primary-800/50 dark:text-primary-300 dark:hover:bg-primary-700/50 transition-colors"
-        onclick="event.stopPropagation()"
+        onclick="e.stopPropagation()"
       >
         #{tag}
       </a>

@@ -87,11 +87,6 @@ graph LR
     C --> D[Production]
     D --> E[Monitoring]
 
-    style A fill:#0d9488,stroke:#475569,color:#f1f5f9
-    style B fill:#0f766e,stroke:#475569,color:#f1f5f9
-    style C fill:#14b8a6,stroke:#475569,color:#f1f5f9
-    style D fill:#2dd4bf,stroke:#475569,color:#f1f5f9
-    style E fill:#115e59,stroke:#475569,color:#f1f5f9
 ```
 
 ## Implementation Guide

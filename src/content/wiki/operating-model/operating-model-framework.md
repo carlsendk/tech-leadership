@@ -21,63 +21,53 @@ This is the top-level guide to our operating and alignment model. Each section l
 ```mermaid
 flowchart TD
   %% ───────────────────────────────── WHY & PURPOSE ───────────────────────────
-  A[[Why & Purpose<br/>Product&nbsp;Strategy]]
-  style A fill:#38b24a,color:#fff,font-weight:bold
+  A[[Why & Purpose - Product Strategy]]
 
   %% ───────────────────────────────── CULTURE ────────────────────────────────
   A --> B[Govern with Culture]
-  style B fill:#9e9e9e,color:#fff,font-weight:bold
 
   %% ───────────────────────────────── VALUES ─────────────────────────────────
   subgraph Values_Block [ ]
     direction LR
-    V1[Value&nbsp;1]:::val1 --> V2[Value&nbsp;2]:::val2 --> V3[Value&nbsp;3]:::val3
+    V1[Value 1]:::val1 --> V2[Value 2]:::val2 --> V3[Value 3]:::val3
   end
   B --> Values_Block
 
-  classDef val1 fill:#f9d6d5,color:#000;
-  classDef val2 fill:#faf3c0,color:#000;
-  classDef val3 fill:#e6e1fb,color:#000;
 
   %% ──────────────── MISSION & OBJECTIVES (TOP-LEVEL LAYER) ──────────────────
   Values_Block --> C[Lead by Mission & Objectives]
-  style C fill:#9e9e9e,color:#fff,font-weight:bold
 
   %% ────────────────────────── THREE CORE ELEMENTS ───────────────────────────
   subgraph Core_Elements [ ]
     direction LR
-    M[Mission<br/>(Product&nbsp;Canvas)]:::bluebox
-    O[Objectives<br/>(OKRs)]:::orangebox
-    S[Strategy<br/>Roadmap]:::bluebox
+    M[Mission - Product Canvas]:::bluebox
+    O[Objectives - OKRs]:::orangebox
+    S[Strategy Roadmap]:::bluebox
     M --> O --> S
   end
   C --> Core_Elements
 
-  classDef bluebox   fill:#4fc3f7,color:#000,font-weight:bold;
-  classDef orangebox fill:#e67e22,color:#fff,font-weight:bold;
 
   %% ───────────────────────── ALIGNMENT & LOOP ───────────────────────────────
-  Core_Elements --> D[Alignment & Feedback&nbsp;Loops]
-  style D fill:#9e9e9e,color:#fff,font-weight:bold
+  Core_Elements --> D[Alignment & Feedback Loops]
 
   %% ──────────────────────── OPTIMISATION PILLARS ────────────────────────────
   subgraph Optimise_For [ ]
     direction LR
-    P1[Optimise for Motivation<br/>eNPS&nbsp;&amp;&nbsp;Squad Health Checks]:::pill1
-    P2[Optimise for Flow<br/>DORA Metrics]:::pill2
-    P3[Optimise for Cost<br/>Cost/Employee&nbsp;&amp;&nbsp;Cost/Customer]:::pill3
+    P1[Optimise for Motivation - eNPS & Squad Health Checks]:::pill1
+    P2[Optimise for Flow - DORA Metrics]:::pill2
+    P3[Optimise for Cost - Cost/Employee & Cost/Customer]:::pill3
     P1 --> P2 --> P3
   end
   D --> Optimise_For
 
-  classDef pill1 fill:#fff3b0,color:#000;
-  classDef pill2 fill:#fad1d9,color:#000;
-  classDef pill3 fill:#e6e1fb,color:#000;
 
   %% ───────────────────────────── FEEDBACK ───────────────────────────────────
-  Optimise_For -->|"Metric&nbsp;insights"| Core_Elements
+  Optimise_For -->|"Metric insights"| Core_Elements
 
-```---
+```
+
+---
 
 ## Layer‑by‑Layer Explanation
 

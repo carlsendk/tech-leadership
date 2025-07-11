@@ -53,10 +53,6 @@ graph LR
     C --> D[Action]
     D --> A
     
-    style A fill:#f9d6d5
-    style B fill:#d6e9f9
-    style C fill:#d6f9e0
-    style D fill:#f9f9d6
 ```
 
 ### Health Check Categories

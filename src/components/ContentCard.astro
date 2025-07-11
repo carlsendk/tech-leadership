@@ -1,5 +1,4 @@
 ---
-import { format } from "date-fns";
 import TagList from "./TagList.astro";
 import { getCategoryUrl, getFullUrl } from "../utils/url";
 
@@ -9,6 +8,7 @@ export interface Props {
   url: string;
   tags: string[];
   category?: string;
+  date?: Date;
   author?: {
     name: string;
     title?: string;
@@ -17,15 +17,7 @@ export interface Props {
   isWiki?: boolean;
 }
 
-const {
-  title,
-  description,
-  url,
-  tags,
-  category,
-  author,
-  isWiki = false,
-} = Astro.props;
+const { title, description, url, tags, category, author } = Astro.props;
 
 // Ensure URL has proper base path
 const fullUrl = url.startsWith("http") ? url : getFullUrl(url);

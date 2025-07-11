@@ -1,8 +1,25 @@
 <script>
     import mermaid from "mermaid";
 
-    // Initialize mermaid with minimal configuration
+    // Make mermaid available globally for our theme script
+    (window as any).mermaid = mermaid;
+
+    // Don't auto-start - our theme script will handle initialization
     mermaid.initialize({
-        startOnLoad: true,
+        startOnLoad: false,
+    });
+
+    // Store original mermaid code before SVG rendering
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.mermaid').forEach((element) => {
+            // Store the original text content before it gets replaced by SVG
+            const originalCode = element.textContent || (element as any).innerText;
+            if (originalCode && originalCode.trim() && !originalCode.includes('<svg')) {
+                element.setAttribute('data-graph-code', originalCode.trim());
+            }
+        });
     });
 </script>
+
+<!-- Load our theme configuration script -->
+<script src="/src/scripts/mermaid-theme.js"></script>

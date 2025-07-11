@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import ContentCard from "../../components/ContentCard.astro";
 import FilterBox from "../../components/FilterBox.astro";
 import { getCollection } from "astro:content";
-import { getBlogUrl, getFullUrl } from "../../utils/url";
+import { getBlogUrl } from "../../utils/url";
 
 // Get all blog posts, excluding drafts
 const allBlogPosts = await getCollection("blog", ({ data }) => {

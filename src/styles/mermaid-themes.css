@@ -1,0 +1,277 @@
+/* Mermaid diagram theme variables for light and dark modes */
+
+/* Light mode theme */
+:root {
+  --mermaid-node-bg: #f8fafc;
+  --mermaid-node-border: #475569;
+  --mermaid-node-text: #0f172a;
+  --mermaid-primary-bg: #0d9488;
+  --mermaid-secondary-bg: #14b8a6;
+  --mermaid-tertiary-bg: #2dd4bf;
+  --mermaid-warning-bg: #0f766e;
+  --mermaid-danger-bg: #115e59;
+  --mermaid-neutral-bg: #475569;
+  --mermaid-dark-bg: #1e293b;
+  --mermaid-cluster-bg: #fefefe;
+  --mermaid-cluster-border: #64748b;
+  --mermaid-edge-color: #334155;
+}
+
+/* Dark mode theme */
+:root.dark {
+  --mermaid-node-bg: #1e293b;
+  --mermaid-node-border: #64748b;
+  --mermaid-node-text: #f1f5f9;
+  --mermaid-primary-bg: #2dd4bf;
+  --mermaid-secondary-bg: #5eead4;
+  --mermaid-tertiary-bg: #99f6e4;
+  --mermaid-warning-bg: #14b8a6;
+  --mermaid-danger-bg: #0d9488;
+  --mermaid-neutral-bg: #64748b;
+  --mermaid-dark-bg: #94a3b8;
+  --mermaid-cluster-bg: #334155;
+  --mermaid-cluster-border: #64748b;
+  --mermaid-edge-color: #cbd5e1;
+}
+
+/* Apply theme variables to Mermaid SVG elements */
+.mermaid svg,
+svg[id^="mermaid-"],
+svg.mermaid {
+  color-scheme: light dark;
+}
+
+/* Universal node styling - covers most default elements */
+.mermaid rect,
+svg[id^="mermaid-"] rect,
+.mermaid polygon,
+svg[id^="mermaid-"] polygon {
+  fill: var(--mermaid-node-bg) !important;
+  stroke: var(--mermaid-node-border) !important;
+  stroke-width: 2px !important;
+}
+
+/* Automatic color differentiation for nodes - can be overridden by specific classes */
+svg[id^="mermaid-"] g.node:nth-child(1) rect,
+svg[id^="mermaid-"] g.node:nth-child(1) polygon {
+  fill: var(--mermaid-primary-bg) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(2) rect,
+svg[id^="mermaid-"] g.node:nth-child(2) polygon {
+  fill: var(--mermaid-secondary-bg) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(3) rect,
+svg[id^="mermaid-"] g.node:nth-child(3) polygon {
+  fill: var(--mermaid-tertiary-bg) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(4) rect,
+svg[id^="mermaid-"] g.node:nth-child(4) polygon {
+  fill: var(--mermaid-warning-bg) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(5) rect,
+svg[id^="mermaid-"] g.node:nth-child(5) polygon {
+  fill: var(--mermaid-danger-bg) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(6) rect,
+svg[id^="mermaid-"] g.node:nth-child(6) polygon {
+  fill: var(--mermaid-neutral-bg) !important;
+}
+
+/* Cycle back through colors for diagrams with more than 6 nodes */
+svg[id^="mermaid-"] g.node:nth-child(7) rect,
+svg[id^="mermaid-"] g.node:nth-child(7) polygon {
+  fill: var(--mermaid-primary-bg) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(8) rect,
+svg[id^="mermaid-"] g.node:nth-child(8) polygon {
+  fill: var(--mermaid-secondary-bg) !important;
+}
+
+/* Text colors for automatically colored nodes */
+svg[id^="mermaid-"] g.node:nth-child(1) text {
+  fill: white !important;
+  color: white !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(2) text {
+  fill: white !important;
+  color: white !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(3) text {
+  fill: var(--mermaid-node-text) !important;
+  color: var(--mermaid-node-text) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(4) text {
+  fill: white !important;
+  color: white !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(5) text {
+  fill: white !important;
+  color: white !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(6) text {
+  fill: white !important;
+  color: white !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(7) text {
+  fill: white !important;
+  color: white !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(8) text {
+  fill: white !important;
+  color: white !important;
+}
+
+/* Text elements */
+.mermaid text,
+svg[id^="mermaid-"] text,
+.mermaid .nodeLabel,
+svg[id^="mermaid-"] .nodeLabel {
+  fill: var(--mermaid-node-text) !important;
+  color: var(--mermaid-node-text) !important;
+}
+
+/* Themed node classes - Primary nodes */
+.mermaid .node.val1 rect,
+.mermaid .node.bluebox rect,
+svg[id^="mermaid-"] .node.val1 rect,
+svg[id^="mermaid-"] .node.bluebox rect,
+svg[id^="mermaid-"] rect.val1,
+svg[id^="mermaid-"] rect.bluebox {
+  fill: var(--mermaid-primary-bg) !important;
+  stroke: var(--mermaid-node-border) !important;
+}
+
+.mermaid .node.val1 text,
+.mermaid .node.bluebox text,
+svg[id^="mermaid-"] .node.val1 text,
+svg[id^="mermaid-"] .node.bluebox text {
+  fill: white !important;
+  color: white !important;
+}
+
+/* Secondary nodes */
+.mermaid .node.val2 rect,
+.mermaid .node.orangebox rect,
+svg[id^="mermaid-"] .node.val2 rect,
+svg[id^="mermaid-"] .node.orangebox rect,
+svg[id^="mermaid-"] rect.val2,
+svg[id^="mermaid-"] rect.orangebox {
+  fill: var(--mermaid-secondary-bg) !important;
+  stroke: var(--mermaid-node-border) !important;
+}
+
+.mermaid .node.val2 text,
+.mermaid .node.orangebox text,
+svg[id^="mermaid-"] .node.val2 text,
+svg[id^="mermaid-"] .node.orangebox text {
+  fill: white !important;
+  color: white !important;
+}
+
+/* Tertiary nodes */
+.mermaid .node.val3 rect,
+svg[id^="mermaid-"] .node.val3 rect,
+svg[id^="mermaid-"] rect.val3 {
+  fill: var(--mermaid-tertiary-bg) !important;
+  stroke: var(--mermaid-node-border) !important;
+}
+
+.mermaid .node.val3 text,
+svg[id^="mermaid-"] .node.val3 text {
+  fill: var(--mermaid-node-text) !important;
+  color: var(--mermaid-node-text) !important;
+}
+
+/* Pill/rounded nodes */
+.mermaid .node.pill1 rect,
+svg[id^="mermaid-"] .node.pill1 rect,
+svg[id^="mermaid-"] rect.pill1 {
+  fill: var(--mermaid-secondary-bg) !important;
+  stroke: var(--mermaid-node-border) !important;
+}
+
+.mermaid .node.pill2 rect,
+svg[id^="mermaid-"] .node.pill2 rect,
+svg[id^="mermaid-"] rect.pill2 {
+  fill: var(--mermaid-tertiary-bg) !important;
+  stroke: var(--mermaid-node-border) !important;
+}
+
+.mermaid .node.pill3 rect,
+svg[id^="mermaid-"] .node.pill3 rect,
+svg[id^="mermaid-"] rect.pill3 {
+  fill: var(--mermaid-danger-bg) !important;
+  stroke: var(--mermaid-node-border) !important;
+}
+
+/* Cluster/subgraph styling */
+.mermaid .cluster rect,
+svg[id^="mermaid-"] .cluster rect,
+.mermaid g.cluster rect,
+svg[id^="mermaid-"] g.cluster rect {
+  fill: var(--mermaid-cluster-bg) !important;
+  stroke: var(--mermaid-cluster-border) !important;
+  stroke-width: 2px !important;
+}
+
+/* Edge/arrow styling */
+.mermaid .edgePath path,
+.mermaid .flowchart-link,
+svg[id^="mermaid-"] .edgePath path,
+svg[id^="mermaid-"] .flowchart-link,
+svg[id^="mermaid-"] path.relation {
+  stroke: var(--mermaid-edge-color) !important;
+  stroke-width: 2px !important;
+}
+
+/* Edge labels */
+.mermaid .edgeLabel,
+svg[id^="mermaid-"] .edgeLabel {
+  background-color: var(--mermaid-node-bg) !important;
+  color: var(--mermaid-node-text) !important;
+}
+
+.mermaid .edgeLabel rect,
+svg[id^="mermaid-"] .edgeLabel rect {
+  fill: var(--mermaid-node-bg) !important;
+  stroke: var(--mermaid-node-border) !important;
+}
+
+/* Arrow markers */
+.mermaid defs marker path,
+svg[id^="mermaid-"] defs marker path {
+  fill: var(--mermaid-edge-color) !important;
+  stroke: var(--mermaid-edge-color) !important;
+}
+
+/* Responsive to system color scheme preference */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --mermaid-node-bg: #1e293b;
+    --mermaid-node-border: #64748b;
+    --mermaid-node-text: #f1f5f9;
+    --mermaid-primary-bg: #2dd4bf;
+    --mermaid-secondary-bg: #5eead4;
+    --mermaid-tertiary-bg: #99f6e4;
+    --mermaid-warning-bg: #14b8a6;
+    --mermaid-danger-bg: #0d9488;
+    --mermaid-neutral-bg: #64748b;
+    --mermaid-dark-bg: #94a3b8;
+    --mermaid-cluster-bg: #334155;
+    --mermaid-cluster-border: #64748b;
+    --mermaid-edge-color: #cbd5e1;
+  }
+}
