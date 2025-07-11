@@ -120,21 +120,40 @@ function applyMermaidTheme(isDark = false) {
   // Initialize mermaid with new config
   window.mermaid.initialize(config);
 
+  // Find all mermaid elements
+  const mermaidElements = document.querySelectorAll('.mermaid');
+  console.log(`Found ${mermaidElements.length} .mermaid elements`);
+
+  // Also check for other possible selectors
+  const preElements = document.querySelectorAll('pre');
+  console.log(`Found ${preElements.length} pre elements total`);
+  
+  const codeElements = document.querySelectorAll('code.language-mermaid');
+  console.log(`Found ${codeElements.length} code.language-mermaid elements`);
+
   // Re-render all diagrams
-  document.querySelectorAll('.mermaid').forEach(async (element, index) => {
+  mermaidElements.forEach(async (element, index) => {
     try {
       // Get original source code
       let source = element.getAttribute('data-mermaid-source') || 
                   element.getAttribute('data-graph-code') ||
                   element.textContent;
 
+      console.log(`Diagram ${index + 1} - data-mermaid-source:`, element.getAttribute('data-mermaid-source'));
+      console.log(`Diagram ${index + 1} - textContent:`, element.textContent);
+      console.log(`Diagram ${index + 1} - innerHTML:`, element.innerHTML.substring(0, 100) + '...');
+
       // Skip if no source or already contains SVG
       if (!source || source.includes('<svg') || source.includes('</svg>')) {
+        console.log(`Diagram ${index + 1} - Skipping: no source or contains SVG`);
         return;
       }
 
       source = source.trim();
-      if (!source) return;
+      if (!source) {
+        console.log(`Diagram ${index + 1} - Skipping: empty source after trim`);
+        return;
+      }
 
       console.log(`Rendering diagram ${index + 1}:`, source.substring(0, 50) + '...');
 
@@ -167,19 +186,41 @@ function detectTheme() {
 function initializeMermaid() {
   console.log('Initializing Mermaid theme system...');
   
+  // Check what elements we have on the page
+  const allMermaid = document.querySelectorAll('.mermaid');
+  const allPre = document.querySelectorAll('pre');
+  const allCode = document.querySelectorAll('code');
+  
+  console.log(`Page scan: ${allMermaid.length} .mermaid, ${allPre.length} pre, ${allCode.length} code elements`);
+  
+  // Log details of all pre elements
+  allPre.forEach((pre, index) => {
+    console.log(`Pre ${index + 1}: class="${pre.className}", content="${pre.textContent.substring(0, 50)}..."`);
+  });
+  
   // Store original source code for all diagrams
-  document.querySelectorAll('.mermaid').forEach((element, index) => {
+  allMermaid.forEach((element, index) => {
+    console.log(`Processing .mermaid element ${index + 1}:`);
+    console.log(`  - Current class: "${element.className}"`);
+    console.log(`  - Current content: "${element.textContent.substring(0, 50)}..."`);
+    console.log(`  - Has data-mermaid-source: ${!!element.getAttribute('data-mermaid-source')}`);
+    
     if (!element.getAttribute('data-mermaid-source')) {
       const source = element.textContent || element.innerText;
       if (source && !source.includes('<svg')) {
         element.setAttribute('data-mermaid-source', source.trim());
-        console.log(`Stored source for diagram ${index + 1}`);
+        console.log(`  - Stored source for diagram ${index + 1}: "${source.substring(0, 30)}..."`);
+      } else {
+        console.log(`  - No source to store (empty or contains SVG)`);
       }
+    } else {
+      console.log(`  - Already has stored source`);
     }
   });
 
   // Apply initial theme
   const isDark = detectTheme();
+  console.log(`Initial theme detected: ${isDark ? 'dark' : 'light'}`);
   applyMermaidTheme(isDark);
 }
 

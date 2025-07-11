@@ -169,7 +169,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const markdownConfig = {
   syntaxHighlight: {
     type: 'shiki',
-    excludeLangs: ['mermaid', 'math'],  // Shiki leaves these alone
+    excludeLangs: ['mermaid'],  // Exclude mermaid from syntax highlighting
   },
   remarkPlugins: [
     [remarkToc, { heading: "Contents" }],
