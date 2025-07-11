@@ -28,155 +28,47 @@ const sortEntries = (a: any, b: any) => {
 // Sort entries in all categories and subcategories
 for (const category in wikiHierarchy) {
   wikiHierarchy[category].entries.sort(sortEntries);
-  
+
   for (const subcategory in wikiHierarchy[category].subcategories) {
-    wikiHierarchy[category].subcategories[subcategory].entries.sort(sortEntries);
+    wikiHierarchy[category].subcategories[subcategory].entries.sort(
+      sortEntries,
+    );
   }
 }
 
 // Find current entry if slug is provided
-const currentEntry = currentSlug ? wikiEntries.find(entry => entry.slug === currentSlug) : null;
+const currentEntry = currentSlug
+  ? wikiEntries.find((entry) => entry.slug === currentSlug)
+  : null;
 
 // Check if we're on the wiki landing page
 const isWikiLanding = currentSlug === "wiki" || currentSlug === undefined;
 ---
 
-<nav class="wiki-sidebar p-4">
+<nav class="wiki-sidebar p-4 hidden lg:block">
   <!-- Wiki navigation header -->
   <div class="mb-6">
-    <h2 class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-2">
+    <h2
+      class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-2"
+    >
       Wiki Navigation
     </h2>
-    {!isWikiLanding && (
-      <a
-        href="/tech-leadership/wiki/"
-        class="text-sm text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 transition-colors"
-      >
-        ← Back to Wiki Home
-      </a>
-    )}
+    {
+      !isWikiLanding && (
+        <a
+          href="/tech-leadership/wiki/"
+          class="text-sm text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 transition-colors"
+        >
+          ← Back to Wiki Home
+        </a>
+      )
+    }
   </div>
 
-  <!-- Main navigation -->
-  <div class="space-y-6">
-    {sortedCategories.map((category) => {
-      const content = wikiHierarchy[category];
-      const isActiveCategory = activeCategory === category;
-      const totalEntries = content.entries.length + 
-        Object.values(content.subcategories).reduce((sum, sub) => sum + sub.entries.length, 0);
-      
-      return (
-        <div class="category-section">
-          <div class="flex items-center justify-between mb-3">
-            <h3 class={`text-sm font-semibold transition-colors ${
-              isActiveCategory 
-                ? 'text-accent-600 dark:text-accent-400' 
-                : 'text-primary-700 dark:text-primary-300'
-            }`}>
-              {category}
-            </h3>
-            <span class="text-xs text-primary-500 dark:text-primary-400 bg-primary-100 dark:bg-primary-800 px-2 py-1 rounded-full">
-              {totalEntries}
-            </span>
-          </div>
-
-          {/* Category index link - show prominently */}
-          {content.index && (
-            <div class="mb-3">
-              <a
-                href={getWikiUrl(content.index.slug)}
-                class={`block text-sm py-2 px-3 rounded-lg transition-colors font-medium ${
-                  currentSlug === content.index.slug
-                    ? 'bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300'
-                    : 'text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800'
-                }`}
-              >
-                📖 {content.index.data.title}
-              </a>
-            </div>
-          )}
-
-          {/* Show subcategories first if they exist */}
-          {Object.entries(content.subcategories).length > 0 && (
-            <div class="space-y-2 mb-3">
-              {Object.entries(content.subcategories).map(([subcategory, subContent]) => (
-                <div class="subcategory-section">
-                  <h4 class="text-xs font-medium text-primary-600 dark:text-primary-400 mb-2 px-3">
-                    {subcategory}
-                  </h4>
-                  
-                  {/* Subcategory index */}
-                  {subContent.index && (
-                    <a
-                      href={getWikiUrl(subContent.index.slug)}
-                      class={`block text-xs py-1 px-4 rounded transition-colors ${
-                        currentSlug === subContent.index.slug
-                          ? 'bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300'
-                          : 'text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800'
-                      }`}
-                    >
-                      📖 {subContent.index.data.title}
-                    </a>
-                  )}
-
-                  {/* Subcategory entries - show only first 2 */}
-                  {subContent.entries.length > 0 && (
-                    <div class="ml-2 space-y-1">
-                      {subContent.entries.slice(0, 2).map((entry) => (
-                        <a
-                          href={getWikiUrl(entry.slug)}
-                          class={`block text-xs py-1 px-2 rounded transition-colors ${
-                            currentSlug === entry.slug
-                              ? 'bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300'
-                              : 'text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800'
-                          }`}
-                        >
-                          {entry.data.title}
-                        </a>
-                      ))}
-                      {subContent.entries.length > 2 && (
-                        <div class="text-xs text-primary-500 dark:text-primary-400 px-2 py-1">
-                          +{subContent.entries.length - 2} more
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Main category entries - show only if no subcategories or as additional items */}
-          {content.entries.length > 0 && (
-            <div class="space-y-1">
-              {content.entries.slice(0, 3).map((entry) => (
-                <a
-                  href={getWikiUrl(entry.slug)}
-                  class={`block text-xs py-1 px-3 rounded transition-colors ${
-                    currentSlug === entry.slug
-                      ? 'bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300'
-                      : 'text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800'
-                  }`}
-                >
-                  {entry.data.title}
-                </a>
-              ))}
-              {content.entries.length > 3 && (
-                <div class="text-xs text-primary-500 dark:text-primary-400 px-3 py-1">
-                  +{content.entries.length - 3} more articles
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      );
-    })}
-  </div>
-
-  <!-- Current context section -->
-  {currentEntry && !isWikiLanding && (
-    <div class="mt-8 pt-6 border-t border-primary-200 dark:border-primary-700">
-      <div class="mb-4 p-4 bg-accent-50 dark:bg-accent-900/20 rounded-lg border border-accent-200 dark:border-accent-800">
+  <!-- Current context section - moved to top -->
+  {
+    currentEntry && !isWikiLanding && (
+      <div class="mb-6 p-4 bg-accent-50 dark:bg-accent-900/20 rounded-lg border border-accent-200 dark:border-accent-800">
         <h3 class="text-sm font-medium text-accent-700 dark:text-accent-300 mb-2">
           Current Page
         </h3>
@@ -185,15 +77,155 @@ const isWikiLanding = currentSlug === "wiki" || currentSlug === undefined;
           <div class="text-xs opacity-75">{currentEntry.data.description}</div>
         </div>
       </div>
+    )
+  }
 
-      <!-- Related content section -->
-      {currentEntry.data.tags && currentEntry.data.tags.length > 0 && (
-        <div>
-          <h3 class="text-sm font-medium text-primary-700 dark:text-primary-300 mb-2">
+  <!-- Main navigation - redesigned for better wiki structure -->
+  <div class="space-y-6">
+    {
+      sortedCategories.map((category) => {
+        const content = wikiHierarchy[category];
+        const isActiveCategory = activeCategory === category;
+        const totalEntries =
+          content.entries.length +
+          Object.values(content.subcategories).reduce(
+            (sum, sub) => sum + sub.entries.length,
+            0,
+          );
+
+        return (
+          <div class="category-section">
+            <div class="flex items-center justify-between mb-3">
+              <h3
+                class={`text-sm font-semibold transition-colors ${
+                  isActiveCategory
+                    ? "text-accent-600 dark:text-accent-400"
+                    : "text-primary-700 dark:text-primary-300"
+                }`}
+              >
+                {category}
+              </h3>
+              <span class="text-xs text-primary-500 dark:text-primary-400 bg-primary-100 dark:bg-primary-800 px-2 py-1 rounded-full">
+                {totalEntries}
+              </span>
+            </div>
+
+            {/* Category overview link - always show if exists */}
+            {content.index && (
+              <div class="mb-3">
+                <a
+                  href={getWikiUrl(content.index.slug)}
+                  class={`block text-sm py-2 px-3 rounded-lg transition-colors font-medium ${
+                    currentSlug === content.index.slug
+                      ? "bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300"
+                      : "text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800"
+                  }`}
+                >
+                  📖 {content.index.data.title}
+                </a>
+              </div>
+            )}
+
+            {/* Subcategories - show as proper sections */}
+            {Object.entries(content.subcategories).length > 0 && (
+              <div class="space-y-3">
+                {Object.entries(content.subcategories).map(
+                  ([subcategory, subContent]) => (
+                    <div class="subcategory-section border-l-2 border-primary-200 dark:border-primary-700 pl-3">
+                      <h4 class="text-xs font-medium text-primary-600 dark:text-primary-400 mb-2">
+                        {subcategory}
+                      </h4>
+
+                      {/* Subcategory overview - always show first */}
+                      {subContent.index && (
+                        <a
+                          href={getWikiUrl(subContent.index.slug)}
+                          class={`block text-xs py-1 px-2 rounded transition-colors mb-2 ${
+                            currentSlug === subContent.index.slug
+                              ? "bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300"
+                              : "text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800"
+                          }`}
+                        >
+                          📖 {subContent.index.data.title}
+                        </a>
+                      )}
+
+                      {/* Subcategory articles - show regular entries */}
+                      {subContent.entries.length > 0 && (
+                        <div class="ml-2 space-y-1">
+                          {subContent.entries.slice(0, 3).map((entry) => (
+                            <a
+                              href={getWikiUrl(entry.slug)}
+                              class={`block text-xs py-1 px-2 rounded transition-colors ${
+                                currentSlug === entry.slug
+                                  ? "bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300"
+                                  : "text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800"
+                              }`}
+                            >
+                              {entry.data.title}
+                            </a>
+                          ))}
+                          {subContent.entries.length > 3 && (
+                            <div class="text-xs text-primary-500 dark:text-primary-400 px-2 py-1">
+                              +{subContent.entries.length - 3} more
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ),
+                )}
+              </div>
+            )}
+
+            {/* Main category articles - only show non-index entries */}
+            {content.entries.filter((entry) => !entry.data.isIndex).length >
+              0 && (
+              <div class="space-y-1">
+                {content.entries
+                  .filter((entry) => !entry.data.isIndex)
+                  .slice(0, 3)
+                  .map((entry) => (
+                    <a
+                      href={getWikiUrl(entry.slug)}
+                      class={`block text-xs py-1 px-3 rounded transition-colors ${
+                        currentSlug === entry.slug
+                          ? "bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300"
+                          : "text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800"
+                      }`}
+                    >
+                      {entry.data.title}
+                    </a>
+                  ))}
+                {content.entries.filter((entry) => !entry.data.isIndex).length >
+                  3 && (
+                  <div class="text-xs text-primary-500 dark:text-primary-400 px-3 py-1">
+                    +
+                    {content.entries.filter((entry) => !entry.data.isIndex)
+                      .length - 3}{" "}
+                    more articles
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      })
+    }
+  </div>
+
+  <!-- Related tags section - desktop only -->
+  {
+    currentEntry &&
+      !isWikiLanding &&
+      currentEntry.data.tags &&
+      currentEntry.data.tags.length > 0 && (
+        <div class="mt-8 pt-6 border-t border-primary-200 dark:border-primary-700">
+          <h3 class="text-sm font-medium text-primary-700 dark:text-primary-300 mb-3">
             Related Tags
           </h3>
-          <div class="flex flex-wrap gap-1">
-            {currentEntry.data.tags.slice(0, 3).map((tag) => (
+          <div class="flex flex-wrap gap-2">
+            {currentEntry.data.tags.slice(0, 5).map((tag) => (
               <a
                 href={`/tech-leadership/tags/${tag}/`}
                 class="text-xs text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 transition-colors bg-primary-100 dark:bg-primary-800 px-2 py-1 rounded"
@@ -203,7 +235,23 @@ const isWikiLanding = currentSlug === "wiki" || currentSlug === undefined;
             ))}
           </div>
         </div>
-      )}
-    </div>
-  )}
+      )
+  }
 </nav>
+
+<!-- Mobile navigation - hidden on desktop -->
+<div class="lg:hidden">
+  {
+    currentEntry && !isWikiLanding && (
+      <div class="p-4 bg-accent-50 dark:bg-accent-900/20 rounded-lg border border-accent-200 dark:border-accent-800 mb-4">
+        <h3 class="text-sm font-medium text-accent-700 dark:text-accent-300 mb-2">
+          Current Page
+        </h3>
+        <div class="text-sm text-accent-600 dark:text-accent-400">
+          <div class="font-medium mb-1">{currentEntry.data.title}</div>
+          <div class="text-xs opacity-75">{currentEntry.data.description}</div>
+        </div>
+      </div>
+    )
+  }
+</div>

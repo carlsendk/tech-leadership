@@ -124,17 +124,11 @@ export function findSubcategoryIndex(
   subcategory: string, 
   allEntries: WikiEntry[]
 ): WikiEntry | null {
-  const found = allEntries.find(entry => 
+  return allEntries.find(entry => 
     entry.data.category === category && 
     entry.data.subcategory === subcategory && 
     entry.data.isIndex
   ) || null;
-  if (!found) {
-    console.warn('[Breadcrumbs] Subcategory index not found:', { category, subcategory });
-    const candidates = allEntries.filter(entry => entry.data.category === category && entry.data.subcategory === subcategory);
-    console.warn('[Breadcrumbs] Candidates:', candidates.map(e => ({ slug: e.slug, isIndex: e.data.isIndex, title: e.data.title })));
-  }
-  return found;
 }
 
 /**
@@ -167,13 +161,16 @@ export function buildWikiHierarchy(entries: WikiEntry[]) {
       } else {
         hierarchy[category].index = entry;
       }
-    } else if (subcategory) {
-      if (!hierarchy[category].subcategories[subcategory]) {
-        hierarchy[category].subcategories[subcategory] = { entries: [] };
-      }
-      hierarchy[category].subcategories[subcategory].entries.push(entry);
     } else {
-      hierarchy[category].entries.push(entry);
+      // Only non-index entries go into the entries arrays
+      if (subcategory) {
+        if (!hierarchy[category].subcategories[subcategory]) {
+          hierarchy[category].subcategories[subcategory] = { entries: [] };
+        }
+        hierarchy[category].subcategories[subcategory].entries.push(entry);
+      } else {
+        hierarchy[category].entries.push(entry);
+      }
     }
   });
 

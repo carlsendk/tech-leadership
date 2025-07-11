@@ -106,6 +106,27 @@ const editUrl = `${githubUrl}/edit/main/src/content/wiki/${currentPath.split("/"
         <div class="prose max-w-none dark:prose-dark prose-lg prose-primary">
           <slot />
         </div>
+
+        <!-- Mobile-only related tags section -->
+        {
+          tags && tags.length > 0 && (
+            <div class="mt-8 pt-6 border-t border-primary-200 dark:border-primary-700 lg:hidden">
+              <h3 class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-4">
+                Related Tags
+              </h3>
+              <div class="flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <a
+                    href={`/tech-leadership/tags/${tag}/`}
+                    class="text-sm text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 transition-colors bg-primary-100 dark:bg-primary-800 px-3 py-2 rounded-lg"
+                  >
+                    #{tag}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )
+        }
       </article>
     </main>
 

@@ -16,28 +16,6 @@ export async function getStaticPaths() {
     },
   );
 
-  console.log("=== ALL WIKI ENTRIES ===");
-  wikiEntries.forEach((entry) => {
-    console.log(`File: ${entry.slug}`);
-    console.log(`  Title: ${entry.data.title}`);
-    console.log(`  Category: ${entry.data.category}`);
-    console.log(`  Subcategory: ${entry.data.subcategory || "none"}`);
-    console.log(`  isIndex: ${entry.data.isIndex}`);
-    console.log("---");
-  });
-
-  // Filter to include only index files for debugging
-  const indexFiles = wikiEntries.filter((entry) => entry.data.isIndex);
-  console.log(
-    "Index files found:",
-    indexFiles.map((e) => ({
-      slug: e.slug,
-      title: e.data.title,
-      category: e.data.category,
-      subcategory: e.data.subcategory,
-    })),
-  );
-
   return wikiEntries.map((entry: CollectionEntry<"wiki">) => {
     const generatedSlug = entry.slug.split(/[/\\]/).join("/");
 
