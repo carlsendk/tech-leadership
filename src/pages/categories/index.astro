@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
-import { getCategoryUrl, getTagUrl, getHomeUrl } from "../../utils/url";
+import { getCategoryUrl, getHomeUrl } from "../../utils/url";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import FilterBox from "../../components/FilterBox.astro";
 
@@ -57,7 +57,6 @@ const allTags = [
 ].sort();
 
 // Calculate total statistics
-const totalItems = categories.reduce((sum, cat) => sum + cat.total, 0);
 const totalBlogPosts = categories.reduce((sum, cat) => sum + cat.blogCount, 0);
 const totalWikiArticles = categories.reduce(
   (sum, cat) => sum + cat.wikiCount,

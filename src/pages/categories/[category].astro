@@ -10,32 +10,6 @@ import {
   getWikiIndexUrl,
 } from "../../utils/url";
 
-interface BlogPost {
-  slug: string;
-  data: {
-    title: string;
-    description: string;
-    date: Date;
-    category: string;
-    tags: string[];
-    author: {
-      name: string;
-      title?: string;
-      avatar?: string;
-    };
-  };
-}
-
-interface WikiEntry {
-  slug: string;
-  data: {
-    title: string;
-    description: string;
-    category: string;
-    tags: string[];
-  };
-}
-
 export async function getStaticPaths() {
   const blogPosts = await getCollection("blog");
   const wikiEntries = await getCollection("wiki");
