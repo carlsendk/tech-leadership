@@ -49,17 +49,23 @@ const isWikiLanding = currentSlug === "wiki" || currentSlug === undefined;
   <!-- Wiki navigation header -->
   <div class="mb-6">
     <h2
-      class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-2"
+      class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-2 flex items-center"
     >
-      Wiki Navigation
+      <svg class="w-5 h-5 mr-2 text-accent-600 dark:text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+      </svg>
+      Wiki
     </h2>
     {
       !isWikiLanding && (
         <a
           href="/tech-leadership/wiki/"
-          class="text-sm text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 transition-colors"
+          class="text-sm text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 transition-colors inline-flex items-center"
         >
-          ← Back to Wiki Home
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Back to Wiki Home
         </a>
       )
     }
@@ -68,13 +74,16 @@ const isWikiLanding = currentSlug === "wiki" || currentSlug === undefined;
   <!-- Current context section - moved to top -->
   {
     currentEntry && !isWikiLanding && (
-      <div class="mb-6 p-4 bg-accent-50 dark:bg-accent-900/20 rounded-lg border border-accent-200 dark:border-accent-800">
-        <h3 class="text-sm font-medium text-accent-700 dark:text-accent-300 mb-2">
-          Current Page
+      <div class="mb-6 p-4 bg-accent-50 dark:bg-accent-900/20 rounded-lg border-l-4 border-accent-400 dark:border-accent-500">
+        <h3 class="text-sm font-medium text-accent-700 dark:text-accent-300 mb-2 flex items-center">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          You are here
         </h3>
         <div class="text-sm text-accent-600 dark:text-accent-400">
-          <div class="font-medium mb-1">{currentEntry.data.title}</div>
-          <div class="text-xs opacity-75">{currentEntry.data.description}</div>
+          <div class="font-semibold mb-1">{currentEntry.data.title}</div>
+          <div class="text-xs opacity-75 line-clamp-2">{currentEntry.data.description}</div>
         </div>
       </div>
     )
@@ -94,37 +103,49 @@ const isWikiLanding = currentSlug === "wiki" || currentSlug === undefined;
           );
 
         return (
-          <div class="category-section">
-            <div class="flex items-center justify-between mb-3">
-              <h3
-                class={`text-sm font-semibold transition-colors ${
+          <div class="category-section" x-data={`{ open: ${isActiveCategory} }`}>
+            <div class="flex items-center justify-between mb-3 group">
+              <button
+                @click="open = !open"
+                class={`text-sm font-semibold transition-colors flex items-center flex-1 text-left ${
                   isActiveCategory
                     ? "text-accent-600 dark:text-accent-400"
-                    : "text-primary-700 dark:text-primary-300"
+                    : "text-primary-700 dark:text-primary-300 group-hover:text-accent-600 dark:group-hover:text-accent-400"
                 }`}
               >
+                <svg class="w-4 h-4 mr-2 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h2a2 2 0 012 2v0H8v0z"></path>
+                </svg>
                 {category}
-              </h3>
-              <span class="text-xs text-primary-500 dark:text-primary-400 bg-primary-100 dark:bg-primary-800 px-2 py-1 rounded-full">
+                <svg class="w-4 h-4 ml-auto transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <span class="text-xs text-primary-500 dark:text-primary-400 bg-primary-100 dark:bg-primary-800 px-2 py-1 rounded-full font-medium">
                 {totalEntries}
               </span>
             </div>
 
-            {/* Category overview link - always show if exists */}
-            {content.index && (
-              <div class="mb-3">
-                <a
-                  href={getWikiUrl(content.index.slug)}
-                  class={`block text-sm py-2 px-3 rounded-lg transition-colors font-medium ${
-                    currentSlug === content.index.slug
-                      ? "bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300"
-                      : "text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800"
-                  }`}
-                >
-                  📖 {content.index.data.title}
-                </a>
-              </div>
-            )}
+            <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
+              {/* Category overview link - always show if exists */}
+              {content.index && (
+                <div class="mb-3">
+                  <a
+                    href={getWikiUrl(content.index.slug)}
+                    class={`block text-sm py-2 px-3 rounded-lg transition-colors font-medium flex items-center ${
+                      currentSlug === content.index.slug
+                        ? "bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300"
+                        : "text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800"
+                    }`}
+                  >
+                    <svg class="w-4 h-4 mr-2 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    {content.index.data.title}
+                  </a>
+                </div>
+              )}
 
             {/* Subcategories - show as proper sections */}
             {Object.entries(content.subcategories).length > 0 && (
@@ -132,7 +153,10 @@ const isWikiLanding = currentSlug === "wiki" || currentSlug === undefined;
                 {Object.entries(content.subcategories).map(
                   ([subcategory, subContent]) => (
                     <div class="subcategory-section border-l-2 border-primary-200 dark:border-primary-700 pl-3">
-                      <h4 class="text-xs font-medium text-primary-600 dark:text-primary-400 mb-2">
+                      <h4 class="text-xs font-medium text-primary-600 dark:text-primary-400 mb-2 flex items-center">
+                        <svg class="w-3 h-3 mr-1 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
                         {subcategory}
                       </h4>
 
@@ -140,34 +164,43 @@ const isWikiLanding = currentSlug === "wiki" || currentSlug === undefined;
                       {subContent.index && (
                         <a
                           href={getWikiUrl(subContent.index.slug)}
-                          class={`block text-xs py-1 px-2 rounded transition-colors mb-2 ${
+                          class={`block text-xs py-1 px-2 rounded transition-colors mb-2 flex items-center ${
                             currentSlug === subContent.index.slug
                               ? "bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300"
                               : "text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800"
                           }`}
                         >
-                          📖 {subContent.index.data.title}
+                          <svg class="w-3 h-3 mr-1 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                          </svg>
+                          {subContent.index.data.title}
                         </a>
                       )}
 
                       {/* Subcategory articles - show regular entries */}
                       {subContent.entries.length > 0 && (
                         <div class="ml-2 space-y-1">
-                          {subContent.entries.slice(0, 3).map((entry) => (
+                          {subContent.entries.slice(0, 2).map((entry) => (
                             <a
                               href={getWikiUrl(entry.slug)}
-                              class={`block text-xs py-1 px-2 rounded transition-colors ${
+                              class={`block text-xs py-1 px-2 rounded transition-colors flex items-center ${
                                 currentSlug === entry.slug
                                   ? "bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300"
                                   : "text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800"
                               }`}
                             >
-                              {entry.data.title}
+                              <svg class="w-3 h-3 mr-1 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                              </svg>
+                              <span class="truncate">{entry.data.title}</span>
                             </a>
                           ))}
-                          {subContent.entries.length > 3 && (
-                            <div class="text-xs text-primary-500 dark:text-primary-400 px-2 py-1">
-                              +{subContent.entries.length - 3} more
+                          {subContent.entries.length > 2 && (
+                            <div class="text-xs text-primary-500 dark:text-primary-400 px-2 py-1 flex items-center">
+                              <svg class="w-3 h-3 mr-1 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+                              </svg>
+                              +{subContent.entries.length - 2} more
                             </div>
                           )}
                         </div>
@@ -184,30 +217,34 @@ const isWikiLanding = currentSlug === "wiki" || currentSlug === undefined;
               <div class="space-y-1">
                 {content.entries
                   .filter((entry) => !entry.data.isIndex)
-                  .slice(0, 3)
+                  .slice(0, 2)
                   .map((entry) => (
                     <a
                       href={getWikiUrl(entry.slug)}
-                      class={`block text-xs py-1 px-3 rounded transition-colors ${
+                      class={`block text-xs py-1 px-3 rounded transition-colors flex items-center ${
                         currentSlug === entry.slug
                           ? "bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300"
                           : "text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800"
                       }`}
                     >
-                      {entry.data.title}
+                      <svg class="w-3 h-3 mr-1 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      <span class="truncate">{entry.data.title}</span>
                     </a>
                   ))}
                 {content.entries.filter((entry) => !entry.data.isIndex).length >
-                  3 && (
-                  <div class="text-xs text-primary-500 dark:text-primary-400 px-3 py-1">
-                    +
-                    {content.entries.filter((entry) => !entry.data.isIndex)
-                      .length - 3}{" "}
-                    more articles
+                  2 && (
+                  <div class="text-xs text-primary-500 dark:text-primary-400 px-3 py-1 flex items-center">
+                    <svg class="w-3 h-3 mr-1 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+                    </svg>
+                    +{content.entries.filter((entry) => !entry.data.isIndex).length - 2} more articles
                   </div>
                 )}
               </div>
             )}
+            </div>
           </div>
         );
       })
@@ -221,16 +258,22 @@ const isWikiLanding = currentSlug === "wiki" || currentSlug === undefined;
       currentEntry.data.tags &&
       currentEntry.data.tags.length > 0 && (
         <div class="mt-8 pt-6 border-t border-primary-200 dark:border-primary-700">
-          <h3 class="text-sm font-medium text-primary-700 dark:text-primary-300 mb-3">
-            Related Tags
+          <h3 class="text-sm font-medium text-primary-700 dark:text-primary-300 mb-3 flex items-center">
+            <svg class="w-4 h-4 mr-2 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+            </svg>
+            Related Topics
           </h3>
           <div class="flex flex-wrap gap-2">
             {currentEntry.data.tags.slice(0, 5).map((tag) => (
               <a
                 href={`/tech-leadership/tags/${tag}/`}
-                class="text-xs text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 transition-colors bg-primary-100 dark:bg-primary-800 px-2 py-1 rounded"
+                class="text-xs text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 transition-colors bg-primary-100 dark:bg-primary-800 hover:bg-accent-50 dark:hover:bg-accent-900/20 px-2 py-1 rounded inline-flex items-center"
               >
-                #{tag}
+                <svg class="w-3 h-3 mr-1 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                </svg>
+                {tag}
               </a>
             ))}
           </div>
