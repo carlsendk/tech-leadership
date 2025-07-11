@@ -8,6 +8,7 @@ tags:
   - strategy
   - canvas
 category: "Organisation Design"
+subcategory: "Alignment"
 date: 2025-04-30
 ---
 

@@ -2,8 +2,13 @@
  * Utility functions for handling URLs consistently across the project
  */
 
-// Get base URL from environment, ensuring it starts with a slash and has no trailing slash
-const baseUrl = (import.meta.env.BASE_URL || '').replace(/^\/+|\/+$/g, '');
+// Get base URL from environment on demand. When running in Vitest or Node, `import.meta.env`
+// is typically undefined, so we fall back to `process.env.BASE_URL`.
+function getBaseUrl(): string {
+  const envBase = typeof import.meta !== 'undefined' ? (import.meta as any).env?.BASE_URL : undefined;
+  const rawBase = envBase && envBase !== '/' ? envBase : process.env.BASE_URL ?? '';
+  return (rawBase || '').replace(/^\/+|\/+$/g, '');
+}
 
 
 // Test cases:
@@ -19,6 +24,7 @@ const baseUrl = (import.meta.env.BASE_URL || '').replace(/^\/+|\/+$/g, '');
  * Ensures a URL is properly prefixed with the base URL and has a trailing slash
  */
 export function getFullUrl(path: string): string {
+  const baseUrl = getBaseUrl();
   // Handle empty path or root path specially
   if (!path || path === '/' || path === '') {
     return baseUrl ? `/${baseUrl}/` : '/';
@@ -40,6 +46,7 @@ export function getFullUrl(path: string): string {
  * Creates a URL for the home page
  */
 export function getHomeUrl(): string {
+  const baseUrl = getBaseUrl();
   return baseUrl ? `/${baseUrl}/` : '/';
 }
 
@@ -56,6 +63,10 @@ export function getBlogUrl(slug: string): string {
 export function getWikiUrl(slug: string): string {
   // Replace any backslashes with forward slashes and ensure no double slashes
   const cleanSlug = slug.replace(/\\/g, '/').replace(/\/+/g, '/');
+  // Handle _index files specially
+  if (cleanSlug.endsWith('/_index')) {
+    return getFullUrl(`wiki/${cleanSlug.replace('/_index', '')}`);
+  }
   return getFullUrl(`wiki/${cleanSlug}`);
 }
 

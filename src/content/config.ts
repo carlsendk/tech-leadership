@@ -30,7 +30,9 @@ const wikiCollection = defineCollection({
     description: z.string(),
     tags: z.array(z.string()),
     category: z.string(),
-    order: z.number().optional(),
+    order: z.number().default(999),
+    subcategory: z.string().optional(),
+    isIndex: z.boolean().optional().default(false),
     draft: z.boolean().optional().default(false),
   }),
 });

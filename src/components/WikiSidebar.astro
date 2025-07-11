@@ -2,40 +2,95 @@
 import { getCollection } from "astro:content";
 import { getCategoryUrl, getWikiUrl } from "../utils/url";
 
-export interface Props {
-  activeCategory?: string;
+interface WikiEntry {
+  slug: string;
+  data: {
+    title: string;
+    category: string;
+    subcategory?: string;
+    order: number;
+    isIndex?: boolean;
+    draft?: boolean;
+  };
 }
 
-const { activeCategory } = Astro.props;
+interface CategoryStructure {
+  index?: WikiEntry;
+  entries: WikiEntry[];
+  subcategories: Record<string, {
+    index?: WikiEntry;
+    entries: WikiEntry[];
+  }>;
+}
+
+export interface Props {
+  activeCategory?: string;
+  activeSubcategory?: string;
+}
+
+const { activeCategory, activeSubcategory } = Astro.props;
 
 const wikiEntries = await getCollection("wiki", ({ data }) => {
   return !data.draft;
 });
 
-// Organize entries by category
-const categories = wikiEntries.reduce(
+// Organize entries by category and subcategory
+const categories = wikiEntries.reduce<Record<string, CategoryStructure>>(
   (acc, entry) => {
     const category = entry.data.category;
+    const subcategory = entry.data.subcategory;
+
     if (!acc[category]) {
-      acc[category] = [];
+      acc[category] = {
+        entries: [],
+        subcategories: {},
+      };
     }
-    acc[category].push(entry);
+
+    if (entry.data.isIndex) {
+      if (subcategory) {
+        if (!acc[category].subcategories[subcategory]) {
+          acc[category].subcategories[subcategory] = {
+            entries: [],
+          };
+        }
+        acc[category].subcategories[subcategory].index = entry;
+      } else {
+        acc[category].index = entry;
+      }
+    } else if (subcategory) {
+      if (!acc[category].subcategories[subcategory]) {
+        acc[category].subcategories[subcategory] = {
+          entries: [],
+        };
+      }
+      acc[category].subcategories[subcategory].entries.push(entry);
+    } else {
+      acc[category].entries.push(entry);
+    }
+
     return acc;
-  },
-  {} as Record<string, typeof wikiEntries>,
+  }, {},
 );
 
 // Sort categories alphabetically
 const sortedCategories = Object.keys(categories).sort();
 
-// Sort entries within each category by order if available, or by title
-for (const category of sortedCategories) {
-  categories[category].sort((a, b) => {
-    if (a.data.order !== undefined && b.data.order !== undefined) {
-      return a.data.order - b.data.order;
-    }
-    return a.data.title.localeCompare(b.data.title);
-  });
+// Sort function for entries
+const sortEntries = (a: WikiEntry, b: WikiEntry) => {
+  if (a.data.order !== b.data.order) {
+    return a.data.order - b.data.order;
+  }
+  return a.data.title.localeCompare(b.data.title);
+};
+
+// Sort entries in all categories and subcategories
+for (const category in categories) {
+  categories[category].entries.sort(sortEntries);
+  
+  for (const subcategory in categories[category].subcategories) {
+    categories[category].subcategories[subcategory].entries.sort(sortEntries);
+  }
 }
 ---
 
@@ -48,40 +103,71 @@ for (const category of sortedCategories) {
     {
       sortedCategories.map((category) => (
         <div>
-          <h3
-            class={`
-          text-sm font-semibold mb-2 
-          ${
+          <h3 class={`text-sm font-semibold mb-2 ${
             activeCategory === category
-              ? "text-accent-600 dark:text-accent-400"
-              : "text-primary-700 dark:text-primary-300"
-          }
-        `}
-          >
-            <a href={getCategoryUrl(category)} class="hover:underline">
+            ? "text-accent-600 dark:text-accent-400"
+            : "text-primary-700 dark:text-primary-300"
+          }`}>
+            <a href={categories[category].index 
+              ? getWikiUrl(categories[category].index.slug)
+              : getCategoryUrl(category)} 
+              class="hover:underline">
               {category}
             </a>
           </h3>
 
-          <ul class="space-y-1 pl-2 border-l border-primary-200 dark:border-primary-700">
-            {categories[category].map((entry) => (
+          {/* Main category entries */}
+          <ul class="space-y-1 pl-2 border-l border-primary-200 dark:border-primary-700 mb-4">
+            {categories[category].entries.map((entry) => (
               <li>
                 <a
                   href={getWikiUrl(entry.slug)}
-                  class={`
-                  block py-1 text-sm 
-                  ${
+                  class={`block py-1 text-sm ${
                     Astro.url.pathname === `/wiki/${entry.slug}`
                       ? "text-accent-600 dark:text-accent-400 font-medium"
                       : "text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100"
-                  }
-                `}
+                  }`}
                 >
                   {entry.data.title}
                 </a>
               </li>
             ))}
           </ul>
+
+          {/* Subcategories */}
+          {Object.entries(categories[category].subcategories).map(([subcategory, content]) => (
+            <div class="ml-4 mb-4">
+              <h4 class={`text-sm font-medium mb-2 ${
+                activeSubcategory === subcategory
+                ? "text-accent-600 dark:text-accent-400"
+                : "text-primary-600 dark:text-primary-300"
+              }`}>
+                <a href={content.index 
+                  ? getWikiUrl(content.index.slug)
+                  : `#${subcategory}`} 
+                  class="hover:underline">
+                  {subcategory}
+                </a>
+              </h4>
+              
+              <ul class="space-y-1 pl-2 border-l border-primary-200 dark:border-primary-700">
+                {content.entries.map((entry) => (
+                  <li>
+                    <a
+                      href={getWikiUrl(entry.slug)}
+                      class={`block py-1 text-sm ${
+                        Astro.url.pathname === `/wiki/${entry.slug}`
+                          ? "text-accent-600 dark:text-accent-400 font-medium"
+                          : "text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100"
+                      }`}
+                    >
+                      {entry.data.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       ))
     }

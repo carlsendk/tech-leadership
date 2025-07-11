@@ -8,6 +8,7 @@ tags:
   - inverse_conway
   - system_design
 category: "Organisation Design"
+subcategory: "Team Structure"
 date: 2025-04-30
 ---
 

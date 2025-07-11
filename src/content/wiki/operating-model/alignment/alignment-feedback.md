@@ -8,6 +8,7 @@ tags:
   - metrics
   - continuous-improvement
 category: "Organisation Design"
+subcategory: "Alignment"
 date: 2025-04-30
 ---
 
