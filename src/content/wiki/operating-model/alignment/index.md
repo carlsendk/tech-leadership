@@ -4,6 +4,7 @@ description: "Overview of alignment practices for strategy and execution."
 category: "Organisation Design"
 subcategory: "Alignment"
 tags: ["operating-model", "alignment", "mission", "objectives", "feedback"]
+displayMode: "subcategory"
 isIndex: true
 order: 0
 ---

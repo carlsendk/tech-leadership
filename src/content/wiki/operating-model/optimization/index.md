@@ -4,6 +4,7 @@ description: "Overview of optimization practices for flow, cost, and motivation.
 category: "Organisation Design"
 subcategory: "Optimization"
 tags: ["operating-model", "optimization", "flow", "cost", "motivation"]
+displayMode: "subcategory"
 isIndex: true
 order: 0
 ---

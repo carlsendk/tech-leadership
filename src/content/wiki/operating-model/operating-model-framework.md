@@ -9,6 +9,8 @@ tags:
   - product-canvas
   - ddd
 category: "Organisation Design"
+displayMode: "category"
+isIndex: true
 date: 2025-04-30
 ---
 
