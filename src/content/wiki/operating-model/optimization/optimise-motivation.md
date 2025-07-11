@@ -10,6 +10,7 @@ tags:
 category: "Organisation Design"
 subcategory: "Optimization"
 date: 2025-04-30
+order: 2
 ---
 
 ## Motivation Framework
@@ -120,7 +121,7 @@ graph TD
 ### With Other Practices
 - Supports [Flow Optimization](optimise-flow)
 - Enables [Cost Efficiency](optimise-cost)
-- Drives [Mission Delivery](mission-objectives)
+- Drives [Mission Delivery](../advanced/mission-objectives)
 
 ### With Tools & Systems
 - Engagement platforms
@@ -128,9 +129,9 @@ graph TD
 - Recognition programs
 
 ## Related Topics
-- [Operating Model Overview](operating_alignment_model_wiki)
-- [Culture Guide](culture)
-- [Values Framework](values)
+- [Operating Model Overview](../operating-model-framework)
+- [Culture Guide](../foundation/culture-framework)
+- [Values Framework](../foundation/values)
 
 > **Pro Tip:** Focus on creating an environment where people can do their best work, rather than trying to motivate them directly.
 

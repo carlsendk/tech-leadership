@@ -1,0 +1,239 @@
+---
+import { getCollection } from "astro:content";
+import { getWikiUrl } from "../utils/url";
+import { buildWikiHierarchy } from "../utils/wiki-breadcrumbs";
+
+// Get all wiki entries and organize by hierarchy
+const wikiEntries = await getCollection("wiki", ({ data }) => !data.draft);
+const wikiHierarchy = buildWikiHierarchy(wikiEntries);
+
+// Sort categories alphabetically
+const sortedCategories = Object.keys(wikiHierarchy).sort();
+
+// Sort function for entries
+const sortEntries = (a: any, b: any) => {
+    if ((a.data.order ?? 999) !== (b.data.order ?? 999)) {
+        return (a.data.order ?? 999) - (b.data.order ?? 999);
+    }
+    return a.data.title.localeCompare(b.data.title);
+};
+
+// Sort entries in all categories and subcategories
+for (const category in wikiHierarchy) {
+    wikiHierarchy[category].entries.sort(sortEntries);
+
+    for (const subcategory in wikiHierarchy[category].subcategories) {
+        wikiHierarchy[category].subcategories[subcategory].entries.sort(
+            sortEntries,
+        );
+    }
+}
+
+// Get all unique tags
+const allTags = [
+    ...new Set(wikiEntries.flatMap((entry) => entry.data.tags)),
+].sort();
+
+// Calculate statistics
+const totalArticles = wikiEntries.length;
+const totalCategories = sortedCategories.length;
+const totalSubcategories = Object.values(wikiHierarchy).reduce(
+    (sum, cat) => sum + Object.keys(cat.subcategories).length,
+    0,
+);
+const totalTags = allTags.length;
+---
+
+<div class="wiki-landing">
+    <!-- Wiki-specific header -->
+    <header class="wiki-header text-center mb-12">
+        <h1
+            class="text-4xl font-bold text-primary-900 dark:text-primary-100 mb-4"
+        >
+            Technical Leadership Wiki
+        </h1>
+        <p
+            class="text-xl text-primary-600 dark:text-primary-300 max-w-3xl mx-auto"
+        >
+            Comprehensive knowledge base for technical leadership,
+            organizational design, and engineering excellence
+        </p>
+    </header>
+
+    <!-- Statistics overview -->
+    <section class="mb-12">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            <div
+                class="bg-white dark:bg-primary-900 rounded-xl shadow-lg p-6 text-center border border-primary-200 dark:border-primary-800"
+            >
+                <div
+                    class="text-3xl font-bold text-accent-600 dark:text-accent-400 mb-2"
+                >
+                    {totalArticles}
+                </div>
+                <div class="text-sm text-primary-600 dark:text-primary-400">
+                    Total Articles
+                </div>
+            </div>
+            <div
+                class="bg-white dark:bg-primary-900 rounded-xl shadow-lg p-6 text-center border border-primary-200 dark:border-primary-800"
+            >
+                <div
+                    class="text-3xl font-bold text-accent-600 dark:text-accent-400 mb-2"
+                >
+                    {totalCategories}
+                </div>
+                <div class="text-sm text-primary-600 dark:text-primary-400">
+                    Categories
+                </div>
+            </div>
+            <div
+                class="bg-white dark:bg-primary-900 rounded-xl shadow-lg p-6 text-center border border-primary-200 dark:border-primary-800"
+            >
+                <div
+                    class="text-3xl font-bold text-accent-600 dark:text-accent-400 mb-2"
+                >
+                    {totalSubcategories}
+                </div>
+                <div class="text-sm text-primary-600 dark:text-primary-400">
+                    Subcategories
+                </div>
+            </div>
+            <div
+                class="bg-white dark:bg-primary-900 rounded-xl shadow-lg p-6 text-center border border-primary-200 dark:border-primary-800"
+            >
+                <div
+                    class="text-3xl font-bold text-accent-600 dark:text-accent-400 mb-2"
+                >
+                    {totalTags}
+                </div>
+                <div class="text-sm text-primary-600 dark:text-primary-400">
+                    Topics
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories overview -->
+    <section class="mb-12">
+        <h2
+            class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6 text-center"
+        >
+            Browse by Category
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {
+                sortedCategories.map((category) => {
+                    const content = wikiHierarchy[category];
+                    const totalEntries =
+                        content.entries.length +
+                        Object.values(content.subcategories).reduce(
+                            (sum, sub) => sum + sub.entries.length,
+                            0,
+                        );
+
+                    return (
+                        <a
+                            href={`/tech-leadership/categories/${encodeURIComponent(category)}/`}
+                            class="category-card bg-white dark:bg-primary-900 rounded-xl shadow-lg hover:shadow-xl transition-shadow p-6 border border-primary-200 dark:border-primary-800 block"
+                        >
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold text-primary-900 dark:text-primary-100">
+                                    {category}
+                                </h3>
+                                <span class="text-sm text-primary-500 dark:text-primary-400 bg-primary-100 dark:bg-primary-800 px-2 py-1 rounded-full">
+                                    {totalEntries} articles
+                                </span>
+                            </div>
+
+                            {content.index && (
+                                <div class="mb-3">
+                                    <div class="text-sm text-accent-600 dark:text-accent-400 font-medium mb-1">
+                                        📖 {content.index.data.title}
+                                    </div>
+                                    <div class="text-xs text-primary-600 dark:text-primary-400">
+                                        {content.index.data.description}
+                                    </div>
+                                </div>
+                            )}
+
+                            <div class="text-xs text-primary-500 dark:text-primary-400">
+                                {Object.keys(content.subcategories).length >
+                                    0 && (
+                                    <span class="block mb-1">
+                                        {
+                                            Object.keys(content.subcategories)
+                                                .length
+                                        }{" "}
+                                        subcategories
+                                    </span>
+                                )}
+                                <span>Explore {category} →</span>
+                            </div>
+                        </a>
+                    );
+                })
+            }
+        </div>
+    </section>
+
+    <!-- Tags overview -->
+    <section class="mb-12">
+        <h2
+            class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6 text-center"
+        >
+            Browse by Topic
+        </h2>
+        <div class="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+            {
+                allTags.map((tag) => {
+                    const tagEntries = wikiEntries.filter((entry) =>
+                        entry.data.tags.includes(tag),
+                    );
+                    return (
+                        <a
+                            href={`/tech-leadership/tags/${encodeURIComponent(tag)}/`}
+                            class="bg-white dark:bg-primary-900 rounded-lg px-4 py-2 text-sm text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-accent-50 dark:hover:bg-accent-900/20 transition-colors border border-primary-200 dark:border-primary-800"
+                        >
+                            #{tag}{" "}
+                            <span class="text-xs text-primary-500 dark:text-primary-400">
+                                ({tagEntries.length})
+                            </span>
+                        </a>
+                    );
+                })
+            }
+        </div>
+    </section>
+
+    <!-- Quick navigation -->
+    <section class="text-center">
+        <h2
+            class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6"
+        >
+            Quick Navigation
+        </h2>
+        <div
+            class="flex flex-col sm:flex-row justify-center gap-4 max-w-2xl mx-auto"
+        >
+            <a
+                href="/tech-leadership/blog/"
+                class="bg-accent-600 hover:bg-accent-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            >
+                📝 Browse Blog Posts
+            </a>
+            <a
+                href="/tech-leadership/categories/"
+                class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            >
+                📂 All Categories
+            </a>
+            <a
+                href="/tech-leadership/tags/"
+                class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            >
+                🏷️ All Tags
+            </a>
+        </div>
+    </section>
+</div>

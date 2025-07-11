@@ -16,8 +16,6 @@ export default function addMermaidClass() {
         );
         
         if (hasMermaid && node.children && node.children[0]) {
-          console.log('Found Mermaid code block, transforming...', classes);
-          
           const sourceCode = node.children[0].value || node.children[0].data || '';
           
           // If the code element is inside a pre element, transform the pre element
@@ -29,7 +27,6 @@ export default function addMermaidClass() {
             };
             // Move the content up to the pre element
             node.parent.children = [{ type: 'text', value: sourceCode }];
-            console.log('Transformed pre element for Mermaid');
           } else {
             // If code element is standalone, transform it to pre
             node.tagName = 'pre';
@@ -37,7 +34,6 @@ export default function addMermaidClass() {
               className: ['mermaid'],
               'data-mermaid-source': sourceCode
             };
-            console.log('Transformed code element to pre for Mermaid');
           }
         }
       }
@@ -53,13 +49,11 @@ export default function addMermaidClass() {
         );
           
         if (hasMermaid) {
-          console.log('Found pre element with mermaid class');
           // Make sure it has the right properties
           node.properties.className = ['mermaid'];
           if (node.children && node.children[0] && !node.properties['data-mermaid-source']) {
             const sourceCode = node.children[0].value || '';
             node.properties['data-mermaid-source'] = sourceCode;
-            console.log('Added data-mermaid-source to pre element');
           }
         }
       }

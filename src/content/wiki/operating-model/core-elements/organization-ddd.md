@@ -9,21 +9,43 @@ tags:
   - bounded-context
   - domain-modeling
 category: "Organisation Design"
+subcategory: "Core Elements"
+displayMode: "content"
 date: 2025-04-30
+order: 3
 ---
 
 ## Domain-Driven Organization
 
 ```mermaid
-graph TD
-    A[Domain] --> B[Subdomains]
-    B --> C[Contexts]
-    C --> D[Models]
-    D --> E[Entities]
-    E --> F[Value Objects]
-    F --> G[Aggregates]
-    G --> H[Services]
-    H --> I[Repositories]
+flowchart TD
+    %% Business Domain
+    BUSINESS_DOMAIN["🏢 Business Domain<br/>Core business problems<br/>& value delivery"]
+    
+    %% Domain Analysis
+    SUBDOMAINS["🧩 Subdomain Analysis<br/>Core, Supporting<br/>& Generic domains"]
+    
+    %% Bounded Contexts
+    CONTEXTS["🔲 Bounded Contexts<br/>Clear boundaries<br/>& explicit interfaces"]
+    
+    %% Team Organization
+    TEAMS["👥 Stream-Aligned Teams<br/>One team per context<br/>End-to-end ownership"]
+    
+    %% Conway's Law Application
+    ARCHITECTURE["🏗️ System Architecture<br/>Mirrors team structure<br/>Loose coupling"]
+    
+    %% Flow
+    BUSINESS_DOMAIN --> SUBDOMAINS
+    SUBDOMAINS --> CONTEXTS
+    CONTEXTS --> TEAMS
+    TEAMS --> ARCHITECTURE
+    
+    %% Feedback loop
+    ARCHITECTURE -.->|"Domain Learning"| BUSINESS_DOMAIN
+    
+    class BUSINESS_DOMAIN val1
+    class SUBDOMAINS,CONTEXTS val2
+    class TEAMS,ARCHITECTURE val3
 ```
 
 ## Core DDD Concepts
@@ -219,9 +241,9 @@ steps:
 ## Integration Points
 
 ### With Other Practices
-- Supports [Team Decoupling](decoupling_teams)
+- Supports [Team Decoupling](../advanced/decoupling_teams)
 - Enables [Flow Optimization](optimise-flow)
-- Guides [Mission & Objectives](mission-objectives)
+- Guides [Mission & Objectives](../advanced/mission-objectives)
 
 ### With Tools & Systems
 - API gateways
@@ -229,9 +251,9 @@ steps:
 - Service mesh
 
 ## Related Topics
-- [Conway's Law](conways-law)
-- [Operating Model Overview](operating_alignment_model_wiki)
-- [Alignment & Feedback](alignment-feedback)
+- [Conway's Law](../advanced/conways-law)
+- [Operating Model Overview](../operating-model-framework)
+- [Alignment & Feedback](../optimization/alignment-feedback)
 
 > **Pro Tip:** Start with a rough context map and refine it as you learn more about the domain. Perfect boundaries aren't as important as clear ones.
 

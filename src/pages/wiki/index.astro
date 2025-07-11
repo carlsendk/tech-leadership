@@ -1,162 +1,36 @@
 ---
+import WikiLayout from "../../layouts/WikiLayout.astro";
+import WikiLanding from "../../components/WikiLanding.astro";
 import { getCollection } from "astro:content";
-import type { CollectionEntry } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import { getWikiUrl } from "../../utils/url";
 
-// Get all wiki entries
-const wikiEntries = await getCollection(
-  "wiki",
-  ({ data }: CollectionEntry<"wiki">) => {
-    return !data.draft;
+// Get all wiki entries for metadata
+const wikiEntries = await getCollection("wiki", ({ data }) => !data.draft);
+
+// Generate meta description
+const totalArticles = wikiEntries.length;
+const categories = [...new Set(wikiEntries.map((entry) => entry.data.category))]
+  .length;
+
+// Create a dummy entry for the wiki landing page
+const wikiLandingEntry = {
+  slug: "wiki",
+  data: {
+    title: "Technical Leadership Wiki",
+    description: `Comprehensive knowledge base with ${totalArticles} articles across ${categories} categories covering technical leadership, organizational design, and engineering excellence.`,
+    category: "Wiki",
+    tags: ["wiki", "documentation", "knowledge-base"],
+    isIndex: true,
   },
-);
-
-// Organize entries by category and optional subcategory
-interface WikiEntry extends CollectionEntry<"wiki"> {}
-interface CategoryStructure {
-  index?: WikiEntry;
-  entries: WikiEntry[];
-  subcategories: Record<string, {
-    index?: WikiEntry;
-    entries: WikiEntry[];
-  }>;
-}
-
-const categories = wikiEntries.reduce<Record<string, CategoryStructure>>(
-  (acc, entry) => {
-    const category = entry.data.category;
-    const subcategory = entry.data.subcategory;
-
-    if (!acc[category]) {
-      acc[category] = { entries: [], subcategories: {} };
-    }
-
-    if (entry.data.isIndex) {
-      if (subcategory) {
-        if (!acc[category].subcategories[subcategory]) {
-          acc[category].subcategories[subcategory] = { entries: [] };
-        }
-        acc[category].subcategories[subcategory].index = entry;
-      } else {
-        acc[category].index = entry;
-      }
-    } else if (subcategory) {
-      if (!acc[category].subcategories[subcategory]) {
-        acc[category].subcategories[subcategory] = { entries: [] };
-      }
-      acc[category].subcategories[subcategory].entries.push(entry);
-    } else {
-      acc[category].entries.push(entry);
-    }
-
-    return acc;
-  },
-  {},
-);
-
-const sortEntries = (a: WikiEntry, b: WikiEntry) => {
-  if ((a.data.order ?? 999) !== (b.data.order ?? 999)) {
-    return (a.data.order ?? 999) - (b.data.order ?? 999);
-  }
-  return a.data.title.localeCompare(b.data.title);
 };
-
-for (const category in categories) {
-  categories[category].entries.sort(sortEntries);
-  for (const sub in categories[category].subcategories) {
-    categories[category].subcategories[sub].entries.sort(sortEntries);
-  }
-}
-
-const sortedCategories = Object.keys(categories).sort();
 ---
 
-<Layout title="Technical Leadership Wiki">
-  <div class="container mx-auto px-4 py-8">
-    <h1 class="text-4xl font-bold mb-8">Technical Leadership Wiki</h1>
-
-    {
-      sortedCategories.map((category) => {
-        const content = categories[category];
-        return (
-          <div class="mb-12">
-            <h2 class="text-2xl font-semibold mb-4">{category}</h2>
-
-            {content.index && (
-              <div class="mb-6">
-                <a
-                  href={getWikiUrl(content.index.slug)}
-                  class="block p-6 bg-white dark:bg-primary-900 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-                >
-                  <h3 class="text-xl font-semibold mb-2">{content.index.data.title}</h3>
-                  <p class="text-gray-600 dark:text-gray-300 mb-4">
-                    {content.index.data.description}
-                  </p>
-                </a>
-              </div>
-            )}
-
-            {content.entries.length > 0 && (
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {content.entries.map((entry) => {
-                  const cleanSlug = entry.slug.replace(/\\/g, '/').replace(/\/+/g, '/');
-                  return (
-                    <a
-                      href={getWikiUrl(cleanSlug)}
-                      class="block p-6 bg-white dark:bg-primary-900 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-                    >
-                      <h3 class="text-xl font-semibold mb-2">{entry.data.title}</h3>
-                      <p class="text-gray-600 dark:text-gray-300 mb-4">
-                        {entry.data.description}
-                      </p>
-                    </a>
-                  );
-                })}
-              </div>
-            )}
-
-            {Object.entries(content.subcategories).map(([sub, subContent]) => (
-              <div class="mt-8">
-                <h3 class="text-xl font-semibold mb-3">{sub}</h3>
-
-                {subContent.index && (
-                  <div class="mb-4">
-                    <a
-                      href={getWikiUrl(subContent.index.slug)}
-                      class="block p-6 bg-white dark:bg-primary-900 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-                    >
-                      <h4 class="text-lg font-semibold mb-2">{subContent.index.data.title}</h4>
-                      <p class="text-gray-600 dark:text-gray-300 mb-4">
-                        {subContent.index.data.description}
-                      </p>
-                    </a>
-                  </div>
-                )}
-
-                {subContent.entries.length > 0 && (
-                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {subContent.entries.map((entry) => {
-                      const cleanSlug = entry.slug.replace(/\\/g, '/').replace(/\/+/g, '/');
-                      return (
-                        <a
-                          href={getWikiUrl(cleanSlug)}
-                          class="block p-6 bg-white dark:bg-primary-900 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-                        >
-                          <h4 class="text-lg font-semibold mb-2">{entry.data.title}</h4>
-                          <p class="text-gray-600 dark:text-gray-300 mb-4">
-                            {entry.data.description}
-                          </p>
-                        </a>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        );
-      })
-    }
-  </div>
-</Layout>
+<WikiLayout
+  title="Technical Leadership Wiki"
+  description={`Comprehensive knowledge base with ${totalArticles} articles across ${categories} categories covering technical leadership, organizational design, and engineering excellence.`}
+  tags={["wiki", "documentation", "knowledge-base"]}
+  category="Wiki"
+  headings={[]}
+  entry={wikiLandingEntry}
+>
+  <WikiLanding />
+</WikiLayout>

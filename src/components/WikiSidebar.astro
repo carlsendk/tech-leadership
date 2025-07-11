@@ -1,175 +1,292 @@
 ---
 import { getCollection } from "astro:content";
-import { getCategoryUrl, getWikiUrl } from "../utils/url";
+import { getWikiUrl } from "../utils/url";
+import { buildWikiHierarchy } from "../utils/wiki-breadcrumbs";
 
-interface WikiEntry {
-  slug: string;
-  data: {
-    title: string;
-    category: string;
-    subcategory?: string;
-    order: number;
-    isIndex?: boolean;
-    draft?: boolean;
-  };
-}
-
-interface CategoryStructure {
-  index?: WikiEntry;
-  entries: WikiEntry[];
-  subcategories: Record<string, {
-    index?: WikiEntry;
-    entries: WikiEntry[];
-  }>;
-}
-
-export interface Props {
+interface Props {
   activeCategory?: string;
-  activeSubcategory?: string;
+  currentSlug?: string;
 }
 
-const { activeCategory, activeSubcategory } = Astro.props;
+const { activeCategory, currentSlug } = Astro.props;
 
-const wikiEntries = await getCollection("wiki", ({ data }) => {
-  return !data.draft;
-});
-
-// Organize entries by category and subcategory
-const categories = wikiEntries.reduce<Record<string, CategoryStructure>>(
-  (acc, entry) => {
-    const category = entry.data.category;
-    const subcategory = entry.data.subcategory;
-
-    if (!acc[category]) {
-      acc[category] = {
-        entries: [],
-        subcategories: {},
-      };
-    }
-
-    if (entry.data.isIndex) {
-      if (subcategory) {
-        if (!acc[category].subcategories[subcategory]) {
-          acc[category].subcategories[subcategory] = {
-            entries: [],
-          };
-        }
-        acc[category].subcategories[subcategory].index = entry;
-      } else {
-        acc[category].index = entry;
-      }
-    } else if (subcategory) {
-      if (!acc[category].subcategories[subcategory]) {
-        acc[category].subcategories[subcategory] = {
-          entries: [],
-        };
-      }
-      acc[category].subcategories[subcategory].entries.push(entry);
-    } else {
-      acc[category].entries.push(entry);
-    }
-
-    return acc;
-  }, {},
-);
+// Get all wiki entries and build hierarchy
+const wikiEntries = await getCollection("wiki", ({ data }) => !data.draft);
+const wikiHierarchy = buildWikiHierarchy(wikiEntries);
 
 // Sort categories alphabetically
-const sortedCategories = Object.keys(categories).sort();
+const sortedCategories = Object.keys(wikiHierarchy).sort();
 
 // Sort function for entries
-const sortEntries = (a: WikiEntry, b: WikiEntry) => {
-  if (a.data.order !== b.data.order) {
-    return a.data.order - b.data.order;
+const sortEntries = (a: any, b: any) => {
+  if ((a.data.order ?? 999) !== (b.data.order ?? 999)) {
+    return (a.data.order ?? 999) - (b.data.order ?? 999);
   }
   return a.data.title.localeCompare(b.data.title);
 };
 
 // Sort entries in all categories and subcategories
-for (const category in categories) {
-  categories[category].entries.sort(sortEntries);
-  
-  for (const subcategory in categories[category].subcategories) {
-    categories[category].subcategories[subcategory].entries.sort(sortEntries);
+for (const category in wikiHierarchy) {
+  wikiHierarchy[category].entries.sort(sortEntries);
+
+  for (const subcategory in wikiHierarchy[category].subcategories) {
+    wikiHierarchy[category].subcategories[subcategory].entries.sort(
+      sortEntries,
+    );
   }
 }
+
+// Find current entry if slug is provided
+const currentEntry = currentSlug
+  ? wikiEntries.find((entry) => entry.slug === currentSlug)
+  : null;
+
+// Check if we're on the wiki landing page
+const isWikiLanding = currentSlug === "wiki" || currentSlug === undefined;
 ---
 
-<nav class="p-4">
-  <h2 class="font-bold text-xl text-primary-900 dark:text-primary-100 mb-4">
-    Wiki Navigation
-  </h2>
-
-  <div class="space-y-4">
+<nav class="wiki-sidebar p-4 hidden lg:block">
+  <!-- Wiki navigation header -->
+  <div class="mb-6">
+    <h2
+      class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-2 flex items-center"
+    >
+      <svg class="w-5 h-5 mr-2 text-accent-600 dark:text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+      </svg>
+      Wiki
+    </h2>
     {
-      sortedCategories.map((category) => (
-        <div>
-          <h3 class={`text-sm font-semibold mb-2 ${
-            activeCategory === category
-            ? "text-accent-600 dark:text-accent-400"
-            : "text-primary-700 dark:text-primary-300"
-          }`}>
-            <a href={categories[category].index 
-              ? getWikiUrl(categories[category].index.slug)
-              : getCategoryUrl(category)} 
-              class="hover:underline">
-              {category}
-            </a>
-          </h3>
-
-          {/* Main category entries */}
-          <ul class="space-y-1 pl-2 border-l border-primary-200 dark:border-primary-700 mb-4">
-            {categories[category].entries.map((entry) => (
-              <li>
-                <a
-                  href={getWikiUrl(entry.slug)}
-                  class={`block py-1 text-sm ${
-                    Astro.url.pathname === `/wiki/${entry.slug}`
-                      ? "text-accent-600 dark:text-accent-400 font-medium"
-                      : "text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100"
-                  }`}
-                >
-                  {entry.data.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-
-          {/* Subcategories */}
-          {Object.entries(categories[category].subcategories).map(([subcategory, content]) => (
-            <div class="ml-4 mb-4">
-              <h4 class={`text-sm font-medium mb-2 ${
-                activeSubcategory === subcategory
-                ? "text-accent-600 dark:text-accent-400"
-                : "text-primary-600 dark:text-primary-300"
-              }`}>
-                <a href={content.index 
-                  ? getWikiUrl(content.index.slug)
-                  : `#${subcategory}`} 
-                  class="hover:underline">
-                  {subcategory}
-                </a>
-              </h4>
-              
-              <ul class="space-y-1 pl-2 border-l border-primary-200 dark:border-primary-700">
-                {content.entries.map((entry) => (
-                  <li>
-                    <a
-                      href={getWikiUrl(entry.slug)}
-                      class={`block py-1 text-sm ${
-                        Astro.url.pathname === `/wiki/${entry.slug}`
-                          ? "text-accent-600 dark:text-accent-400 font-medium"
-                          : "text-primary-600 dark:text-primary-300 hover:text-primary-900 dark:hover:text-primary-100"
-                      }`}
-                    >
-                      {entry.data.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      ))
+      !isWikiLanding && (
+        <a
+          href="/tech-leadership/wiki/"
+          class="text-sm text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 transition-colors inline-flex items-center"
+        >
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Back to Wiki Home
+        </a>
+      )
     }
   </div>
+
+  <!-- Current context section - moved to top -->
+  {
+    currentEntry && !isWikiLanding && (
+      <div class="mb-6 p-4 bg-accent-50 dark:bg-accent-900/20 rounded-lg border-l-4 border-accent-400 dark:border-accent-500">
+        <h3 class="text-sm font-medium text-accent-700 dark:text-accent-300 mb-2 flex items-center">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          You are here
+        </h3>
+        <div class="text-sm text-accent-600 dark:text-accent-400">
+          <div class="font-semibold mb-1">{currentEntry.data.title}</div>
+          <div class="text-xs opacity-75 line-clamp-2">{currentEntry.data.description}</div>
+        </div>
+      </div>
+    )
+  }
+
+  <!-- Main navigation - redesigned for better wiki structure -->
+  <div class="space-y-6">
+    {
+      sortedCategories.map((category) => {
+        const content = wikiHierarchy[category];
+        const isActiveCategory = activeCategory === category;
+        const totalEntries =
+          content.entries.length +
+          Object.values(content.subcategories).reduce(
+            (sum, sub) => sum + sub.entries.length,
+            0,
+          ) +
+          (content.index ? 1 : 0) +
+          Object.values(content.subcategories).reduce(
+            (sum, sub) => sum + (sub.index ? 1 : 0),
+            0,
+          );
+
+        return (
+          <div class="category-section" x-data={`{ open: ${isActiveCategory} }`}>
+            <div class="flex items-center justify-between mb-3 group">
+              <button
+                @click="open = !open"
+                class={`text-sm font-semibold transition-colors flex items-center flex-1 text-left ${
+                  isActiveCategory
+                    ? "text-accent-600 dark:text-accent-400"
+                    : "text-primary-700 dark:text-primary-300 group-hover:text-accent-600 dark:group-hover:text-accent-400"
+                }`}
+              >
+                <svg class="w-4 h-4 mr-2 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h2a2 2 0 012 2v0H8v0z"></path>
+                </svg>
+                {category}
+                <svg class="w-4 h-4 ml-auto transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <span class="text-xs text-primary-500 dark:text-primary-400 bg-primary-100 dark:bg-primary-800 px-2 py-1 rounded-full font-medium">
+                {totalEntries}
+              </span>
+            </div>
+
+            <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
+              {/* Category overview link - always show if exists */}
+              {content.index && (
+                <div class="mb-3">
+                  <a
+                    href={getWikiUrl(content.index.slug)}
+                    class={`block text-sm py-2 px-3 rounded-lg transition-colors font-medium flex items-center ${
+                      currentSlug === content.index.slug
+                        ? "bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300"
+                        : "text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800"
+                    }`}
+                  >
+                    <svg class="w-4 h-4 mr-2 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    {content.index.data.title}
+                  </a>
+                </div>
+              )}
+
+            {/* Subcategories - show as proper sections */}
+            {Object.entries(content.subcategories).length > 0 && (
+              <div class="space-y-3">
+                {Object.entries(content.subcategories)
+                  .sort(([, a], [, b]) => {
+                    const orderA = a.index?.data.order ?? 999;
+                    const orderB = b.index?.data.order ?? 999;
+                    if (orderA !== orderB) {
+                      return orderA - orderB;
+                    }
+                    return 0;
+                  })
+                  .map(([subcategory, subContent]) => (
+                    <div class="subcategory-section border-l-2 border-primary-200 dark:border-primary-700 pl-3">
+                      {/* Subcategory overview - show as main heading if exists, otherwise show category name */}
+                      {subContent.index ? (
+                        <a
+                          href={getWikiUrl(subContent.index.slug)}
+                          class={`block text-xs font-medium py-1 px-2 rounded transition-colors mb-2 flex items-center ${
+                            currentSlug === subContent.index.slug
+                              ? "bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300"
+                              : "text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800"
+                          }`}
+                        >
+                          <svg class="w-3 h-3 mr-1 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                          </svg>
+                          {subContent.index.data.title}
+                        </a>
+                      ) : (
+                        <h4 class="text-xs font-medium text-primary-600 dark:text-primary-400 mb-2 flex items-center">
+                          <svg class="w-3 h-3 mr-1 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                          </svg>
+                          {subcategory}
+                        </h4>
+                      )}
+
+                      {/* Subcategory articles - show all entries */}
+                      {subContent.entries.length > 0 && (
+                        <div class="ml-2 space-y-1">
+                          {subContent.entries.map((entry) => (
+                            <a
+                              href={getWikiUrl(entry.slug)}
+                              class={`block text-xs py-1 px-2 rounded transition-colors flex items-center ${
+                                currentSlug === entry.slug
+                                  ? "bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300"
+                                  : "text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800"
+                              }`}
+                            >
+                              <svg class="w-3 h-3 mr-1 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                              </svg>
+                              <span class="truncate">{entry.data.title}</span>
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ),
+                )}
+              </div>
+            )}
+
+            {/* Main category articles - show all entries */}
+            {content.entries.length > 0 && (
+              <div class="space-y-1">
+                {content.entries.map((entry) => (
+                  <a
+                    href={getWikiUrl(entry.slug)}
+                    class={`block text-xs py-1 px-3 rounded transition-colors flex items-center ${
+                      currentSlug === entry.slug
+                        ? "bg-accent-100 dark:bg-accent-800 text-accent-700 dark:text-accent-300"
+                        : "text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-primary-800"
+                    }`}
+                  >
+                    <svg class="w-3 h-3 mr-1 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="truncate">{entry.data.title}</span>
+                  </a>
+                ))}
+              </div>
+            )}
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+
+  <!-- Related tags section - desktop only -->
+  {
+    currentEntry &&
+      !isWikiLanding &&
+      currentEntry.data.tags &&
+      currentEntry.data.tags.length > 0 && (
+        <div class="mt-8 pt-6 border-t border-primary-200 dark:border-primary-700">
+          <h3 class="text-sm font-medium text-primary-700 dark:text-primary-300 mb-3 flex items-center">
+            <svg class="w-4 h-4 mr-2 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+            </svg>
+            Related Topics
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            {currentEntry.data.tags.slice(0, 5).map((tag) => (
+              <a
+                href={`/tech-leadership/tags/${tag}/`}
+                class="text-xs text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 transition-colors bg-primary-100 dark:bg-primary-800 hover:bg-accent-50 dark:hover:bg-accent-900/20 px-2 py-1 rounded inline-flex items-center"
+              >
+                <svg class="w-3 h-3 mr-1 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                </svg>
+                {tag}
+              </a>
+            ))}
+          </div>
+        </div>
+      )
+  }
 </nav>
+
+<!-- Mobile navigation - hidden on desktop -->
+<div class="lg:hidden">
+  {
+    currentEntry && !isWikiLanding && (
+      <div class="p-4 bg-accent-50 dark:bg-accent-900/20 rounded-lg border border-accent-200 dark:border-accent-800 mb-4">
+        <h3 class="text-sm font-medium text-accent-700 dark:text-accent-300 mb-2">
+          Current Page
+        </h3>
+        <div class="text-sm text-accent-600 dark:text-accent-400">
+          <div class="font-medium mb-1">{currentEntry.data.title}</div>
+          <div class="text-xs opacity-75">{currentEntry.data.description}</div>
+        </div>
+      </div>
+    )
+  }
+</div>
