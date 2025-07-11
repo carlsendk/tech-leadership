@@ -202,21 +202,37 @@ function updateMermaidTheme(isDark) {
       themeVariables: isDark ? darkTheme : lightTheme
     };
     mermaid.initialize(config);
+    
+    // Force re-render all diagrams with new theme
     document.querySelectorAll('.mermaid').forEach(async (element) => {
       const graphCode = element.getAttribute('data-graph-code') || element.textContent;
-      try {
-        const { svg } = await mermaid.render(`mermaid-${Math.random()}`, graphCode);
-        element.innerHTML = svg;
-      } catch (error) {
-        console.error('Failed to render Mermaid diagram:', error);
+      if (graphCode && graphCode.trim()) {
+        try {
+          const { svg } = await mermaid.render(`mermaid-${Date.now()}-${Math.random()}`, graphCode);
+          element.innerHTML = svg;
+        } catch (error) {
+          console.error('Failed to render Mermaid diagram:', error);
+        }
       }
     });
   }
 }
 
+// Initialize mermaid when page loads
+document.addEventListener('DOMContentLoaded', () => {
+  // Store original graph code before first render
+  document.querySelectorAll('.mermaid').forEach((element) => {
+    element.setAttribute('data-graph-code', element.textContent);
+  });
+  
+  // Initial render with appropriate theme
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches || 
+                 document.documentElement.classList.contains('dark');
+  updateMermaidTheme(isDark);
+});
+
 // Watch for system color scheme changes
 const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-updateMermaidTheme(mediaQuery.matches);
 mediaQuery.addEventListener('change', (e) => updateMermaidTheme(e.matches));
 
 // Watch for manual theme toggles (assuming a 'dark' class on html element)
@@ -232,11 +248,4 @@ const observer = new MutationObserver((mutations) => {
 observer.observe(document.documentElement, {
   attributes: true,
   attributeFilter: ['class']
-});
-
-// Store original graph code before first render
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.mermaid').forEach((element) => {
-    element.setAttribute('data-graph-code', element.textContent);
-  });
 }); 
