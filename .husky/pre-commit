@@ -1,4 +1,4 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
 
-npm test
+# Run tests in non-watch mode
+npx vitest run
