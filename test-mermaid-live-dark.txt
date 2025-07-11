@@ -1,0 +1,42 @@
+flowchart TD
+    A[Primary Teal] --> B[Light Teal]
+    B --> C[Lighter Teal]
+    C --> D[Medium Teal]
+    D --> E[Dark Teal]
+    E --> F[Medium Gray]
+    F --> G[Light Gray]
+    
+    subgraph "Example Subgraph"
+        H[Default Node Style]
+        I[Another Node]
+        J[Third Node]
+    end
+    
+    G --> H
+    H --> I
+    I --> J
+
+    %% Custom styling for dark mode using your app colors
+    style A fill:#2dd4bf,stroke:#64748b,color:#000
+    style B fill:#5eead4,stroke:#64748b,color:#000
+    style C fill:#99f6e4,stroke:#64748b,color:#000
+    style D fill:#14b8a6,stroke:#64748b,color:#fff
+    style E fill:#0d9488,stroke:#64748b,color:#fff
+    style F fill:#64748b,stroke:#94a3b8,color:#fff
+    style G fill:#94a3b8,stroke:#cbd5e1,color:#000
+    
+    %% Subgraph nodes should also have colors
+    style H fill:#5eead4,stroke:#64748b,color:#000
+    style I fill:#2dd4bf,stroke:#64748b,color:#000
+    style J fill:#14b8a6,stroke:#64748b,color:#fff
+    
+    %% Arrow/line colors for dark mode (light arrows on dark background)
+    linkStyle 0 stroke:#cbd5e1,stroke-width:2px
+    linkStyle 1 stroke:#cbd5e1,stroke-width:2px
+    linkStyle 2 stroke:#cbd5e1,stroke-width:2px
+    linkStyle 3 stroke:#cbd5e1,stroke-width:2px
+    linkStyle 4 stroke:#cbd5e1,stroke-width:2px
+    linkStyle 5 stroke:#cbd5e1,stroke-width:2px
+    linkStyle 6 stroke:#cbd5e1,stroke-width:2px
+    linkStyle 7 stroke:#cbd5e1,stroke-width:2px
+    linkStyle 8 stroke:#cbd5e1,stroke-width:2px

@@ -22,11 +22,9 @@ This is the top-level guide to our operating and alignment model. Each section l
 flowchart TD
   %% ───────────────────────────────── WHY & PURPOSE ───────────────────────────
   A[[Why & Purpose - Product Strategy]]
-  style A fill:#38b24a,color:#fff,font-weight:bold
 
   %% ───────────────────────────────── CULTURE ────────────────────────────────
   A --> B[Govern with Culture]
-  style B fill:#9e9e9e,color:#fff,font-weight:bold
 
   %% ───────────────────────────────── VALUES ─────────────────────────────────
   subgraph Values_Block [ ]
@@ -35,13 +33,9 @@ flowchart TD
   end
   B --> Values_Block
 
-  classDef val1 fill:#f9d6d5,color:#000;
-  classDef val2 fill:#faf3c0,color:#000;
-  classDef val3 fill:#e6e1fb,color:#000;
 
   %% ──────────────── MISSION & OBJECTIVES (TOP-LEVEL LAYER) ──────────────────
   Values_Block --> C[Lead by Mission & Objectives]
-  style C fill:#9e9e9e,color:#fff,font-weight:bold
 
   %% ────────────────────────── THREE CORE ELEMENTS ───────────────────────────
   subgraph Core_Elements [ ]
@@ -53,12 +47,9 @@ flowchart TD
   end
   C --> Core_Elements
 
-  classDef bluebox   fill:#4fc3f7,color:#000,font-weight:bold;
-  classDef orangebox fill:#e67e22,color:#fff,font-weight:bold;
 
   %% ───────────────────────── ALIGNMENT & LOOP ───────────────────────────────
   Core_Elements --> D[Alignment & Feedback Loops]
-  style D fill:#9e9e9e,color:#fff,font-weight:bold
 
   %% ──────────────────────── OPTIMISATION PILLARS ────────────────────────────
   subgraph Optimise_For [ ]
@@ -70,14 +61,13 @@ flowchart TD
   end
   D --> Optimise_For
 
-  classDef pill1 fill:#fff3b0,color:#000;
-  classDef pill2 fill:#fad1d9,color:#000;
-  classDef pill3 fill:#e6e1fb,color:#000;
 
   %% ───────────────────────────── FEEDBACK ───────────────────────────────────
   Optimise_For -->|"Metric insights"| Core_Elements
 
-```---
+```
+
+---
 
 ## Layer‑by‑Layer Explanation
 

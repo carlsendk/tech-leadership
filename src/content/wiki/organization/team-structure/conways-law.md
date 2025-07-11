@@ -62,12 +62,6 @@ graph TD
     B1 --> B2
     C1 --> C2
     
-    style A1 fill:#f9f9d6
-    style B1 fill:#d6f9f9
-    style C1 fill:#f9d6f9
-    style A2 fill:#f9f9d6
-    style B2 fill:#d6f9f9
-    style C2 fill:#f9d6f9
 ```
 
 ## Implementation Guide
