@@ -1,0 +1,161 @@
+---
+import { getCollection } from "astro:content";
+import { getWikiUrl } from "../utils/url";
+import { findCategoryIndex } from "../utils/wiki-breadcrumbs";
+
+interface Props {
+    category: string;
+    subcategory: string;
+}
+
+const { category, subcategory } = Astro.props;
+
+// Get all wiki entries in this subcategory
+const wikiEntries = await getCollection(
+    "wiki",
+    ({ data }) =>
+        !data.draft &&
+        data.category === category &&
+        data.subcategory === subcategory,
+);
+
+// Get all wiki entries for category URL lookup
+const allWikiEntries = await getCollection("wiki", ({ data }) => !data.draft);
+
+// Find category index for proper URL
+const categoryIndex = findCategoryIndex(category, allWikiEntries);
+const categoryUrl = categoryIndex
+    ? getWikiUrl(categoryIndex.slug)
+    : `/tech-leadership/categories/${encodeURIComponent(category)}/`;
+
+// Sort entries by order, then by title
+const sortedEntries = wikiEntries.sort((a, b) => {
+    if ((a.data.order ?? 999) !== (b.data.order ?? 999)) {
+        return (a.data.order ?? 999) - (b.data.order ?? 999);
+    }
+    return a.data.title.localeCompare(b.data.title);
+});
+
+// Separate index from content entries
+const indexEntry = sortedEntries.find((entry) => entry.data.isIndex);
+const contentEntries = sortedEntries.filter((entry) => !entry.data.isIndex);
+
+// Get all unique tags from this subcategory
+const allTags = [
+    ...new Set(contentEntries.flatMap((entry) => entry.data.tags)),
+].sort();
+---
+
+<div class="subcategory-landing">
+    <!-- Subcategory content overview -->
+    <section class="mb-12">
+        <h2
+            class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6"
+        >
+            Content in {subcategory}
+        </h2>
+
+        {
+            contentEntries.length > 0 ? (
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {contentEntries.map((entry) => (
+                        <a
+                            href={getWikiUrl(entry.slug)}
+                            class="group bg-white dark:bg-primary-900 rounded-xl border border-primary-200 dark:border-primary-800 p-6 hover:border-accent-500 dark:hover:border-accent-500 transition-all duration-300"
+                        >
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-primary-900 dark:text-primary-100 group-hover:text-accent-600 dark:group-hover:text-accent-400">
+                                    {entry.data.title}
+                                </h3>
+                                {entry.data.order !== undefined && (
+                                    <span class="text-sm text-primary-500 dark:text-primary-400 bg-primary-100 dark:bg-primary-800 px-2 py-1 rounded-full">
+                                        {entry.data.order + 1}
+                                    </span>
+                                )}
+                            </div>
+
+                            <p class="text-sm text-primary-600 dark:text-primary-400 mb-4">
+                                {entry.data.description}
+                            </p>
+
+                            {entry.data.tags.length > 0 && (
+                                <div class="flex flex-wrap gap-2">
+                                    {entry.data.tags.slice(0, 3).map((tag) => (
+                                        <span class="text-xs px-2 py-1 rounded-full bg-primary-100 text-primary-600 dark:bg-primary-800 dark:text-primary-300">
+                                            #{tag}
+                                        </span>
+                                    ))}
+                                    {entry.data.tags.length > 3 && (
+                                        <span class="text-xs px-2 py-1 rounded-full bg-primary-100 text-primary-600 dark:bg-primary-800 dark:text-primary-300">
+                                            +{entry.data.tags.length - 3} more
+                                        </span>
+                                    )}
+                                </div>
+                            )}
+                        </a>
+                    ))}
+                </div>
+            ) : (
+                <div class="text-center py-8">
+                    <p class="text-primary-600 dark:text-primary-400">
+                        No content found in this subcategory yet.
+                    </p>
+                </div>
+            )
+        }
+    </section>
+
+    <!-- Tags overview -->
+    {
+        allTags.length > 0 && (
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
+                    Topics in {subcategory}
+                </h2>
+                <div class="flex flex-wrap gap-3">
+                    {allTags.map((tag) => {
+                        const tagEntries = contentEntries.filter((entry) =>
+                            entry.data.tags.includes(tag),
+                        );
+                        return (
+                            <a
+                                href={`/tech-leadership/tags/${encodeURIComponent(tag)}/`}
+                                class="bg-white dark:bg-primary-900 rounded-lg px-4 py-2 text-sm text-primary-600 dark:text-primary-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-accent-50 dark:hover:bg-accent-900/20 transition-colors border border-primary-200 dark:border-primary-800"
+                            >
+                                #{tag}{" "}
+                                <span class="text-xs text-primary-500 dark:text-primary-400">
+                                    ({tagEntries.length})
+                                </span>
+                            </a>
+                        );
+                    })}
+                </div>
+            </section>
+        )
+    }
+
+    <!-- Quick navigation -->
+    <section class="text-center">
+        <h2
+            class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6"
+        >
+            Quick Navigation
+        </h2>
+        <div
+            class="flex flex-col sm:flex-row justify-center gap-4 max-w-2xl mx-auto"
+        >
+            <a
+                href={categoryUrl}
+                class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            >
+                ← Back to {category}
+            </a>
+            <a
+                href="/tech-leadership/wiki/"
+                class="bg-accent-600 hover:bg-accent-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            >
+                📚 Wiki Home
+            </a>
+        </div>
+    </section>
+</div>

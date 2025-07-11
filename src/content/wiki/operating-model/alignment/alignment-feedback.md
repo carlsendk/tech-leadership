@@ -1,12 +1,11 @@
 ---
 title: "Alignment & Feedback Loops"
-description: "Continuous inspection connecting execution, learning and strategy."
+description: "Creating effective alignment and feedback mechanisms"
 tags:
   - operating-model
   - alignment
-  - feedback-loops
-  - metrics
-  - continuous-improvement
+  - feedback
+  - loops
 category: "Organisation Design"
 subcategory: "Alignment"
 date: 2025-04-30

@@ -1,7 +1,7 @@
 ---
 title: "Operating Model"
 description: "Comprehensive guide to engineering operating models and organizational design"
-category: "Operating Model"
+category: "Organisation Design"
 tags: ["operating-model", "organization", "engineering"]
 isIndex: true
 order: 1

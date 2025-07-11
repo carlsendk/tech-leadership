@@ -1,12 +1,11 @@
 ---
-title: "Objectives – Wardley Mapping"
-description: "Stress‑testing strategic bets against landscape evolution."
+title: "Objectives & Wardley Mapping"
+description: "Strategic objectives and Wardley mapping for technical leadership"
 tags:
   - operating-model
   - alignment
-  - strategy
+  - objectives
   - wardley
-  - mapping
 category: "Organisation Design"
 subcategory: "Alignment"
 date: 2025-04-30

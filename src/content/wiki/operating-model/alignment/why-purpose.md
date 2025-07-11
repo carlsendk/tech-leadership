@@ -1,12 +1,11 @@
 ---
-title: "Why & Purpose – Product Strategy"
-description: "North‑Star definition of why the organisation exists and where the product is headed."
+title: "Why Purpose Matters"
+description: "Understanding the importance of purpose in technical leadership"
 tags:
   - operating-model
   - alignment
-  - strategy
   - purpose
-  - vision
+  - leadership
 category: "Organisation Design"
 subcategory: "Alignment"
 date: 2025-04-30

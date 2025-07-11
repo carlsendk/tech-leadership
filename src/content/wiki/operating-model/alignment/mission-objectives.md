@@ -1,10 +1,9 @@
 ---
-title: "Lead by Mission & Objectives"
-description: "Frame work around mission problems and measurable outcomes."
+title: "Mission Objectives"
+description: "Defining clear mission objectives for technical teams"
 tags:
   - operating-model
   - alignment
-  - okrs
   - mission
   - objectives
   - strategy

@@ -1,11 +1,10 @@
 ---
-title: "Mission – Product Canvas"
-description: "Capturing who, what and why for a product slice using Roman Pichler's Product Canvas."
+title: "Mission Product Canvas"
+description: "Product strategy canvas for mission alignment"
 tags:
   - operating-model
   - alignment
   - product
-  - strategy
   - canvas
 category: "Organisation Design"
 subcategory: "Alignment"
