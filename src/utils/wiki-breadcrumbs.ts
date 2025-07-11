@@ -152,7 +152,7 @@ export function buildWikiHierarchy(entries: WikiEntry[]) {
       hierarchy[category] = { entries: [], subcategories: {} };
     }
 
-    if (entry.data.isIndex) {
+    if (entry.data.isIndex === true) {
       if (subcategory) {
         if (!hierarchy[category].subcategories[subcategory]) {
           hierarchy[category].subcategories[subcategory] = { entries: [] };
