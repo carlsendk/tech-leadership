@@ -4,6 +4,7 @@ description: "Overview of team structure patterns and practices."
 category: "Organisation Design"
 subcategory: "Team Structure"
 tags: ["organization", "team-structure", "conways-law", "team-topologies"]
+displayMode: "subcategory"
 isIndex: true
 order: 0
 ---

@@ -9,6 +9,9 @@ tags:
   - bounded-context
   - domain-modeling
 category: "Organisation Design"
+subcategory: "Organization"
+displayMode: "subcategory"
+isIndex: true
 date: 2025-04-30
 ---
 

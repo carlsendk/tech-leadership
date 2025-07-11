@@ -9,6 +9,7 @@ tags:
   - behavior
   - decision-making
 category: "Organisation Design"
+subcategory: "Culture"
 date: 2025-04-30
 ---
 

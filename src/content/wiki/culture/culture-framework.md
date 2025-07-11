@@ -9,6 +9,9 @@ tags:
   - engineering-practices
   - rituals
 category: "Organisation Design"
+subcategory: "Culture"
+displayMode: "category"
+isIndex: true
 date: 2025-04-30
 ---
 
