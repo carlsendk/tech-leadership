@@ -196,40 +196,73 @@ const commonConfig = {
 };
 
 function updateMermaidTheme(isDark) {
-  if (typeof mermaid !== 'undefined') {
+  if (typeof window.mermaid !== 'undefined') {
     const config = {
       ...commonConfig,
       themeVariables: isDark ? darkTheme : lightTheme
     };
-    mermaid.initialize(config);
+    window.mermaid.initialize(config);
     
     // Force re-render all diagrams with new theme
     document.querySelectorAll('.mermaid').forEach(async (element) => {
-      const graphCode = element.getAttribute('data-graph-code') || element.textContent;
-      if (graphCode && graphCode.trim()) {
+      let graphCode = element.getAttribute('data-graph-code');
+      
+      // If no stored code, extract from existing SVG or text content
+      if (!graphCode) {
+        const svgElement = element.querySelector('svg');
+        if (svgElement) {
+          // Try to find original code in data attributes or extract from title
+          graphCode = element.getAttribute('data-original-code') || 
+                     element.textContent.trim() ||
+                     svgElement.getAttribute('aria-labelledby');
+        } else {
+          graphCode = element.textContent.trim();
+        }
+        
+        if (graphCode) {
+          element.setAttribute('data-graph-code', graphCode);
+        }
+      }
+      
+      if (graphCode && graphCode.trim() && !graphCode.includes('<svg')) {
         try {
-          const { svg } = await mermaid.render(`mermaid-${Date.now()}-${Math.random()}`, graphCode);
+          const { svg } = await window.mermaid.render(`mermaid-${Date.now()}-${Math.random()}`, graphCode);
           element.innerHTML = svg;
         } catch (error) {
-          console.error('Failed to render Mermaid diagram:', error);
+          console.error('Failed to render Mermaid diagram:', error, 'Code:', graphCode);
         }
       }
     });
   }
 }
 
-// Initialize mermaid when page loads
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize when both DOM and mermaid are ready
+function initializeMermaidWithTheme() {
+  if (typeof window.mermaid === 'undefined') {
+    // Wait for mermaid to be available
+    setTimeout(initializeMermaidWithTheme, 100);
+    return;
+  }
+
   // Store original graph code before first render
   document.querySelectorAll('.mermaid').forEach((element) => {
-    element.setAttribute('data-graph-code', element.textContent);
+    if (!element.getAttribute('data-graph-code')) {
+      element.setAttribute('data-graph-code', element.textContent);
+    }
   });
   
   // Initial render with appropriate theme
   const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches || 
                  document.documentElement.classList.contains('dark');
   updateMermaidTheme(isDark);
-});
+}
+
+// Start initialization when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeMermaidWithTheme);
+} else {
+  initializeMermaidWithTheme();
+}
 
 // Watch for system color scheme changes
 const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');

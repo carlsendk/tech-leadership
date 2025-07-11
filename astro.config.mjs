@@ -177,14 +177,32 @@ const markdownConfig = {
   rehypePlugins: [
     addMermaidClass,  // 1. restore <pre class="mermaid">
     [rehypeMermaid, { 
-      strategy: 'pre-raw',
+      strategy: 'inline-svg',
       mermaidConfig: {
         startOnLoad: false,
         securityLevel: 'loose',
         fontFamily: 'Inter, system-ui, sans-serif',
         theme: 'base',
-        // No themeVariables here - client-side will handle theming
-        // Basic config only - full theming handled client-side
+        // Use neutral theme for pre-rendering - client will override with custom colors
+        themeVariables: {
+          primaryColor: '#64748b',
+          primaryTextColor: '#1e293b',
+          primaryBorderColor: '#64748b',
+          mainBkg: '#ffffff',
+          nodeBkg: '#f8fafc',
+          clusterBkg: '#f1f5f9',
+          nodeTextColor: '#1e293b',
+          lineColor: '#64748b'
+        },
+        flowchart: {
+          curve: 'basis',
+          padding: 20,
+          useMaxWidth: true,
+          htmlLabels: true,
+          diagramPadding: 8,
+          nodeSpacing: 50,
+          rankSpacing: 50,
+        },
       },
       launchOptions: {
         args: ['--no-sandbox'],
@@ -219,14 +237,32 @@ export default defineConfig({
     rehypePlugins: [
       addMermaidClass,
       [rehypeMermaid, { 
-        strategy: 'pre-raw',
+        strategy: 'inline-svg',
         mermaidConfig: {
           startOnLoad: false,
           securityLevel: 'loose',
           fontFamily: 'Inter, system-ui, sans-serif',
           theme: 'base',
-          // No themeVariables here - client-side will handle theming
-          // Basic config only - full theming handled client-side
+          // Use neutral theme for pre-rendering - client will override with custom colors
+          themeVariables: {
+            primaryColor: '#64748b',
+            primaryTextColor: '#1e293b',
+            primaryBorderColor: '#64748b',
+            mainBkg: '#ffffff',
+            nodeBkg: '#f8fafc',
+            clusterBkg: '#f1f5f9',
+            nodeTextColor: '#1e293b',
+            lineColor: '#64748b'
+          },
+          flowchart: {
+            curve: 'basis',
+            padding: 20,
+            useMaxWidth: true,
+            htmlLabels: true,
+            diagramPadding: 8,
+            nodeSpacing: 50,
+            rankSpacing: 50,
+          },
         }
       }],
       rehypeSlug,
