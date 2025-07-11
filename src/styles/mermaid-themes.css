@@ -51,6 +51,89 @@ svg[id^="mermaid-"] polygon {
   stroke-width: 2px !important;
 }
 
+/* Automatic color differentiation for nodes - can be overridden by specific classes */
+svg[id^="mermaid-"] g.node:nth-child(1) rect,
+svg[id^="mermaid-"] g.node:nth-child(1) polygon {
+  fill: var(--mermaid-primary-bg) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(2) rect,
+svg[id^="mermaid-"] g.node:nth-child(2) polygon {
+  fill: var(--mermaid-secondary-bg) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(3) rect,
+svg[id^="mermaid-"] g.node:nth-child(3) polygon {
+  fill: var(--mermaid-tertiary-bg) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(4) rect,
+svg[id^="mermaid-"] g.node:nth-child(4) polygon {
+  fill: var(--mermaid-warning-bg) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(5) rect,
+svg[id^="mermaid-"] g.node:nth-child(5) polygon {
+  fill: var(--mermaid-danger-bg) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(6) rect,
+svg[id^="mermaid-"] g.node:nth-child(6) polygon {
+  fill: var(--mermaid-neutral-bg) !important;
+}
+
+/* Cycle back through colors for diagrams with more than 6 nodes */
+svg[id^="mermaid-"] g.node:nth-child(7) rect,
+svg[id^="mermaid-"] g.node:nth-child(7) polygon {
+  fill: var(--mermaid-primary-bg) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(8) rect,
+svg[id^="mermaid-"] g.node:nth-child(8) polygon {
+  fill: var(--mermaid-secondary-bg) !important;
+}
+
+/* Text colors for automatically colored nodes */
+svg[id^="mermaid-"] g.node:nth-child(1) text {
+  fill: white !important;
+  color: white !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(2) text {
+  fill: white !important;
+  color: white !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(3) text {
+  fill: var(--mermaid-node-text) !important;
+  color: var(--mermaid-node-text) !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(4) text {
+  fill: white !important;
+  color: white !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(5) text {
+  fill: white !important;
+  color: white !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(6) text {
+  fill: white !important;
+  color: white !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(7) text {
+  fill: white !important;
+  color: white !important;
+}
+
+svg[id^="mermaid-"] g.node:nth-child(8) text {
+  fill: white !important;
+  color: white !important;
+}
+
 /* Text elements */
 .mermaid text,
 svg[id^="mermaid-"] text,
