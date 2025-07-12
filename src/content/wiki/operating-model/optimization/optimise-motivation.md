@@ -13,36 +13,44 @@ date: 2025-04-30
 order: 2
 ---
 
-## Motivation Framework
+## Motivation Optimization System
 
 ```mermaid
-graph TD
-    subgraph "Motivation Drivers"
-        A[Autonomy]
-        B[Mastery]
-        C[Purpose]
-    end
+flowchart TD
+    %% Core Motivation Drivers
+    DRIVERS["🎯 Motivation Drivers<br/>🔓 Autonomy - Decision freedom<br/>🏆 Mastery - Skill development<br/>💡 Purpose - Meaningful impact"]
     
-    subgraph "Support Systems"
-        D[Psychological Safety]
-        E[Growth Opportunities]
-        F[Recognition]
-    end
+    %% Support Systems
+    PSYCHOLOGICAL["🛡️ Psychological Safety<br/>💬 Open communication<br/>🤝 Trust & respect<br/>❌ Failure tolerance"]
     
-    subgraph "Outcomes"
-        G[Engagement]
-        H[Innovation]
-        I[Retention]
-    end
+    GROWTH["📈 Growth Systems<br/>🎓 Learning opportunities<br/>📚 Mentorship programs<br/>🚀 Career progression"]
     
-    A --> D & E & F
-    B --> D & E & F
-    C --> D & E & F
+    RECOGNITION["🌟 Recognition & Feedback<br/>👏 Peer appreciation<br/>📊 Performance visibility<br/>🎉 Achievement celebration"]
     
-    D --> G & H & I
-    E --> G & H & I
-    F --> G & H & I
+    %% Organizational Outcomes
+    ENGAGEMENT["💪 High Engagement"]
+    INNOVATION["💡 Innovation Culture"]
+    RETENTION["🤝 Talent Retention"]
     
+    %% Flow
+    DRIVERS --> PSYCHOLOGICAL
+    DRIVERS --> GROWTH
+    DRIVERS --> RECOGNITION
+    
+    PSYCHOLOGICAL --> ENGAGEMENT
+    GROWTH --> INNOVATION
+    RECOGNITION --> RETENTION
+    
+    %% Cross-connections
+    ENGAGEMENT --> INNOVATION
+    INNOVATION --> RETENTION
+    
+    %% Feedback loop
+    RETENTION -.->|"Culture Reinforcement"| DRIVERS
+    
+    class DRIVERS val1
+    class PSYCHOLOGICAL,GROWTH,RECOGNITION val2
+    class ENGAGEMENT,INNOVATION,RETENTION val3
 ```
 
 ## Core Metrics

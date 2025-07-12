@@ -12,13 +12,40 @@ date: 2025-04-30
 order: 1
 ---
 
-## Feedback Loop Overview
+## Alignment & Feedback System
 
 ```mermaid
-graph TD
-    A[Strategy] --> B[Objectives]
-    B --> C[Execution]
-    C --> D[Feedback]
+flowchart TD
+    %% Strategic Layer
+    STRATEGY["🎯 Strategic Alignment<br/>📊 Quarterly OKR reviews<br/>🗺️ Strategy validation<br/>📈 Wardley map updates"]
+    
+    %% Tactical Layer
+    TACTICAL["⚖️ Tactical Feedback<br/>💪 Squad health checks<br/>🔄 Sprint retrospectives<br/>📋 Monthly planning"]
+    
+    %% Operational Layer
+    OPERATIONAL["⚡ Operational Loops<br/>👥 Daily standups<br/>📊 Metrics monitoring<br/>🚨 Incident learning"]
+    
+    %% Outcomes
+    ALIGNMENT["🎯 Team Alignment"]
+    PERFORMANCE["⚡ High Performance"]
+    LEARNING["🧠 Continuous Learning"]
+    
+    %% Flow
+    STRATEGY --> TACTICAL
+    TACTICAL --> OPERATIONAL
+    OPERATIONAL --> ALIGNMENT
+    ALIGNMENT --> PERFORMANCE
+    PERFORMANCE --> LEARNING
+    
+    %% Feedback loops
+    LEARNING -.->|"Strategic Insights"| STRATEGY
+    PERFORMANCE -.->|"Tactical Adjustments"| TACTICAL
+    ALIGNMENT -.->|"Process Improvements"| OPERATIONAL
+    
+    class STRATEGY val1
+    class TACTICAL val2
+    class OPERATIONAL val2
+    class ALIGNMENT,PERFORMANCE,LEARNING val3
 ```
 
 ## Feedback Cadences
