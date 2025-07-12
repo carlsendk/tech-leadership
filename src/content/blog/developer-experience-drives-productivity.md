@@ -2,7 +2,7 @@
 title: "Developer Experience: What Actually Drives Productivity"
 description: "How focusing on developer experience through feedback loops, cognitive load reduction, and flow state optimization creates measurable productivity improvements"
 date: 2025-01-15
-category: "Engineering Effectiveness"
+category: "Engineering Excellence"
 tags: ["developer-experience", "productivity", "devex", "engineering-effectiveness", "measurement"]
 author:
   name: "Technology Leadership Team"

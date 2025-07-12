@@ -2,7 +2,7 @@
 title: "Remote Team Management at Scale: Building High-Performance Distributed Organizations"
 description: "Practical strategies for managing remote teams effectively as your organization scales, from startup to enterprise"
 date: 2025-01-15
-category: "Team Management"
+category: "Leadership & Management"
 tags: ["remote-work", "team-management", "scaling", "leadership", "distributed-teams"]
 author:
   name: "Technology Leadership Team"

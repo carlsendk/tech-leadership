@@ -2,7 +2,7 @@
 title: "Engineering Practices Health Check: A Maturity Assessment Model"
 description: "Inspired by Spotify's squad health check, we present a comprehensive model for assessing engineering practices maturity across your organization"
 date: 2025-01-15
-category: "Assessment"
+category: "Engineering Excellence"
 tags: ["engineering-practices", "maturity-assessment", "team-health", "continuous-improvement"]
 author:
   name: "Technology Leadership Team"
