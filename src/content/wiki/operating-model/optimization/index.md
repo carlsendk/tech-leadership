@@ -13,6 +13,42 @@ order: 3
 
 The optimization layer ensures your operating model delivers sustainable results through continuous measurement, feedback, and improvement.
 
+## Optimization Framework
+
+```mermaid
+flowchart TD
+    %% Feedback Foundation
+    ALIGNMENT["🎯 Alignment & Feedback<br/>📊 Strategic reviews<br/>💪 Squad health checks<br/>⚡ Operational loops"]
+    
+    %% Three Optimization Pillars
+    MOTIVATION["🚀 Motivation Optimization<br/>🔓 Autonomy & mastery<br/>🛡️ Psychological safety<br/>🌟 Recognition systems"]
+    
+    FLOW["⚡ Flow Optimization<br/>📊 DORA metrics<br/>🤖 CI/CD automation<br/>👀 Observability"]
+    
+    COST["💰 Cost Optimization<br/>📈 Unit economics<br/>☁️ FinOps practices<br/>⚖️ Resource governance"]
+    
+    %% Sustainable Outcomes
+    PERFORMANCE["🏆 Sustainable Performance<br/>💪 High engagement<br/>⚡ Fast delivery<br/>💰 Cost efficiency"]
+    
+    %% Flow connections
+    ALIGNMENT --> MOTIVATION
+    ALIGNMENT --> FLOW
+    ALIGNMENT --> COST
+    
+    MOTIVATION --> PERFORMANCE
+    FLOW --> PERFORMANCE
+    COST --> PERFORMANCE
+    
+    %% Optimization feedback loop
+    PERFORMANCE -.->|"Continuous Learning"| ALIGNMENT
+    
+    class ALIGNMENT val1
+    class MOTIVATION,FLOW,COST val2
+    class PERFORMANCE val3
+```
+
+The optimization layer ensures your operating model delivers sustainable results through continuous measurement, feedback, and improvement.
+
 ## Layer Components
 
 ### Alignment & Feedback Loops

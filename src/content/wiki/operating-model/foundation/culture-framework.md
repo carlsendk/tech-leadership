@@ -10,8 +10,7 @@ tags:
   - rituals
 category: "Organisation Design"
 subcategory: "Foundation"
-displayMode: "category"
-isIndex: true
+displayMode: "content"
 date: 2025-04-30
 order: 2
 ---
@@ -19,15 +18,37 @@ order: 2
 ## Culture as Operating System
 
 ```mermaid
-graph TD
-    A[Values] --> B[Behaviors]
-    B --> C[Practices]
-    C --> D[Artifacts]
-    D --> E[Environment]
-    E --> F[Outcomes]
-    F --> G[Feedback]
-    G --> H[Learning]
-    H --> I[Evolution]
+flowchart TD
+    %% Core Principles
+    PRINCIPLES["⚖️ Decision Principles<br/>🤝 Disagree & Commit<br/>📢 Default to Open<br/>🔄 You Build It, You Run It"]
+    
+    %% Engineering Rituals
+    RITUALS["🔄 Engineering Rituals<br/>📅 Weekly planning & demos<br/>🎯 Monthly architecture reviews<br/>🚀 Innovation days"]
+    
+    %% Cultural Practices  
+    PRACTICES["👥 Daily Practices<br/>💬 Context sharing<br/>📝 Decision documentation<br/>⚡ End-to-end ownership"]
+    
+    %% Cultural Artifacts
+    ARTIFACTS["📋 Cultural Artifacts<br/>📖 Decision records<br/>🤝 Team agreements<br/>📊 Health metrics"]
+    
+    %% Organizational Outcomes
+    ENVIRONMENT["🌟 Team Environment<br/>🔒 Psychological safety<br/>⚡ Fast decision-making<br/>🎯 Clear accountability"]
+    
+    %% Flow connections
+    PRINCIPLES --> PRACTICES
+    RITUALS --> PRACTICES
+    PRACTICES --> ARTIFACTS
+    ARTIFACTS --> ENVIRONMENT
+    
+    %% Feedback loop
+    ENVIRONMENT -.->|"Culture Evolution"| PRINCIPLES
+    ENVIRONMENT -.->|"Ritual Refinement"| RITUALS
+    
+    class PRINCIPLES val1
+    class RITUALS val1
+    class PRACTICES val2
+    class ARTIFACTS val2
+    class ENVIRONMENT val3
 ```
 
 ## Core Decision Principles
