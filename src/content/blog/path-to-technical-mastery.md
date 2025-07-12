@@ -1,9 +1,12 @@
 ---
 title: "The Path to Technical Mastery: Building Expertise in an Ever-Evolving Field"
 description: "A comprehensive guide to developing technical mastery through structured learning paths, deliberate practice, and community engagement"
-pubDate: 2025-01-15
-author: "Technology Leadership Team"
+date: 2025-01-15
+category: "Career Development"
 tags: ["mastery", "skill-development", "learning", "career-growth", "technical-excellence"]
+author:
+  name: "Technology Leadership Team"
+  title: "Engineering Excellence"
 image: "/images/blog/technical-mastery.jpg"
 ---
 

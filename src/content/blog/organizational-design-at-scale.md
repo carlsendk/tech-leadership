@@ -1,9 +1,12 @@
 ---
 title: "Organizational Design at Scale: Lessons from Coolblue's Experimental Approach"
 description: "How Coolblue scaled from startup to enterprise while maintaining agility through experimental organizational design and customer obsession"
-pubDate: 2025-01-15
-author: "Technology Leadership Team"
+date: 2025-01-15
+category: "Organizational Design"
 tags: ["organizational-design", "scaling", "team-structure", "agile", "customer-experience"]
+author:
+  name: "Technology Leadership Team"
+  title: "Engineering Excellence"
 image: "/images/blog/organizational-design.jpg"
 ---
 

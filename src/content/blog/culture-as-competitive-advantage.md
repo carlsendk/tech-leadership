@@ -1,9 +1,12 @@
 ---
 title: "Culture as Competitive Advantage: Building High-Performance Engineering Organizations"
 description: "How psychological safety, continuous learning, and shared ownership create sustainable competitive advantages in technology organizations"
-pubDate: 2025-01-15
-author: "Technology Leadership Team"
+date: 2025-01-15
+category: "Organizational Culture"
 tags: ["culture", "psychological-safety", "competitive-advantage", "high-performance", "leadership"]
+author:
+  name: "Technology Leadership Team"
+  title: "Engineering Excellence"
 image: "/images/blog/culture-competitive-advantage.jpg"
 ---
 

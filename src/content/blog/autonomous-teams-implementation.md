@@ -1,9 +1,12 @@
 ---
 title: "From Dependency Hell to Autonomous Teams: A Practical Implementation Guide"
 description: "Step-by-step guide to transforming dependent teams into autonomous, end-to-end ownership structures that deliver faster with higher quality"
-pubDate: 2025-01-15
-author: "Technology Leadership Team"
+date: 2025-01-15
+category: "Organizational Design"
 tags: ["autonomous-teams", "team-structure", "organizational-design", "scaling", "implementation"]
+author:
+  name: "Technology Leadership Team"
+  title: "Engineering Excellence"
 image: "/images/blog/autonomous-teams.jpg"
 ---
 

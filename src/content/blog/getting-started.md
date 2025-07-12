@@ -1,9 +1,12 @@
 ---
 title: "Getting Started with Technology Leadership Excellence"
 description: "Your comprehensive guide to navigating engineering practices, operating models, and building high-performing technology organizations"
-pubDate: 2025-01-15
-author: "Technology Leadership Team"
+date: 2025-01-15
+category: "Getting Started"
 tags: ["getting-started", "leadership", "engineering-practices", "operating-model"]
+author:
+  name: "Technology Leadership Team"
+  title: "Engineering Excellence"
 image: "/images/blog/getting-started.jpg"
 ---
 

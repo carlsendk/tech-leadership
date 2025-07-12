@@ -1,9 +1,12 @@
 ---
 title: "The Evolution of Golden Paths: From Standardization to Intelligence"
 description: "How Golden Paths evolve from simple templates to intelligent, self-optimizing developer experiences that adapt to team needs"
-pubDate: 2025-01-15
-author: "Technology Leadership Team"
+date: 2025-01-15
+category: "Platform Engineering"
 tags: ["golden-path", "developer-experience", "platform-engineering", "automation", "standardization"]
+author:
+  name: "Technology Leadership Team"
+  title: "Engineering Excellence"
 image: "/images/blog/golden-path-evolution.jpg"
 ---
 
