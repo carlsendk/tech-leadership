@@ -16,7 +16,7 @@ The journey to cloud native isn't just about adopting new technologies—it's ab
 
 The [Container Solutions Maturity Matrix](https://containersolutions.github.io/maturity-matrix/) provides a comprehensive framework for understanding and planning this transformation. Unlike simple technology adoption roadmaps, this matrix recognizes that cloud native maturity spans multiple dimensions that must evolve together to achieve true organizational effectiveness.
 
-Drawing from our [engineering practices framework](../wiki/engineering-practices) and [operating model](../wiki/operating-model), this post explores how to use the maturity matrix strategically to guide your organization's cloud native transformation while avoiding common pitfalls and anti-patterns.
+Drawing from our [engineering practices framework](/tech-leadership/wiki/engineering-practices/) and [operating model](/tech-leadership/wiki/operating-model/), this post explores how to use the maturity matrix strategically to guide your organization's cloud native transformation while avoiding common pitfalls and anti-patterns.
 
 ## Understanding the Cloud Native Maturity Matrix
 
@@ -71,7 +71,7 @@ The matrix evaluates maturity across ten critical dimensions:
 - **CLOUD NATIVE**: Autonomous teams, minimal dependencies
 - **NEXT**: Dynamic team formation
 
-This progression aligns closely with our [autonomous teams framework](../blog/autonomous-teams-implementation), where we see the evolution from functional silos to self-sufficient, end-to-end teams.
+This progression aligns closely with our [autonomous teams framework](/tech-leadership/blog/autonomous-teams-implementation/), where we see the evolution from functional silos to self-sufficient, end-to-end teams.
 
 #### 6. Architecture
 - **NO PROCESS**: No defined architecture
@@ -205,32 +205,32 @@ Priority Dimensions:
 
 ### Alignment with Maturity Stages
 
-The Container Solutions matrix aligns well with our [engineering practices framework](../wiki/engineering-practices):
+The Container Solutions matrix aligns well with our [engineering practices framework](/tech-leadership/wiki/engineering-practices/):
 
-**NO PROCESS / WATERFALL** ↔ **[Normalization Stage](../wiki/engineering-practices/normalization)**:
-- Establishing basic [version control](../wiki/engineering-practices/normalization/version-control) practices
-- Implementing consistent [development guidelines](../wiki/engineering-practices/normalization/development-guidelines)
-- Creating foundational [standardized systems](../wiki/engineering-practices/normalization/standardized-systems)
+**NO PROCESS / WATERFALL** ↔ **[Normalization Stage](/tech-leadership/wiki/engineering-practices/normalization/)**:
+- Establishing basic [version control](/tech-leadership/wiki/engineering-practices/normalization/version-control/) practices
+- Implementing consistent [development guidelines](/tech-leadership/wiki/engineering-practices/normalization/development-guidelines/)
+- Creating foundational [standardized systems](/tech-leadership/wiki/engineering-practices/normalization/standardized-systems/)
 
-**AGILE** ↔ **[Standardization Stage](../wiki/engineering-practices/standardization)**:
-- Implementing [golden paths](../wiki/engineering-practices/standardization/golden-path) for common workflows
-- Adopting [infrastructure as code](../wiki/engineering-practices/standardization/infrastructure-as-code)
-- Standardizing on [containerization](../wiki/engineering-practices/standardization/containerization)
+**AGILE** ↔ **[Standardization Stage](/tech-leadership/wiki/engineering-practices/standardization/)**:
+- Implementing [golden paths](/tech-leadership/wiki/engineering-practices/standardization/golden-path/) for common workflows
+- Adopting [infrastructure as code](/tech-leadership/wiki/engineering-practices/standardization/infrastructure-as-code/)
+- Standardizing on [containerization](/tech-leadership/wiki/engineering-practices/standardization/containerization/)
 
-**CLOUD NATIVE** ↔ **[Expansion Stage](../wiki/engineering-practices/expansion)**:
-- Enabling [autonomous teams](../wiki/engineering-practices/expansion/autonomous-teams)
-- Implementing [CI/CD pipelines](../wiki/engineering-practices/expansion/cicd-pipeline)
-- Building comprehensive [observability](../wiki/engineering-practices/expansion/observability-feedback)
+**CLOUD NATIVE** ↔ **[Expansion Stage](/tech-leadership/wiki/engineering-practices/expansion/)**:
+- Enabling [autonomous teams](/tech-leadership/wiki/engineering-practices/expansion/autonomous-teams/)
+- Implementing [CI/CD pipelines](/tech-leadership/wiki/engineering-practices/expansion/cicd-pipeline/)
+- Building comprehensive [observability](/tech-leadership/wiki/engineering-practices/expansion/observability-feedback/)
 
-**NEXT** ↔ **[Automation](../wiki/engineering-practices/automation) and [Self-Service](../wiki/engineering-practices/self-service)**:
-- [AI-driven operations](../wiki/engineering-practices/automation/ai-driven-operations)
-- [Self-service platforms](../wiki/engineering-practices/self-service/self-service-platform)
-- [Citizen developer](../wiki/engineering-practices/self-service/citizen-developers) capabilities
+**NEXT** ↔ **[Automation](/tech-leadership/wiki/engineering-practices/automation/) and [Self-Service](/tech-leadership/wiki/engineering-practices/self-service/)**:
+- [AI-driven operations](/tech-leadership/wiki/engineering-practices/automation/ai-driven-operations/)
+- [Self-service platforms](/tech-leadership/wiki/engineering-practices/self-service/self-service-platform/)
+- [Citizen developer](/tech-leadership/wiki/engineering-practices/self-service/citizen-developers/) capabilities
 
 ### Practical Implementation Patterns
 
 **Culture and Team Structure Evolution**:
-Our [culture framework](../wiki/operating-model/foundation/culture-framework) provides the foundation for advancing through the maturity levels:
+Our [culture framework](/tech-leadership/wiki/operating-model/foundation/culture-framework/) provides the foundation for advancing through the maturity levels:
 
 ```yaml
 Culture Transformation Journey:
@@ -628,23 +628,23 @@ Success Criteria:
 
 ### Integration with Operating Model
 
-The maturity transformation directly supports our [operating model objectives](../wiki/operating-model):
+The maturity transformation directly supports our [operating model objectives](/tech-leadership/wiki/operating-model/):
 
-**[Foundation](../wiki/operating-model/foundation)**: Culture and team structure maturity creates the foundation for organizational excellence.
+**[Foundation](/tech-leadership/wiki/operating-model/foundation/)**: Culture and team structure maturity creates the foundation for organizational excellence.
 
-**[Operations](../wiki/operating-model/operations)**: Process and delivery maturity enables effective [decision-making](../wiki/operating-model/operations/decision-making) and [coordination](../wiki/operating-model/operations/coordination).
+**[Operations](/tech-leadership/wiki/operating-model/operations/)**: Process and delivery maturity enables effective [decision-making](/tech-leadership/wiki/operating-model/operations/decision-making/) and [coordination](/tech-leadership/wiki/operating-model/operations/coordination/).
 
-**[Optimization](../wiki/operating-model/optimization)**: Advanced maturity levels enable sophisticated [flow optimization](../wiki/operating-model/optimization/optimise-flow) and [cost optimization](../wiki/operating-model/optimization/optimise-cost).
+**[Optimization](/tech-leadership/wiki/operating-model/optimization/)**: Advanced maturity levels enable sophisticated [flow optimization](/tech-leadership/wiki/operating-model/optimization/optimise-flow/) and [cost optimization](/tech-leadership/wiki/operating-model/optimization/optimise-cost/).
 
 ### Supporting Engineering Excellence
 
-The maturity framework complements our [engineering effectiveness](../wiki/engineering-effectiveness) approach:
+The maturity framework complements our [engineering effectiveness](/tech-leadership/wiki/engineering-effectiveness/) approach:
 
-**[Managing Time](../wiki/engineering-effectiveness/managing-time)**: Higher maturity levels reduce context switching and enable better flow states.
+**[Managing Time](/tech-leadership/wiki/engineering-effectiveness/managing-time/)**: Higher maturity levels reduce context switching and enable better flow states.
 
-**[Managing Building Activities](../wiki/engineering-effectiveness/managing-building-activities)**: Advanced delivery and provisioning maturity streamlines development workflows.
+**[Managing Building Activities](/tech-leadership/wiki/engineering-effectiveness/managing-building-activities/)**: Advanced delivery and provisioning maturity streamlines development workflows.
 
-**[Managing Feedback Loops](../wiki/engineering-effectiveness/managing-feedback-loops)**: Cloud native maturity creates faster, higher-quality feedback throughout the development lifecycle.
+**[Managing Feedback Loops](/tech-leadership/wiki/engineering-effectiveness/managing-feedback-loops/)**: Cloud native maturity creates faster, higher-quality feedback throughout the development lifecycle.
 
 ## Future Directions: Beyond Cloud Native
 
@@ -709,7 +709,7 @@ Advanced Product Management:
 
 The Container Solutions maturity matrix provides a comprehensive framework for understanding and planning cloud native transformation. By recognizing that true cloud native adoption requires coordinated evolution across culture, process, technology, and organization, leaders can avoid the common pitfall of technology-first transformation.
 
-The key insight is that maturity is not just about adopting new technologies—it's about building organizational capabilities that enable sustained innovation and adaptation. As outlined in our [engineering practices](../wiki/engineering-practices) and [operating model](../wiki/operating-model) frameworks, successful transformation requires systematic attention to both technical and organizational dimensions.
+The key insight is that maturity is not just about adopting new technologies—it's about building organizational capabilities that enable sustained innovation and adaptation. As outlined in our [engineering practices](/tech-leadership/wiki/engineering-practices/) and [operating model](/tech-leadership/wiki/operating-model/) frameworks, successful transformation requires systematic attention to both technical and organizational dimensions.
 
 The journey to cloud native maturity is not a destination but a continuous evolution toward greater organizational capability and effectiveness. By using the maturity matrix as both assessment tool and transformation roadmap, technology leaders can build organizations that are not just cloud native in technology, but cloud native in thinking, culture, and execution.
 
@@ -721,14 +721,14 @@ Start where you are, measure honestly, advance systematically, and remember that
 - [Container Solutions Maturity Matrix](https://containersolutions.github.io/maturity-matrix/) - The comprehensive assessment framework
 
 **Related Frameworks**:
-- Our [Engineering Practices Framework](../wiki/engineering-practices) - Implementation guidance for technical maturity
-- Our [Operating Model Framework](../wiki/operating-model) - Organizational excellence patterns
-- Our [Engineering Effectiveness](../wiki/engineering-effectiveness) approach - Input-focused optimization
+- Our [Engineering Practices Framework](/tech-leadership/wiki/engineering-practices/) - Implementation guidance for technical maturity
+- Our [Operating Model Framework](/tech-leadership/wiki/operating-model/) - Organizational excellence patterns
+- Our [Engineering Effectiveness](/tech-leadership/wiki/engineering-effectiveness/) approach - Input-focused optimization
 
 **Implementation Guides**:
-- Our [Autonomous Teams Implementation](../blog/autonomous-teams-implementation) - Team structure evolution
-- Our [Strategic Trinity](../blog/ddd-wardley-team-topologies-trinity) - Integrating domain design, strategy, and team structure
-- Our [Organizational Design at Scale](../blog/organizational-design-at-scale) - Scaling transformation approaches
+- Our [Autonomous Teams Implementation](/tech-leadership/blog/autonomous-teams-implementation/) - Team structure evolution
+- Our [Strategic Trinity](/tech-leadership/blog/ddd-wardley-team-topologies-trinity/) - Integrating domain design, strategy, and team structure
+- Our [Organizational Design at Scale](/tech-leadership/blog/organizational-design-at-scale/) - Scaling transformation approaches
 
 **Industry Context**:
 - DORA State of DevOps Reports - Research on high-performing organizations

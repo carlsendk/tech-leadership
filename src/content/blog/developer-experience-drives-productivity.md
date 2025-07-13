@@ -24,7 +24,7 @@ The authors clearly articulate what many engineering leaders have experienced fi
 
 These metrics fail because they treat software development like a manufacturing process, when it's actually a complex, creative, and collaborative activity. As the research demonstrates, **productivity in software engineering is fundamentally about removing friction from the developer experience**.
 
-This aligns perfectly with our [engineering effectiveness framework](../wiki/engineering-effectiveness), which emphasizes optimizing inputs rather than measuring outputs. The DevEx research provides the scientific foundation for this approach.
+This aligns perfectly with our [engineering effectiveness framework](/tech-leadership/wiki/engineering-effectiveness/), which emphasizes optimizing inputs rather than measuring outputs. The DevEx research provides the scientific foundation for this approach.
 
 ### The Three Pillars of Developer Experience
 
@@ -47,7 +47,7 @@ Fast, high-quality feedback enables developers to:
 - Maintain context and flow by avoiding long delays
 - Build confidence in their changes and decisions
 
-As detailed in our [managing feedback loops](../wiki/engineering-effectiveness/managing-feedback-loops) documentation, optimizing feedback speed can dramatically improve both productivity and quality.
+As detailed in our [managing feedback loops](/tech-leadership/wiki/engineering-effectiveness/managing-feedback-loops/) documentation, optimizing feedback speed can dramatically improve both productivity and quality.
 
 ### Optimizing Feedback Loops
 
@@ -105,7 +105,7 @@ The research distinguishes between:
 The goal is to minimize extraneous cognitive load while preserving the intrinsic complexity that creates business value:
 
 **Standardization and Consistency**:
-- [Golden paths](../wiki/engineering-practices/standardization/golden-path) for common development tasks
+- [Golden paths](/tech-leadership/wiki/engineering-practices/standardization/golden-path/) for common development tasks
 - Consistent development environments and tooling
 - Clear coding standards and architectural patterns
 - Standardized deployment and operational procedures
@@ -135,7 +135,7 @@ Flow state is characterized by:
 ### Conditions That Enable Flow
 
 **Uninterrupted Time Blocks**:
-As outlined in our [managing time](../wiki/engineering-effectiveness/managing-time) framework, developers need sustained periods (2-4 hours) of focused work to achieve flow state.
+As outlined in our [managing time](/tech-leadership/wiki/engineering-effectiveness/managing-time/) framework, developers need sustained periods (2-4 hours) of focused work to achieve flow state.
 
 **Clear Goals and Autonomy**:
 - Well-defined requirements and success criteria
@@ -358,14 +358,14 @@ The DevEx research validates and extends our comprehensive approach to engineeri
 
 ### Engineering Effectiveness Integration
 
-Our [engineering effectiveness framework](../wiki/engineering-effectiveness) aligns perfectly with DevEx principles:
-- **[Managing Time](../wiki/engineering-effectiveness/managing-time)**: Optimizes flow state through focus protection
-- **[Managing Building Activities](../wiki/engineering-effectiveness/managing-building-activities)**: Reduces cognitive load through streamlined workflows
-- **[Managing Feedback Loops](../wiki/engineering-effectiveness/managing-feedback-loops)**: Accelerates learning and iteration
+Our [engineering effectiveness framework](/tech-leadership/wiki/engineering-effectiveness/) aligns perfectly with DevEx principles:
+- **[Managing Time](/tech-leadership/wiki/engineering-effectiveness/managing-time/)**: Optimizes flow state through focus protection
+- **[Managing Building Activities](/tech-leadership/wiki/engineering-effectiveness/managing-building-activities/)**: Reduces cognitive load through streamlined workflows
+- **[Managing Feedback Loops](/tech-leadership/wiki/engineering-effectiveness/managing-feedback-loops/)**: Accelerates learning and iteration
 
 ### Engineering Practices Enhancement
 
-DevEx principles enhance our [engineering practices](../wiki/engineering-practices) at every maturity level:
+DevEx principles enhance our [engineering practices](/tech-leadership/wiki/engineering-practices/) at every maturity level:
 - **Normalization**: Consistent practices reduce cognitive load
 - **Standardization**: Golden paths optimize feedback loops and flow
 - **Expansion**: Autonomous teams enable better developer experience
@@ -426,7 +426,7 @@ DevEx principles enhance our [engineering practices](../wiki/engineering-practic
 
 The DevEx research represents a fundamental shift in how we understand and optimize engineering productivity. By focusing on developer experience rather than traditional output metrics, organizations can create sustainable competitive advantages through superior engineering capabilities.
 
-The three pillars—feedback loops, cognitive load, and flow state—provide a practical framework for systematic improvement. When combined with our [engineering effectiveness](../wiki/engineering-effectiveness) and [engineering practices](../wiki/engineering-practices) frameworks, DevEx creates a comprehensive approach to engineering excellence.
+The three pillars—feedback loops, cognitive load, and flow state—provide a practical framework for systematic improvement. When combined with our [engineering effectiveness](/tech-leadership/wiki/engineering-effectiveness/) and [engineering practices](/tech-leadership/wiki/engineering-practices/) frameworks, DevEx creates a comprehensive approach to engineering excellence.
 
 As the research clearly demonstrates, **developer experience is not just about making engineers happy—it's about creating the conditions that enable exceptional business performance**. Organizations that invest in developer experience will outperform those that focus solely on traditional productivity metrics.
 
@@ -443,8 +443,8 @@ The question isn't whether to invest in developer experience—it's how quickly 
 - Microsoft Developer Velocity research and SPACE framework
 
 **Framework Integration**:
-- Our [Engineering Effectiveness](../wiki/engineering-effectiveness) framework provides implementation guidance for DevEx principles
-- Our [Engineering Practices](../wiki/engineering-practices) framework creates the organizational foundation for developer experience excellence
+- Our [Engineering Effectiveness](/tech-leadership/wiki/engineering-effectiveness/) framework provides implementation guidance for DevEx principles
+- Our [Engineering Practices](/tech-leadership/wiki/engineering-practices/) framework creates the organizational foundation for developer experience excellence
 
 ---
 
