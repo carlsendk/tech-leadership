@@ -3,6 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import alpinejs from '@astrojs/alpinejs';
 import remarkToc from 'remark-toc';
+import remarkFixInternalLinks from './src/plugins/remark-fix-internal-links.js';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeMermaid from 'rehype-mermaid';
@@ -16,6 +17,7 @@ const markdownConfig = {
   },
   remarkPlugins: [
     [remarkToc, { heading: "Contents" }],
+    remarkFixInternalLinks,
   ],
   rehypePlugins: [
     addMermaidClass,  // 1. restore <pre class="mermaid">
@@ -76,6 +78,7 @@ export default defineConfig({
     ...markdownConfig,
     remarkPlugins: [
       [remarkToc, { heading: "Contents" }],
+      remarkFixInternalLinks,
     ],
     rehypePlugins: [
       addMermaidClass,
