@@ -29,7 +29,17 @@ const allPosts = await getCollection("blog", ({ data }) => !data.draft);
 const categories = [
   ...new Set(allPosts.map((post) => post.data.category)),
 ].sort();
-const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))].sort();
+// Get tag frequency and limit to most popular
+const tagFrequency = allPosts.flatMap((post) => post.data.tags)
+  .reduce((acc, tag) => {
+    acc[tag] = (acc[tag] || 0) + 1;
+    return acc;
+  }, {});
+
+const popularTags = Object.entries(tagFrequency)
+  .sort(([,a], [,b]) => b - a)
+  .slice(0, 12)
+  .map(([tag]) => tag);
 
 // Get related posts if we have a current post
 let relatedPosts: BlogPost[] = [];
@@ -61,12 +71,53 @@ const recentPosts = allPosts
   .slice(0, 5);
 ---
 
-<aside class="space-y-8">
+<aside class="space-y-4">
+  <!-- Related Posts (priority) or Popular Posts if no related -->
+  {
+    relatedPosts.length > 0 ? (
+      <div class="bg-white dark:bg-primary-900 rounded-xl shadow-sm p-6">
+        <h2 class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-4">
+          Related Posts
+        </h2>
+        <div class="space-y-4">
+          {relatedPosts.map((post) => (
+            <a href={getBlogUrl(post.slug)} class="block group">
+              <h3 class="text-primary-900 dark:text-primary-100 group-hover:text-accent-600 dark:group-hover:text-accent-400 font-medium transition-colors line-clamp-2">
+                {post.data.title}
+              </h3>
+              <p class="text-sm text-primary-600 dark:text-primary-300 line-clamp-2 mt-1">
+                {post.data.description}
+              </p>
+            </a>
+          ))}
+        </div>
+      </div>
+    ) : (
+      <div class="bg-white dark:bg-primary-900 rounded-xl shadow-sm p-6">
+        <h2 class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-4">
+          Popular Posts
+        </h2>
+        <div class="space-y-4">
+          {
+            recentPosts.map((post) => (
+              <a href={getBlogUrl(post.slug)} class="block group">
+                <h3 class="text-primary-900 dark:text-primary-100 group-hover:text-accent-600 dark:group-hover:text-accent-400 font-medium transition-colors line-clamp-2">
+                  {post.data.title}
+                </h3>
+                <p class="text-sm text-primary-500 dark:text-primary-400 mt-1">
+                  {post.data.date.toLocaleDateString()}
+                </p>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    )
+  }
+
   <!-- Categories -->
   <div class="bg-white dark:bg-primary-900 rounded-xl shadow-sm p-6">
-    <h2
-      class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-4"
-    >
+    <h2 class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-4">
       Categories
     </h2>
     <div class="space-y-2">
@@ -81,62 +132,6 @@ const recentPosts = allPosts
             }`}
           >
             {category}
-          </a>
-        ))
-      }
-    </div>
-  </div>
-
-  <!-- Popular Tags -->
-  <div class="bg-white dark:bg-primary-900 rounded-xl shadow-sm p-6">
-    <h2
-      class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-4"
-    >
-      Popular Tags
-    </h2>
-    <TagList tags={allTags} />
-  </div>
-
-  <!-- Related Posts -->
-  {
-    relatedPosts.length > 0 && (
-      <div class="bg-white dark:bg-primary-900 rounded-xl shadow-sm p-6">
-        <h2 class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-4">
-          Related Posts
-        </h2>
-        <div class="space-y-4">
-          {relatedPosts.map((post) => (
-            <a href={getBlogUrl(post.slug)} class="block group">
-              <h3 class="text-primary-900 dark:text-primary-100 group-hover:text-accent-600 dark:group-hover:text-accent-400 font-medium transition-colors">
-                {post.data.title}
-              </h3>
-              <p class="text-sm text-primary-600 dark:text-primary-300 line-clamp-2 mt-1">
-                {post.data.description}
-              </p>
-            </a>
-          ))}
-        </div>
-      </div>
-    )
-  }
-
-  <!-- Recent Posts -->
-  <div class="bg-white dark:bg-primary-900 rounded-xl shadow-sm p-6">
-    <h2
-      class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-4"
-    >
-      Recent Posts
-    </h2>
-    <div class="space-y-4">
-      {
-        recentPosts.map((post) => (
-          <a href={getBlogUrl(post.slug)} class="block group">
-            <h3 class="text-primary-900 dark:text-primary-100 group-hover:text-accent-600 dark:group-hover:text-accent-400 font-medium transition-colors">
-              {post.data.title}
-            </h3>
-            <p class="text-sm text-primary-500 dark:text-primary-400 mt-1">
-              {post.data.date.toLocaleDateString()}
-            </p>
           </a>
         ))
       }

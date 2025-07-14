@@ -7,7 +7,7 @@ tags: ["engineering-practices", "maturity-assessment", "team-health", "continuou
 author:
   name: "Technology Leadership Team"
   title: "Engineering Excellence"
-image: "/images/blog/engineering-health-check.jpg"
+# image: "/images/blog/engineering-health-check.jpg"
 ---
 
 # Engineering Practices Health Check: A Maturity Assessment Model

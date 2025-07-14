@@ -1,0 +1,57 @@
+---
+// Component to automatically skip the first H1 heading if it's similar to the title
+export interface Props {
+  content: string;
+  title: string;
+}
+
+const { content, title } = Astro.props;
+
+// Function to normalize text for comparison (remove punctuation, extra spaces, case)
+function normalizeText(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Function to check if two strings are similar (allowing for minor differences)
+function areSimilar(str1: string, str2: string): boolean {
+  const normalized1 = normalizeText(str1);
+  const normalized2 = normalizeText(str2);
+  
+  // Check if they're exactly the same
+  if (normalized1 === normalized2) return true;
+  
+  // Check if one contains the other (with at least 80% overlap)
+  const shorter = normalized1.length < normalized2.length ? normalized1 : normalized2;
+  const longer = normalized1.length >= normalized2.length ? normalized1 : normalized2;
+  
+  return longer.includes(shorter) && shorter.length / longer.length > 0.8;
+}
+
+// Process the content to remove the first H1 if it's similar to the title
+function processContent(content: string, title: string): string {
+  // Match the first H1 heading pattern
+  const firstH1Match = content.match(/^(.*?)^# (.+)$/m);
+  
+  if (firstH1Match) {
+    const beforeH1 = firstH1Match[1];
+    const h1Text = firstH1Match[2];
+    
+    // Check if the H1 text is similar to the title
+    if (areSimilar(h1Text, title)) {
+      // Remove the H1 and any preceding whitespace
+      const afterH1 = content.substring(firstH1Match.index + firstH1Match[0].length);
+      return beforeH1.trim() + '\n\n' + afterH1.trim();
+    }
+  }
+  
+  return content;
+}
+
+const processedContent = processContent(content, title);
+---
+
+<div class="processed-content" set:html={processedContent} />

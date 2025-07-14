@@ -7,7 +7,7 @@ tags: ["mastery", "skill-development", "learning", "career-growth", "technical-e
 author:
   name: "Technology Leadership Team"
   title: "Engineering Excellence"
-image: "/images/blog/technical-mastery.jpg"
+# image: "/images/blog/technical-mastery.jpg"
 ---
 
 # The Path to Technical Mastery: Building Expertise in an Ever-Evolving Field

@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+import InteractiveCalculators from '../components/InteractiveCalculators.astro';
+---
+
+<Layout 
+  title="Engineering Tools & Calculators"
+  description="Interactive tools and calculators to measure and improve your engineering practices, including DORA metrics, technical debt assessment, and code quality analysis."
+>
+  <main class="container mx-auto px-4 py-8">
+    <!-- Page Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-primary-900 dark:text-primary-100 mb-4">
+        Engineering Tools & Calculators
+      </h1>
+      <p class="text-xl text-primary-600 dark:text-primary-400 max-w-3xl mx-auto">
+        Interactive tools to measure, analyze, and improve your engineering practices. 
+        Use these calculators to benchmark your team's performance and identify areas for improvement.
+      </p>
+    </div>
+
+    <!-- Tools Section -->
+    <InteractiveCalculators />
+
+    <!-- Information Section -->
+    <div class="mt-16">
+      <div class="bg-white dark:bg-primary-800 rounded-lg shadow-md p-8">
+        <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-4">
+          About These Tools
+        </h2>
+        <div class="grid gap-6 md:grid-cols-2">
+          <div>
+            <h3 class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-2">
+              DORA Metrics Calculator
+            </h3>
+            <p class="text-primary-600 dark:text-primary-300 text-sm mb-4">
+              Based on Google's DevOps Research and Assessment (DORA) program research from the 
+              State of DevOps reports (2019-2023) analyzing thousands of organizations worldwide.
+            </p>
+            <div class="text-xs text-primary-500 dark:text-primary-400 space-y-2">
+              <div>
+                <strong>Research-Based Thresholds:</strong>
+                <ul class="mt-1 space-y-1 ml-2">
+                  <li>• <strong>Elite:</strong> Deploy multiple times/day, less than 1hr lead time, less than 1hr recovery</li>
+                  <li>• <strong>High:</strong> Deploy weekly-daily, less than 1 day lead time, less than 1 day recovery</li>
+                  <li>• <strong>Medium:</strong> Deploy monthly-weekly, 1 week-1 month lead time</li>
+                  <li>• <strong>Low:</strong> Deploy less than monthly, greater than 6 months lead time</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-2">
+              Technical Debt Calculator
+            </h3>
+            <p class="text-primary-600 dark:text-primary-300 text-sm mb-4">
+              Estimates the hidden costs of technical debt based on industry research showing 
+              teams typically spend 20-40% of their time dealing with technical debt.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-2">
+              Incident Cost Calculator
+            </h3>
+            <p class="text-primary-600 dark:text-primary-300 text-sm mb-4">
+              Calculates the true cost of system outages including direct revenue loss, 
+              team response costs, and customer impact multipliers.
+            </p>
+          </div>
+        </div>
+        
+        <div class="mt-6 p-4 bg-primary-50 dark:bg-primary-700 rounded-lg">
+          <p class="text-sm text-primary-600 dark:text-primary-300">
+            <strong>Note:</strong> These tools provide estimates based on industry benchmarks and research. 
+            Use them as starting points for discussions and improvement initiatives within your organization.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,5 +1,5 @@
 ---
-// Enhanced Search Component Integration
+// Enhanced Search Component with Fuse.js
 ---
 
 <div 
@@ -17,7 +17,7 @@
     <input
       type="text"
       placeholder="Search articles, wiki pages, and topics..."
-      class="block w-full md:w-64 pl-10 pr-3 py-2 border border-primary-300 dark:border-primary-600 rounded-md leading-5 bg-white dark:bg-primary-800 text-primary-900 dark:text-primary-100 placeholder-primary-500 dark:placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
+      class="block w-full pl-10 pr-3 py-2 border border-primary-300 dark:border-primary-600 rounded-md leading-5 bg-white dark:bg-primary-800 text-primary-900 dark:text-primary-100 placeholder-primary-500 dark:placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
       x-model="searchQuery"
       @input="performSearch()"
       @focus="showResults = true"
@@ -33,6 +33,48 @@
     </div>
   </div>
 
+  <!-- Search Filters -->
+  <div x-show="showFilters" class="mt-4 p-4 bg-primary-50 dark:bg-primary-800 rounded-lg">
+    <div class="flex flex-wrap items-center gap-4">
+      <!-- Content Type Filter -->
+      <div class="flex items-center gap-2">
+        <label class="text-sm font-medium text-primary-700 dark:text-primary-300">Type:</label>
+        <select 
+          x-model="filters.type" 
+          @change="performSearch()"
+          class="text-sm border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
+        >
+          <option value="">All</option>
+          <option value="blog">Blog Posts</option>
+          <option value="wiki">Wiki Pages</option>
+        </select>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="flex items-center gap-2">
+        <label class="text-sm font-medium text-primary-700 dark:text-primary-300">Category:</label>
+        <select 
+          x-model="filters.category" 
+          @change="performSearch()"
+          class="text-sm border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
+        >
+          <option value="">All Categories</option>
+          <template x-for="category in availableCategories" :key="category">
+            <option :value="category" x-text="category"></option>
+          </template>
+        </select>
+      </div>
+
+      <!-- Clear Filters -->
+      <button 
+        @click="clearFilters()"
+        class="text-sm text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 transition-colors"
+      >
+        Clear Filters
+      </button>
+    </div>
+  </div>
+
   <!-- Results Dropdown -->
   <div 
     x-show="showResults && (searchQuery.length > 0 || searchResults.length > 0)"
@@ -42,24 +84,34 @@
     x-transition:leave="transition ease-in duration-150"
     x-transition:leave-start="opacity-100 translate-y-0"
     x-transition:leave-end="opacity-0 translate-y-1"
-    class="absolute z-50 mt-1 w-full md:w-96 bg-white dark:bg-primary-800 rounded-md shadow-lg border border-primary-200 dark:border-primary-600 max-h-96 overflow-y-auto"
-    @click.away="showResults = false"
+    class="absolute z-50 mt-1 w-full bg-white dark:bg-primary-800 rounded-md shadow-lg border border-primary-200 dark:border-primary-600 max-h-96 overflow-y-auto"
   >
     <!-- Search Stats -->
     <div x-show="searchQuery.length > 0" class="px-4 py-2 border-b border-primary-200 dark:border-primary-600">
-      <p class="text-sm text-primary-600 dark:text-primary-400">
-        <span x-text="searchResults.length"></span> results
-        <span x-show="searchQuery.length > 0">for "<span x-text="searchQuery"></span>"</span>
-      </p>
+      <div class="flex items-center justify-between">
+        <p class="text-sm text-primary-600 dark:text-primary-400">
+          <span x-text="searchResults.length"></span> results
+          <span x-show="searchQuery.length > 0">for "<span x-text="searchQuery"></span>"</span>
+        </p>
+        <button 
+          @click="showFilters = !showFilters"
+          class="text-sm text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 transition-colors flex items-center gap-1"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z"></path>
+          </svg>
+          Filters
+        </button>
+      </div>
     </div>
 
     <!-- Search Results -->
     <div class="py-2">
-      <template x-for="(result, index) in searchResults.slice(0, 8)" :key="result.item.id">
+      <template x-for="(result, index) in searchResults.slice(0, 10)" :key="result.item.id">
         <a 
           :href="result.item.url"
           class="block px-4 py-3 hover:bg-primary-50 dark:hover:bg-primary-700 transition-colors cursor-pointer"
-          @click="trackSearchClick(result.item); showResults = false"
+          @click="trackSearchClick(result.item)"
         >
           <div class="flex items-start justify-between">
             <div class="flex-1">
@@ -73,6 +125,16 @@
               </div>
               <h3 class="text-sm font-medium text-primary-900 dark:text-primary-100 line-clamp-1" x-text="result.item.title"></h3>
               <p class="text-sm text-primary-600 dark:text-primary-300 line-clamp-2 mt-1" x-text="result.item.description"></p>
+              
+              <!-- Search Match Highlights -->
+              <div x-show="result.matches && result.matches.length > 0" class="mt-2">
+                <template x-for="match in result.matches.slice(0, 2)" :key="match.key">
+                  <div class="text-xs text-primary-500 dark:text-primary-400">
+                    <span class="font-medium" x-text="match.key + ':'"></span>
+                    <span x-text="getMatchPreview(match)"></span>
+                  </div>
+                </template>
+              </div>
             </div>
             <div class="ml-2 text-xs text-primary-400">
               <span x-text="Math.round((1 - result.score) * 100) + '%'"></span>
@@ -87,7 +149,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
         </svg>
         <h3 class="mt-2 text-sm font-medium text-primary-900 dark:text-primary-100">No results found</h3>
-        <p class="mt-1 text-sm text-primary-500 dark:text-primary-400">Try different keywords.</p>
+        <p class="mt-1 text-sm text-primary-500 dark:text-primary-400">Try different keywords or remove filters.</p>
       </div>
 
       <!-- Popular Searches (when no query) -->
@@ -107,7 +169,9 @@
   </div>
 </div>
 
-<script is:inline>
+<script>
+  import Fuse from 'fuse.js';
+
   function enhancedSearch() {
     return {
       searchQuery: '',
@@ -116,6 +180,12 @@
       fuse: null,
       isLoading: false,
       showResults: false,
+      showFilters: false,
+      filters: {
+        type: '',
+        category: ''
+      },
+      availableCategories: [],
       popularTopics: [
         'engineering practices',
         'team topologies', 
@@ -130,13 +200,12 @@
         try {
           this.isLoading = true;
           
-          // Dynamically import Fuse.js
-          const FuseModule = await import('https://cdn.skypack.dev/fuse.js');
-          const Fuse = FuseModule.default;
-          
           // Fetch search index
           const response = await fetch('/tech-leadership/search/index.json');
           this.searchIndex = await response.json();
+          
+          // Extract unique categories
+          this.availableCategories = [...new Set(this.searchIndex.map(item => item.category))].sort();
           
           // Initialize Fuse.js
           this.fuse = new Fuse(this.searchIndex, {
@@ -154,7 +223,6 @@
           
         } catch (error) {
           console.error('Failed to initialize search:', error);
-          // Fallback to basic search if needed
         } finally {
           this.isLoading = false;
         }
@@ -167,10 +235,40 @@
         }
 
         let results = this.fuse.search(this.searchQuery);
+        
+        // Apply filters
+        if (this.filters.type) {
+          results = results.filter(result => result.item.type === this.filters.type);
+        }
+        
+        if (this.filters.category) {
+          results = results.filter(result => result.item.category === this.filters.category);
+        }
+        
         this.searchResults = results;
         
         // Track search analytics (local storage)
         this.trackSearch(this.searchQuery, results.length);
+      },
+
+      clearFilters() {
+        this.filters.type = '';
+        this.filters.category = '';
+        this.performSearch();
+      },
+
+      getMatchPreview(match) {
+        if (!match.value) return '';
+        
+        const indices = match.indices[0];
+        if (!indices) return match.value.substring(0, 50) + '...';
+        
+        const [start, end] = indices;
+        const before = match.value.substring(Math.max(0, start - 20), start);
+        const highlighted = match.value.substring(start, end + 1);
+        const after = match.value.substring(end + 1, Math.min(match.value.length, end + 21));
+        
+        return `...${before}**${highlighted}**${after}...`;
       },
 
       trackSearch(query, resultCount) {

@@ -49,12 +49,20 @@ const categories = Object.values(categoryData).sort(
 
 // Get all categories and tags for the filter box
 const allCategories = categories.map((cat) => cat.name);
-const allTags = [
-  ...new Set([
-    ...allBlogPosts.flatMap((post) => post.data.tags),
-    ...allWikiEntries.flatMap((entry) => entry.data.tags),
-  ]),
-].sort();
+
+// Get tag frequency and limit to most popular for filter
+const tagFrequency = [
+  ...allBlogPosts.flatMap((post) => post.data.tags),
+  ...allWikiEntries.flatMap((entry) => entry.data.tags),
+].reduce((acc, tag) => {
+  acc[tag] = (acc[tag] || 0) + 1;
+  return acc;
+}, {});
+
+const popularTags = Object.entries(tagFrequency)
+  .sort(([,a], [,b]) => b - a)
+  .slice(0, 24)
+  .map(([tag]) => tag);
 
 // Calculate total statistics
 const totalBlogPosts = categories.reduce((sum, cat) => sum + cat.blogCount, 0);
@@ -110,7 +118,7 @@ const breadcrumbItems = [
     <FilterBox
       title="Filter by Category"
       categories={allCategories}
-      tags={allTags}
+      tags={popularTags}
       baseUrl="/categories"
     />
 

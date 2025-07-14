@@ -1,0 +1,86 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ThemeProvider from "../components/ThemeProvider.astro";
+import "../styles/mermaid-themes.css";
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Assessment results and recommendations" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/tech-leadership/manifest.json" />
+    <!-- PWA Theme Color -->
+    <meta name="theme-color" content="#6366f1" />
+    <!-- Apple PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Tech Leadership" />
+  </head>
+  <body
+    class="min-h-screen bg-white dark:bg-primary-950 text-primary-800 dark:text-primary-200 flex flex-col transition-colors duration-300"
+  >
+    <ThemeProvider />
+    <Header />
+    <main class="flex-grow py-8">
+      <slot />
+    </main>
+    <Footer />
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --accent: #0d9488;
+    --accent-light: #5eead4;
+    --accent-dark: #115e59;
+  }
+
+  html {
+    font-family: "Inter", system-ui, sans-serif;
+  }
+
+  code {
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
+  }
+
+  /* Dark mode support for charts */
+  @media (prefers-color-scheme: dark) {
+    .chart-container {
+      filter: invert(1) hue-rotate(180deg);
+    }
+    .chart-container canvas {
+      filter: invert(1) hue-rotate(180deg);
+    }
+  }
+</style>

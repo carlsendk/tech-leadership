@@ -7,7 +7,7 @@ tags: ["getting-started", "leadership", "engineering-practices", "operating-mode
 author:
   name: "Technology Leadership Team"
   title: "Engineering Excellence"
-image: "/images/blog/getting-started.jpg"
+# image: "/images/blog/getting-started.jpg"
 ---
 
 # Getting Started with Technology Leadership Excellence

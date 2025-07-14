@@ -1,0 +1,244 @@
+{
+  "id": "cloud-native-maturity",
+  "title": "Cloud Native Maturity Matrix",
+  "description": "Assess your organization's cloud native maturity across multiple dimensions including culture, architecture, delivery, and operations.",
+  "type": "matrix",
+  "version": "1.0",
+  "category": "Cloud Native",
+  "estimatedTime": 10,
+  "tags": ["cloud-native", "maturity-assessment", "organizational-transformation", "devops"],
+  "createdAt": "2025-07-14T00:00:00.000Z",
+  "updatedAt": "2025-07-14T00:00:00.000Z",
+  "dimensions": [
+    {
+      "id": "culture",
+      "title": "Culture",
+      "description": "Organizational mindset and approach to change, learning, and collaboration",
+      "weight": 1.0
+    },
+    {
+      "id": "product-management",
+      "title": "Product Management",
+      "description": "How products are planned, developed, and managed throughout their lifecycle",
+      "weight": 1.0
+    },
+    {
+      "id": "delivery",
+      "title": "Delivery",
+      "description": "Methods and practices for delivering software to production",
+      "weight": 1.0
+    },
+    {
+      "id": "process",
+      "title": "Process",
+      "description": "Development and operational processes and their level of automation",
+      "weight": 1.0
+    },
+    {
+      "id": "team",
+      "title": "Team",
+      "description": "Team structure, skills, and collaboration patterns",
+      "weight": 1.0
+    },
+    {
+      "id": "architecture",
+      "title": "Architecture",
+      "description": "System design patterns and architectural approaches",
+      "weight": 1.0
+    },
+    {
+      "id": "reliability",
+      "title": "Reliability",
+      "description": "Approach to system reliability, monitoring, and incident management",
+      "weight": 1.0
+    },
+    {
+      "id": "provisioning",
+      "title": "Provisioning",
+      "description": "How infrastructure and resources are provisioned and managed",
+      "weight": 1.0
+    },
+    {
+      "id": "infrastructure",
+      "title": "Infrastructure",
+      "description": "Infrastructure patterns and management approaches",
+      "weight": 1.0
+    },
+    {
+      "id": "security",
+      "title": "Security",
+      "description": "Security practices and integration throughout the development lifecycle",
+      "weight": 1.0
+    }
+  ],
+  "maturityLevels": [
+    {
+      "id": "no-process",
+      "name": "No Process",
+      "description": "Ad-hoc, individual-driven approaches with minimal standardization",
+      "level": 1,
+      "color": "#ef4444"
+    },
+    {
+      "id": "waterfall",
+      "name": "Waterfall",
+      "description": "Traditional, sequential approaches with predictable but rigid processes",
+      "level": 2,
+      "color": "#f97316"
+    },
+    {
+      "id": "agile",
+      "name": "Agile",
+      "description": "Iterative development with increased flexibility and faster feedback cycles",
+      "level": 3,
+      "color": "#eab308"
+    },
+    {
+      "id": "cloud-native",
+      "name": "Cloud Native",
+      "description": "Distributed, resilient systems optimized for cloud environments",
+      "level": 4,
+      "color": "#22c55e"
+    },
+    {
+      "id": "next",
+      "name": "Next",
+      "description": "Advanced, self-organizing systems with AI-driven optimization",
+      "level": 5,
+      "color": "#3b82f6"
+    }
+  ],
+  "dimensionDetails": {
+    "culture": {
+      "no-process": "Individualist - Work in silos, ad-hoc decision making",
+      "waterfall": "Predictive - Top-down management, risk-averse, blame culture",
+      "agile": "Iterative - Learning oriented, cross-functional collaboration",
+      "cloud-native": "Experimental - Data-driven decisions, fast failure recovery",
+      "next": "Self-Organized - Autonomous teams, continuous learning, innovation focus"
+    },
+    "product-management": {
+      "no-process": "Projects - Feature-driven, no customer feedback loops",
+      "waterfall": "Long-term plan - Annual planning cycles, limited customer input",
+      "agile": "Feature driven - Sprint-based delivery, regular customer interaction",
+      "cloud-native": "Data driven - Hypothesis-driven development, A/B testing",
+      "next": "AI driven - Machine learning insights, predictive customer needs"
+    },
+    "delivery": {
+      "no-process": "Irregular releases - Manual, unpredictable deployment",
+      "waterfall": "Scheduled releases - Quarterly or annual releases",
+      "agile": "Feature driven - Sprint-based releases, some automation",
+      "cloud-native": "Continuous deployment - Automated pipelines, daily releases",
+      "next": "AI driven - Intelligent deployment strategies, self-healing systems"
+    },
+    "process": {
+      "no-process": "Random - No defined processes, heroic efforts",
+      "waterfall": "Waterfall - Sequential phases, heavy documentation",
+      "agile": "Agile - Iterative development, retrospectives",
+      "cloud-native": "Continuous everything - CI/CD, continuous improvement",
+      "next": "Fully automated - Self-optimizing processes, AI-driven decisions"
+    },
+    "team": {
+      "no-process": "No organization - Individual contributors, unclear roles",
+      "waterfall": "Hierarchy - Functional silos, handoffs between teams",
+      "agile": "Cross-functional - T-shaped skills, scrum teams",
+      "cloud-native": "DevOps/SRE - Full lifecycle ownership, shared responsibility",
+      "next": "Self-selecting - Dynamic team formation, AI-assisted collaboration"
+    },
+    "architecture": {
+      "no-process": "Emergent - No planned architecture, technical debt",
+      "waterfall": "Tightly coupled - Monolithic architecture, shared databases",
+      "agile": "Client server - Service-oriented architecture, API layers",
+      "cloud-native": "Microservices - Loosely coupled, event-driven architecture",
+      "next": "Functions - Serverless, event mesh, self-adapting systems"
+    },
+    "reliability": {
+      "no-process": "Respond to outages - Reactive firefighting, no monitoring",
+      "waterfall": "Ad-hoc monitoring - Basic monitoring, manual incident response",
+      "agile": "Alerting - Proactive monitoring, defined incident procedures",
+      "cloud-native": "Full observability - Distributed tracing, SLOs, chaos engineering",
+      "next": "Anti-fragile - Self-healing systems, AI-driven reliability"
+    },
+    "provisioning": {
+      "no-process": "Manual - Hand-crafted servers, snowflake infrastructure",
+      "waterfall": "Scripted - Configuration management, basic automation",
+      "agile": "Configuration management - Infrastructure as code, version control",
+      "cloud-native": "Orchestration - Container orchestration, immutable infrastructure",
+      "next": "Serverless - Function-based compute, AI-driven resource optimization"
+    },
+    "infrastructure": {
+      "no-process": "Single server - Physical servers, manual management",
+      "waterfall": "Multiple servers - Virtual machines, basic clustering",
+      "agile": "VMs in cloud - Cloud adoption, auto-scaling groups",
+      "cloud-native": "Containers - Kubernetes, service mesh, cloud-native services",
+      "next": "Serverless - Function-as-a-service, edge computing, AI optimization"
+    },
+    "security": {
+      "no-process": "Ignore - Security as afterthought, manual patches",
+      "waterfall": "Periodic audits - Annual security reviews, compliance focus",
+      "agile": "Security gate - Security checkpoints in development process",
+      "cloud-native": "Policy as code - Automated security scanning, shift-left security",
+      "next": "Continuous verification - Zero-trust architecture, AI-driven threat detection"
+    }
+  },
+  "scoring": {
+    "interpretation": "The Cloud Native Maturity Matrix helps you visualize your organization's current state across multiple dimensions of cloud native transformation. Each dimension represents a critical aspect of modern software delivery and operations.",
+    "recommendations": [
+      {
+        "title": "Foundation Building",
+        "description": "Focus on establishing basic processes and moving away from ad-hoc approaches.",
+        "applicableWhen": {
+          "averageLevel": 2
+        },
+        "actions": [
+          "Implement version control for all code and infrastructure",
+          "Establish basic CI/CD pipelines",
+          "Create cross-functional teams",
+          "Adopt agile development practices"
+        ],
+        "priority": "high"
+      },
+      {
+        "title": "Agile Transformation", 
+        "description": "Mature your agile practices and begin cloud adoption.",
+        "applicableWhen": {
+          "averageLevel": 3
+        },
+        "actions": [
+          "Implement comprehensive testing strategies",
+          "Adopt infrastructure as code",
+          "Establish monitoring and observability",
+          "Begin containerization journey"
+        ],
+        "priority": "high"
+      },
+      {
+        "title": "Cloud Native Adoption",
+        "description": "Embrace cloud native patterns and microservices architecture.",
+        "applicableWhen": {
+          "averageLevel": 4
+        },
+        "actions": [
+          "Implement microservices architecture",
+          "Adopt Kubernetes and container orchestration",
+          "Implement comprehensive observability",
+          "Establish chaos engineering practices"
+        ],
+        "priority": "medium"
+      },
+      {
+        "title": "Future-Ready Organization",
+        "description": "Leverage AI and automation for next-generation capabilities.",
+        "applicableWhen": {
+          "averageLevel": 5
+        },
+        "actions": [
+          "Implement AI-driven development processes",
+          "Adopt serverless and edge computing",
+          "Establish self-healing systems",
+          "Implement predictive analytics"
+        ],
+        "priority": "low"
+      }
+    ]
+  }
+}

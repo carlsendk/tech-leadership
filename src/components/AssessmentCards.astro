@@ -1,0 +1,153 @@
+---
+// Pure Assessment Cards Component - Just displays cards, no assessment logic
+---
+
+<div 
+  id="assessment-cards"
+  x-data="assessmentCards()"
+  x-init="loadAssessments()"
+>
+  <!-- Loading State -->
+  <div x-show="isLoading" class="flex items-center justify-center p-8">
+    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-600"></div>
+    <span class="ml-3 text-primary-600 dark:text-primary-400">Loading assessments...</span>
+  </div>
+
+  <!-- Assessment Cards -->
+  <div x-show="!isLoading" class="space-y-12">
+    <!-- Questionnaire Assessments -->
+    <div x-show="questionnaireAssessments.length > 0">
+      <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
+        📊 Questionnaire Assessments
+      </h2>
+      <div class="grid gap-8 md:grid-cols-2">
+        <template x-for="assessment in questionnaireAssessments" :key="assessment.id">
+          <div class="group bg-white dark:bg-primary-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-primary-100 dark:border-primary-700 overflow-hidden">
+            <div class="p-6 pb-4">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-2">
+                  <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                    <span class="text-blue-600 dark:text-blue-400 text-sm font-bold">📊</span>
+                  </div>
+                  <div class="text-xs font-medium text-primary-500 dark:text-primary-400 uppercase tracking-wide">
+                    Questionnaire
+                  </div>
+                </div>
+                <span x-text="assessment.category" class="text-xs font-medium bg-primary-100 dark:bg-primary-700 text-primary-600 dark:text-primary-300 px-3 py-1 rounded-full"></span>
+              </div>
+              
+              <h3 class="text-xl font-bold text-primary-900 dark:text-primary-100 mb-3 group-hover:text-accent-600 transition-colors" x-text="assessment.title"></h3>
+              <p class="text-primary-600 dark:text-primary-300 text-sm leading-relaxed mb-4" x-text="assessment.description"></p>
+              
+              <div class="flex items-center text-sm text-primary-500 dark:text-primary-400 mb-6">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span x-text="`${assessment.estimatedTime} minutes`"></span>
+              </div>
+            </div>
+            
+            <div class="px-6 pb-6">
+              <a 
+                :href="`/tech-leadership/assessments/${assessment.id}/`"
+                class="flex-1 w-full bg-accent-600 hover:bg-accent-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 text-center block"
+              >
+                Start Assessment
+              </a>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+    
+    <!-- Matrix Assessments -->
+    <div x-show="matrixAssessments.length > 0">
+      <h2 class="text-2xl font-bold text-primary-900 dark:text-primary-100 mb-6">
+        🎯 Matrix Assessments
+      </h2>
+      <div class="grid gap-8 md:grid-cols-2">
+        <template x-for="assessment in matrixAssessments" :key="assessment.id">
+          <div class="group bg-white dark:bg-primary-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-primary-100 dark:border-primary-700 overflow-hidden">
+            <div class="p-6 pb-4">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-2">
+                  <div class="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
+                    <span class="text-green-600 dark:text-green-400 text-sm font-bold">🎯</span>
+                  </div>
+                  <div class="text-xs font-medium text-primary-500 dark:text-primary-400 uppercase tracking-wide">
+                    Matrix Assessment
+                  </div>
+                </div>
+                <span x-text="assessment.category" class="text-xs font-medium bg-primary-100 dark:bg-primary-700 text-primary-600 dark:text-primary-300 px-3 py-1 rounded-full"></span>
+              </div>
+              
+              <h3 class="text-xl font-bold text-primary-900 dark:text-primary-100 mb-3 group-hover:text-accent-600 transition-colors" x-text="assessment.title"></h3>
+              <p class="text-primary-600 dark:text-primary-300 text-sm leading-relaxed mb-4" x-text="assessment.description"></p>
+              
+              <div class="flex items-center text-sm text-primary-500 dark:text-primary-400 mb-6">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span x-text="`${assessment.estimatedTime} minutes`"></span>
+              </div>
+            </div>
+            
+            <div class="px-6 pb-6">
+              <a 
+                :href="`/tech-leadership/assessments/${assessment.id}/`"
+                class="flex-1 w-full bg-accent-600 hover:bg-accent-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 text-center block"
+              >
+                Start Assessment
+              </a>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  function assessmentCards() {
+    return {
+      isLoading: true,
+      questionnaireAssessments: [],
+      matrixAssessments: [],
+
+      async loadAssessments() {
+        try {
+          this.isLoading = true;
+          const response = await fetch('/tech-leadership/assessments/index.json/');
+          const allAssessments = await response.json();
+          
+          // Split assessments by type
+          this.questionnaireAssessments = allAssessments.filter(a => 
+            a.type === 'questionnaire' || !a.type
+          );
+          this.matrixAssessments = allAssessments.filter(a => 
+            a.type === 'matrix'
+          );
+          
+        } catch (error) {
+          console.error('Failed to load assessments:', error);
+        } finally {
+          this.isLoading = false;
+        }
+      }
+    };
+  }
+
+  // Make function globally available
+  window.assessmentCards = assessmentCards;
+</script>
+
+<style>
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+</style>
