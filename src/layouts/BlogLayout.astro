@@ -47,7 +47,7 @@ const shareLinks = {
         <span>›</span>
         <a href="/tech-leadership/blog/" class="hover:text-primary-900 dark:hover:text-primary-100 transition-colors">Blog</a>
         <span>›</span>
-        <a href={`/tech-leadership/blog/category/${category.toLowerCase().replace(/\s+/g, '-')}`} 
+        <a href={`/tech-leadership/blog/category/${category.toLowerCase().replace(/\s+/g, '-')}/`} 
            class="hover:text-primary-900 dark:hover:text-primary-100 transition-colors">{category}</a>
       </nav>
     </div>
@@ -75,7 +75,7 @@ const shareLinks = {
           <header class="mb-6 pb-4 border-b border-primary-100 dark:border-primary-800">
             <!-- Category and Date - Above title for context -->
             <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-primary-600 dark:text-primary-400 mb-4">
-              <a href={`/tech-leadership/blog/category/${category.toLowerCase().replace(/\s+/g, '-')}`} 
+              <a href={`/tech-leadership/blog/category/${category.toLowerCase().replace(/\s+/g, '-')}/`} 
                  class="hover:text-accent-600 dark:hover:text-accent-400 font-medium bg-accent-50 dark:bg-accent-900/20 px-3 py-1 rounded-full transition-colors">
                 {category}
               </a>
@@ -120,7 +120,7 @@ const shareLinks = {
               <!-- Tags -->
               <div class="flex flex-wrap gap-2">
                 {tags.map((tag) => (
-                  <a href={`/tech-leadership/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+                  <a href={`/tech-leadership/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}/`}
                      class="text-xs px-3 py-1 bg-primary-100 hover:bg-primary-200 dark:bg-primary-800 dark:hover:bg-primary-700 text-primary-700 hover:text-primary-900 dark:text-primary-300 dark:hover:text-primary-100 rounded-full transition-all">
                     #{tag}
                   </a>
