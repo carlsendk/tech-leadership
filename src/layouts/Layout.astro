@@ -29,6 +29,21 @@ const { title, description = "A content-driven website built with Astro" } =
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <!-- RSS Feed Auto-Discovery -->
+    <link 
+      rel="alternate" 
+      type="application/rss+xml" 
+      title="Technology Leadership Blog RSS Feed" 
+      href="/tech-leadership/rss.xml" 
+    />
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/tech-leadership/manifest.json" />
+    <!-- PWA Theme Color -->
+    <meta name="theme-color" content="#6366f1" />
+    <!-- Apple PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Tech Leadership" />
   </head>
   <body
     class="min-h-screen bg-white dark:bg-primary-950 text-primary-800 dark:text-primary-200 flex flex-col transition-colors duration-300"
@@ -40,6 +55,106 @@ const { title, description = "A content-driven website built with Astro" } =
     </main>
     <Footer />
     <MermaidInit />
+    
+    <!-- Service Worker Registration -->
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/tech-leadership/sw.js')
+            .then((registration) => {
+              // Service worker registered successfully
+              
+              // Check for updates
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                if (newWorker) {
+                  newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                      // New content is available, show update notification
+                      showUpdateNotification();
+                    }
+                  });
+                }
+              });
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+
+        // Listen for PWA install prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+          // Prevent Chrome 67 and earlier from automatically showing the prompt
+          e.preventDefault();
+          // Stash the event so it can be triggered later
+          deferredPrompt = e;
+          // Show install button
+          showInstallButton();
+        });
+
+        function showInstallButton() {
+          // Create and show install button
+          const installButton = document.createElement('button');
+          installButton.textContent = '📱 Install App';
+          installButton.className = 'fixed bottom-4 right-4 bg-accent-600 text-white px-4 py-2 rounded-lg shadow-lg z-50 text-sm font-medium hover:bg-accent-700 transition-colors';
+          installButton.style.display = 'block';
+          
+          installButton.addEventListener('click', () => {
+            // Hide the button
+            installButton.style.display = 'none';
+            // Show the prompt
+            if (deferredPrompt) {
+              deferredPrompt.prompt();
+              // Wait for the user to respond to the prompt
+              deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                  console.log('User accepted the A2HS prompt');
+                } else {
+                  console.log('User dismissed the A2HS prompt');
+                }
+                deferredPrompt = null;
+              });
+            }
+          });
+          
+          document.body.appendChild(installButton);
+          
+          // Auto-hide after 10 seconds
+          setTimeout(() => {
+            if (installButton.parentNode) {
+              installButton.style.opacity = '0.7';
+            }
+          }, 10000);
+        }
+
+        function showUpdateNotification() {
+          // Create update notification
+          const updateNotification = document.createElement('div');
+          updateNotification.className = 'fixed top-4 right-4 bg-blue-600 text-white px-4 py-3 rounded-lg shadow-lg z-50 max-w-sm';
+          updateNotification.innerHTML = `
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Update Available</div>
+                <div class="text-xs opacity-90">New content is ready</div>
+              </div>
+              <button onclick="window.location.reload()" class="ml-3 bg-blue-700 hover:bg-blue-800 px-2 py-1 rounded text-xs">
+                Refresh
+              </button>
+            </div>
+          `;
+          
+          document.body.appendChild(updateNotification);
+          
+          // Auto-hide after 10 seconds
+          setTimeout(() => {
+            if (updateNotification.parentNode) {
+              updateNotification.remove();
+            }
+          }, 10000);
+        }
+      }
+    </script>
   </body>
 </html>
 

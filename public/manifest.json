@@ -1,0 +1,77 @@
+{
+  "name": "Technology Leadership Platform",
+  "short_name": "Tech Leadership",
+  "description": "Comprehensive platform for engineering practices, operating models, and building high-performing technology organizations",
+  "start_url": "/tech-leadership/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "scope": "/tech-leadership/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["productivity", "education", "business"],
+  "icons": [
+    {
+      "src": "/tech-leadership/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Take Assessment",
+      "short_name": "Assessment",
+      "description": "Take an engineering practices assessment",
+      "url": "/tech-leadership/assessments/",
+      "icons": [
+        {
+          "src": "/tech-leadership/favicon.svg",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Browse Wiki",
+      "short_name": "Wiki",
+      "description": "Browse engineering practices wiki",
+      "url": "/tech-leadership/wiki/",
+      "icons": [
+        {
+          "src": "/tech-leadership/favicon.svg",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Read Blog",
+      "short_name": "Blog",
+      "description": "Read latest blog posts",
+      "url": "/tech-leadership/blog/",
+      "icons": [
+        {
+          "src": "/tech-leadership/favicon.svg",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/tech-leadership/favicon.svg",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Tech Leadership Platform Dashboard"
+    },
+    {
+      "src": "/tech-leadership/favicon.svg",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Assessment Interface"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "engineering-practices",
+    "title": "Engineering Practices Maturity Assessment",
+    "description": "Evaluate your organization's engineering practices maturity across five key stages: Normalization, Standardization, Expansion, Automation, and Self-Service.",
+    "type": "questionnaire",
+    "category": "Engineering Excellence",
+    "estimatedTime": 15,
+    "tags": [
+      "engineering-practices",
+      "maturity-assessment",
+      "team-health",
+      "continuous-improvement"
+    ],
+    "version": "1.0",
+    "updatedAt": "2025-01-13T00:00:00.000Z"
+  },
+  {
+    "id": "cloud-native-maturity",
+    "title": "Cloud Native Maturity Matrix",
+    "description": "Assess your organization's cloud native maturity across multiple dimensions including culture, architecture, delivery, and operations.",
+    "type": "matrix",
+    "category": "Cloud Native",
+    "estimatedTime": 10,
+    "tags": [
+      "cloud-native",
+      "maturity-assessment",
+      "organizational-transformation",
+      "devops"
+    ],
+    "version": "1.0",
+    "updatedAt": "2025-07-14T00:00:00.000Z"
+  }
+]

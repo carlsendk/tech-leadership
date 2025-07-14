@@ -49,8 +49,51 @@ const isSubcategoryIndex = entry.data.isIndex && entry.data.subcategory;
       tags={entry.data.tags}
       category={entry.data.category}
       entry={entry}
+      heroImage={entry.data.heroImage || entry.data.image}
+      heroImageAlt={entry.data.heroImageAlt}
     >
-      <Content />
+      <div class="prose-content" data-title={entry.data.title}>
+        <Content />
+      </div>
+      
+      <script>
+        // Auto-skip first H1 heading if it's similar to the title
+        function autoSkipFirstH1() {
+          const contentDiv = document.querySelector('.prose-content[data-title]');
+          if (!contentDiv) return;
+          
+          const title = contentDiv.getAttribute('data-title') || '';
+          const firstH1 = contentDiv.querySelector('h1');
+          
+          if (!firstH1 || !title) return;
+          
+          const h1Text = firstH1.textContent?.trim() || '';
+          
+          const normalizeText = (text) => {
+            return text.toLowerCase()
+              .replace(/[^\w\s]/g, ' ')
+              .replace(/\s+/g, ' ')
+              .trim();
+          };
+          
+          const normalizedH1 = normalizeText(h1Text);
+          const normalizedTitle = normalizeText(title);
+          
+          const areSimilar = normalizedH1 === normalizedTitle || 
+                            (normalizedH1.includes(normalizedTitle) && normalizedTitle.length > 10) ||
+                            (normalizedTitle.includes(normalizedH1) && normalizedH1.length > 10);
+          
+          if (areSimilar) {
+            firstH1.remove();
+          }
+        }
+        
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', autoSkipFirstH1);
+        } else {
+          autoSkipFirstH1();
+        }
+      </script>
     </CategoryLayout>
   ) : isSubcategoryDisplay ? (
     <SubcategoryLayout
@@ -60,8 +103,51 @@ const isSubcategoryIndex = entry.data.isIndex && entry.data.subcategory;
       category={entry.data.category}
       subcategory={entry.data.subcategory}
       entry={entry}
+      heroImage={entry.data.heroImage || entry.data.image}
+      heroImageAlt={entry.data.heroImageAlt}
     >
-      <Content />
+      <div class="prose-content" data-title={entry.data.title}>
+        <Content />
+      </div>
+      
+      <script>
+        // Auto-skip first H1 heading if it's similar to the title
+        function autoSkipFirstH1() {
+          const contentDiv = document.querySelector('.prose-content[data-title]');
+          if (!contentDiv) return;
+          
+          const title = contentDiv.getAttribute('data-title') || '';
+          const firstH1 = contentDiv.querySelector('h1');
+          
+          if (!firstH1 || !title) return;
+          
+          const h1Text = firstH1.textContent?.trim() || '';
+          
+          const normalizeText = (text) => {
+            return text.toLowerCase()
+              .replace(/[^\w\s]/g, ' ')
+              .replace(/\s+/g, ' ')
+              .trim();
+          };
+          
+          const normalizedH1 = normalizeText(h1Text);
+          const normalizedTitle = normalizeText(title);
+          
+          const areSimilar = normalizedH1 === normalizedTitle || 
+                            (normalizedH1.includes(normalizedTitle) && normalizedTitle.length > 10) ||
+                            (normalizedTitle.includes(normalizedH1) && normalizedH1.length > 10);
+          
+          if (areSimilar) {
+            firstH1.remove();
+          }
+        }
+        
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', autoSkipFirstH1);
+        } else {
+          autoSkipFirstH1();
+        }
+      </script>
     </SubcategoryLayout>
   ) : isSubcategoryIndex && entry.data.subcategory ? (
     <SubcategoryLayout
@@ -71,8 +157,51 @@ const isSubcategoryIndex = entry.data.isIndex && entry.data.subcategory;
       category={entry.data.category}
       subcategory={entry.data.subcategory}
       entry={entry}
+      heroImage={entry.data.heroImage || entry.data.image}
+      heroImageAlt={entry.data.heroImageAlt}
     >
-      <Content />
+      <div class="prose-content" data-title={entry.data.title}>
+        <Content />
+      </div>
+      
+      <script>
+        // Auto-skip first H1 heading if it's similar to the title
+        function autoSkipFirstH1() {
+          const contentDiv = document.querySelector('.prose-content[data-title]');
+          if (!contentDiv) return;
+          
+          const title = contentDiv.getAttribute('data-title') || '';
+          const firstH1 = contentDiv.querySelector('h1');
+          
+          if (!firstH1 || !title) return;
+          
+          const h1Text = firstH1.textContent?.trim() || '';
+          
+          const normalizeText = (text) => {
+            return text.toLowerCase()
+              .replace(/[^\w\s]/g, ' ')
+              .replace(/\s+/g, ' ')
+              .trim();
+          };
+          
+          const normalizedH1 = normalizeText(h1Text);
+          const normalizedTitle = normalizeText(title);
+          
+          const areSimilar = normalizedH1 === normalizedTitle || 
+                            (normalizedH1.includes(normalizedTitle) && normalizedTitle.length > 10) ||
+                            (normalizedTitle.includes(normalizedH1) && normalizedH1.length > 10);
+          
+          if (areSimilar) {
+            firstH1.remove();
+          }
+        }
+        
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', autoSkipFirstH1);
+        } else {
+          autoSkipFirstH1();
+        }
+      </script>
     </SubcategoryLayout>
   ) : (
     <WikiLayout
@@ -82,8 +211,59 @@ const isSubcategoryIndex = entry.data.isIndex && entry.data.subcategory;
       category={entry.data.category}
       headings={headings}
       entry={entry}
+      heroImage={entry.data.heroImage || entry.data.image}
+      heroImageAlt={entry.data.heroImageAlt}
     >
-      <Content />
+      <div class="prose-content" data-title={entry.data.title}>
+        <Content />
+      </div>
+      
+      <script>
+        // Auto-skip first H1 heading if it's similar to the title
+        function autoSkipFirstH1() {
+          const contentDiv = document.querySelector('.prose-content[data-title], .prose[data-title]');
+          if (!contentDiv) return;
+          
+          const title = contentDiv.getAttribute('data-title') || '';
+          const firstH1 = contentDiv.querySelector('h1');
+          
+          if (!firstH1 || !title) return;
+          
+          const h1Text = firstH1.textContent?.trim() || '';
+          
+          // Normalize both texts for comparison
+          const normalizeText = (text) => {
+            return text.toLowerCase()
+              .replace(/[^\w\s]/g, ' ')
+              .replace(/\s+/g, ' ')
+              .trim();
+          };
+          
+          const normalizedH1 = normalizeText(h1Text);
+          const normalizedTitle = normalizeText(title);
+          
+          // Check if they're similar
+          const areSimilar = normalizedH1 === normalizedTitle || 
+                            (normalizedH1.includes(normalizedTitle) && normalizedTitle.length > 10) ||
+                            (normalizedTitle.includes(normalizedH1) && normalizedH1.length > 10);
+          
+          if (areSimilar) {
+            firstH1.remove();
+          }
+        }
+        
+        // Run with slight delay to ensure content is fully rendered
+        function runAutoSkip() {
+          setTimeout(autoSkipFirstH1, 100);
+        }
+        
+        // Run on page load
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', runAutoSkip);
+        } else {
+          runAutoSkip();
+        }
+      </script>
     </WikiLayout>
   )
 }

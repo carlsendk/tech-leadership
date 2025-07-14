@@ -10,6 +10,10 @@ const blogCollection = defineCollection({
     tags: z.array(z.string()),
     category: z.string(),
     draft: z.boolean().optional().default(false),
+    heroImage: z.string().optional(),
+    heroImageAlt: z.string().optional(),
+    // Support legacy 'image' field as alias for heroImage
+    image: z.string().optional(),
     author: z.object({
       name: z.string(),
       avatar: z.string().optional(),
@@ -34,6 +38,10 @@ const wikiCollection = defineCollection({
     subcategory: z.string().optional(),
     isIndex: z.boolean().optional().default(false),
     draft: z.boolean().optional().default(false),
+    heroImage: z.string().optional(),
+    heroImageAlt: z.string().optional(),
+    // Support legacy 'image' field as alias for heroImage
+    image: z.string().optional(),
   }),
 });
 
