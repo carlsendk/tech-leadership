@@ -1,3 +1,5 @@
+Note: this is a project to see and play with vibe coding with little to no interaction
+
 # Technology Leadership Knowledge Platform
 
 A comprehensive knowledge platform for technology leaders, featuring three interconnected framework areas: **Engineering Practices**, **Operating Model**, and **Engineering Effectiveness**. Includes extensive blog content covering strategic approaches like Wardley Mapping, Domain-Driven Design, Team Topologies, and visual portfolio management. Built with Astro for performance and optimized for both learning and reference.
