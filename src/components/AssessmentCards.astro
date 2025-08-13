@@ -117,7 +117,7 @@
       async loadAssessments() {
         try {
           this.isLoading = true;
-          const response = await fetch('/tech-leadership/assessments/index.json/');
+          const response = await fetch('/tech-leadership/assessments/index.json');
           const allAssessments = await response.json();
           
           // Split assessments by type

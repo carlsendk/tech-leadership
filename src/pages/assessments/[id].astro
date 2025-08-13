@@ -609,7 +609,7 @@ const assessmentTitle = id === 'engineering-practices'
           try {
             this.isLoading = true;
             const assessmentId = window.location.pathname.split('/').filter(p => p).pop();
-            const response = await fetch(`/tech-leadership/assessments/${assessmentId}.json/`);
+            const response = await fetch(`/tech-leadership/assessments/${assessmentId}.json`);
             
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
@@ -922,7 +922,7 @@ const assessmentTitle = id === 'engineering-practices'
           try {
             this.isLoading = true;
             const assessmentId = window.location.pathname.split('/').filter(p => p).pop();
-            const response = await fetch(`/tech-leadership/assessments/${assessmentId}.json/`);
+            const response = await fetch(`/tech-leadership/assessments/${assessmentId}.json`);
             
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
