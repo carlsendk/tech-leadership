@@ -5,13 +5,14 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm run generate:assessments && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
     "postinstall": "playwright install chromium --with-deps",
     "test": "vitest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "generate:assessments": "node scripts/generate-assessments.mjs"
   },
   "dependencies": {
     "@astrojs/alpinejs": "^0.4.8",
