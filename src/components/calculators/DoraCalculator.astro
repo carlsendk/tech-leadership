@@ -1,0 +1,157 @@
+<div
+  class="bg-white dark:bg-primary-800 rounded-lg shadow-md p-6"
+  x-data="doraCalculator()"
+>
+  <h3 class="text-xl font-semibold text-primary-900 dark:text-primary-100 mb-4">
+    DORA Metrics Calculator
+  </h3>
+  <p class="text-sm text-primary-600 dark:text-primary-300 mb-6">
+    Calculate your DevOps Research and Assessment (DORA) metrics to benchmark your team's performance.
+  </p>
+
+  <div class="space-y-4">
+    <!-- Deployment Frequency -->
+    <div>
+      <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
+        Deployments per week
+      </label>
+      <input
+        type="number"
+        x-model="deploymentsPerWeek"
+        @input="calculate()"
+        min="0"
+        step="0.1"
+        class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
+        placeholder="e.g., 5"
+      />
+      <p x-show="errors.deploymentsPerWeek" x-text="errors.deploymentsPerWeek" class="text-red-600 text-xs mt-1"></p>
+    </div>
+
+    <!-- Lead Time -->
+    <div>
+      <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
+        Lead time (hours from commit to production)
+      </label>
+      <input
+        type="number"
+        x-model="leadTimeHours"
+        @input="calculate()"
+        min="0"
+        step="0.5"
+        class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
+        placeholder="e.g., 24"
+      />
+      <p x-show="errors.leadTimeHours" x-text="errors.leadTimeHours" class="text-red-600 text-xs mt-1"></p>
+    </div>
+
+    <!-- MTTR -->
+    <div>
+      <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
+        Mean Time to Recovery (hours)
+      </label>
+      <input
+        type="number"
+        x-model="mttrHours"
+        @input="calculate()"
+        min="0"
+        step="0.5"
+        class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
+        placeholder="e.g., 2"
+      />
+      <p x-show="errors.mttrHours" x-text="errors.mttrHours" class="text-red-600 text-xs mt-1"></p>
+    </div>
+
+    <!-- Change Failure Rate -->
+    <div>
+      <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
+        Change failure rate (%)
+      </label>
+      <input
+        type="number"
+        x-model="changeFailureRate"
+        @input="calculate()"
+        min="0"
+        max="100"
+        step="1"
+        class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
+        placeholder="e.g., 15"
+      />
+      <p x-show="errors.changeFailureRate" x-text="errors.changeFailureRate" class="text-red-600 text-xs mt-1"></p>
+    </div>
+
+    <!-- Results -->
+    <div x-show="doraResults" class="mt-6 p-4 bg-primary-50 dark:bg-primary-700 rounded-lg">
+      <h4 class="font-semibold text-primary-900 dark:text-primary-100 mb-3">DORA Performance Level</h4>
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between">
+          <span>Overall Rating:</span>
+          <span class="font-medium" :class="getRatingColor(doraResults?.overall)" x-text="doraResults?.overall"></span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+          <div>Deployment Frequency: <span :class="getRatingColor(doraResults?.deploymentFreq)" x-text="doraResults?.deploymentFreq"></span></div>
+          <div>Lead Time: <span :class="getRatingColor(doraResults?.leadTime)" x-text="doraResults?.leadTime"></span></div>
+          <div>MTTR: <span :class="getRatingColor(doraResults?.mttr)" x-text="doraResults?.mttr"></span></div>
+          <div>Change Failure Rate: <span :class="getRatingColor(doraResults?.changeFailure)" x-text="doraResults?.changeFailure"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { calculateDora } from '../../utils/calculators/dora';
+
+  function doraCalculator() {
+    return {
+      deploymentsPerWeek: '',
+      leadTimeHours: '',
+      mttrHours: '',
+      changeFailureRate: '',
+      doraResults: null,
+      errors: {},
+
+      validateNumber(value, field, opts = {}) {
+        const { min = 0, max } = opts;
+        if (value === '' || value === null) {
+          this.errors[field] = '';
+          return null;
+        }
+        const num = parseFloat(value);
+        if (!Number.isFinite(num) || num < min) {
+          this.errors[field] = min > 0 ? `Please enter a number ≥ ${min}` : 'Please enter a valid non-negative number';
+          return null;
+        }
+        if (max !== undefined && num > max) {
+          this.errors[field] = 'Percentage cannot exceed 100';
+          return null;
+        }
+        this.errors[field] = '';
+        return num;
+      },
+
+      calculate() {
+        const deployments = this.validateNumber(this.deploymentsPerWeek, 'deploymentsPerWeek');
+        const lead = this.validateNumber(this.leadTimeHours, 'leadTimeHours');
+        const mttr = this.validateNumber(this.mttrHours, 'mttrHours');
+        const changeFailure = this.validateNumber(this.changeFailureRate, 'changeFailureRate', { max: 100 });
+
+        if ([deployments, lead, mttr, changeFailure].some(v => v === null)) {
+          this.doraResults = null;
+          return;
+        }
+
+        this.doraResults = calculateDora(deployments, lead, mttr, changeFailure);
+      },
+
+      getRatingColor(rating) {
+        switch (rating) {
+          case 'Elite': return 'text-green-600 dark:text-green-400';
+          case 'High': return 'text-blue-600 dark:text-blue-400';
+          case 'Medium': return 'text-yellow-600 dark:text-yellow-400';
+          case 'Low': return 'text-red-600 dark:text-red-400';
+          default: return '';
+        }
+      }
+    };
+  }
+</script>

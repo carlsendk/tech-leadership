@@ -1,0 +1,143 @@
+<div
+  class="bg-white dark:bg-primary-800 rounded-lg shadow-md p-6"
+  x-data="codeQualityCalculator()"
+>
+  <h3 class="text-xl font-semibold text-primary-900 dark:text-primary-100 mb-4">
+    Code Quality Score
+  </h3>
+  <p class="text-sm text-primary-600 dark:text-primary-300 mb-6">
+    Calculate your overall code quality score based on multiple metrics.
+  </p>
+
+  <div class="space-y-4">
+    <!-- Test Coverage -->
+    <div>
+      <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
+        Test coverage (%)
+      </label>
+      <input
+        type="number"
+        x-model="testCoverage"
+        @input="calculate()"
+        min="0"
+        max="100"
+        step="1"
+        class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
+        placeholder="e.g., 85"
+      />
+      <p x-show="errors.testCoverage" x-text="errors.testCoverage" class="text-red-600 text-xs mt-1"></p>
+    </div>
+
+    <!-- Code Review Coverage -->
+    <div>
+      <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
+        Code review coverage (%)
+      </label>
+      <input
+        type="number"
+        x-model="codeReviewCoverage"
+        @input="calculate()"
+        min="0"
+        max="100"
+        step="1"
+        class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
+        placeholder="e.g., 95"
+      />
+      <p x-show="errors.codeReviewCoverage" x-text="errors.codeReviewCoverage" class="text-red-600 text-xs mt-1"></p>
+    </div>
+
+    <!-- Static Analysis Score -->
+    <div>
+      <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
+        Static analysis score (0-100)
+      </label>
+      <input
+        type="number"
+        x-model="staticAnalysisScore"
+        @input="calculate()"
+        min="0"
+        max="100"
+        step="1"
+        class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
+        placeholder="e.g., 85"
+      />
+      <p x-show="errors.staticAnalysisScore" x-text="errors.staticAnalysisScore" class="text-red-600 text-xs mt-1"></p>
+    </div>
+
+    <!-- Results -->
+    <div x-show="codeQualityResults" class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+      <h4 class="font-semibold text-primary-900 dark:text-primary-100 mb-3">Quality Assessment</h4>
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between">
+          <span>Overall quality score:</span>
+          <span class="font-medium text-blue-600 dark:text-blue-400" x-text="codeQualityResults?.overallScore + '/100'"></span>
+        </div>
+        <div class="flex justify-between">
+          <span>Quality level:</span>
+          <span class="font-medium" x-text="codeQualityResults?.level"></span>
+        </div>
+        <div class="mt-3">
+          <div class="text-xs text-primary-600 dark:text-primary-400 mb-1">Score breakdown:</div>
+          <div class="text-xs space-y-1">
+            <div>Test Coverage: <span x-text="codeQualityResults?.testScore"></span></div>
+            <div>Code Review: <span x-text="codeQualityResults?.reviewScore"></span></div>
+            <div>Static Analysis: <span x-text="codeQualityResults?.staticScore"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { calculateCodeQuality } from '../../utils/calculators/codeQuality';
+
+  function codeQualityCalculator() {
+    return {
+      testCoverage: '',
+      codeReviewCoverage: '',
+      staticAnalysisScore: '',
+      codeQualityResults: null,
+      errors: {},
+
+      validateNumber(value, field, opts = {}) {
+        const { min = 0, max } = opts;
+        if (value === '' || value === null) {
+          this.errors[field] = '';
+          return null;
+        }
+        const num = parseFloat(value);
+        if (!Number.isFinite(num) || num < min) {
+          this.errors[field] = min > 0 ? `Please enter a number ≥ ${min}` : 'Please enter a valid non-negative number';
+          return null;
+        }
+        if (max !== undefined && num > max) {
+          this.errors[field] = 'Percentage cannot exceed 100';
+          return null;
+        }
+        this.errors[field] = '';
+        return num;
+      },
+
+      calculate() {
+        const testScore = this.validateNumber(this.testCoverage, 'testCoverage', { max: 100 });
+        const reviewScore = this.validateNumber(this.codeReviewCoverage, 'codeReviewCoverage', { max: 100 });
+        const staticScore = this.validateNumber(this.staticAnalysisScore, 'staticAnalysisScore', { max: 100 });
+
+        if ([testScore, reviewScore, staticScore].some(v => v === null)) {
+          this.codeQualityResults = null;
+          return;
+        }
+
+        const result = calculateCodeQuality(testScore, reviewScore, staticScore);
+        this.codeQualityResults = {
+          overallScore: result.overallScore,
+          level: result.level,
+          testScore: result.testScore.toFixed(0),
+          reviewScore: result.reviewScore.toFixed(0),
+          staticScore: result.staticScore.toFixed(0)
+        };
+      }
+    };
+  }
+</script>
