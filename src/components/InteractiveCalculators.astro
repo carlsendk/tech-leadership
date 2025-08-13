@@ -33,15 +33,16 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Deployments per week
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="deploymentsPerWeek"
             @input="calculateDORA()"
-            min="0" 
+            min="0"
             step="0.1"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 5"
           />
+          <p x-show="errors.deploymentsPerWeek" x-text="errors.deploymentsPerWeek" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- Lead Time -->
@@ -49,15 +50,16 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Lead time (hours from commit to production)
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="leadTimeHours"
             @input="calculateDORA()"
-            min="0" 
+            min="0"
             step="0.5"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 24"
           />
+          <p x-show="errors.leadTimeHours" x-text="errors.leadTimeHours" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- MTTR -->
@@ -65,15 +67,16 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Mean Time to Recovery (hours)
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="mttrHours"
             @input="calculateDORA()"
-            min="0" 
+            min="0"
             step="0.5"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 2"
           />
+          <p x-show="errors.mttrHours" x-text="errors.mttrHours" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- Change Failure Rate -->
@@ -81,16 +84,17 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Change failure rate (%)
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="changeFailureRate"
             @input="calculateDORA()"
-            min="0" 
+            min="0"
             max="100"
             step="1"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 15"
           />
+          <p x-show="errors.changeFailureRate" x-text="errors.changeFailureRate" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- Results -->
@@ -130,15 +134,16 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Team size (developers)
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="teamSize"
             @input="calculateTechDebt()"
-            min="1" 
+            min="1"
             step="1"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 8"
           />
+          <p x-show="errors.teamSize" x-text="errors.teamSize" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- Average Salary -->
@@ -146,15 +151,16 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Average developer salary (annual)
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="avgSalary"
             @input="calculateTechDebt()"
-            min="0" 
+            min="0"
             step="1000"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 100000"
           />
+          <p x-show="errors.avgSalary" x-text="errors.avgSalary" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- Tech Debt Tax -->
@@ -162,16 +168,17 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Technical debt tax (% of time spent on debt)
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="techDebtTax"
             @input="calculateTechDebt()"
-            min="0" 
+            min="0"
             max="100"
             step="5"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 30"
           />
+          <p x-show="errors.techDebtTax" x-text="errors.techDebtTax" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- Results -->
@@ -213,15 +220,16 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Incident duration (hours)
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="incidentDuration"
             @input="calculateIncidentCost()"
-            min="0" 
+            min="0"
             step="0.5"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 2.5"
           />
+          <p x-show="errors.incidentDuration" x-text="errors.incidentDuration" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- Revenue per Hour -->
@@ -229,15 +237,16 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Revenue per hour (when system is operational)
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="revenuePerHour"
             @input="calculateIncidentCost()"
-            min="0" 
+            min="0"
             step="100"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 10000"
           />
+          <p x-show="errors.revenuePerHour" x-text="errors.revenuePerHour" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- People Involved -->
@@ -245,15 +254,16 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Number of people involved in resolution
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="peopleInvolved"
             @input="calculateIncidentCost()"
-            min="1" 
+            min="1"
             step="1"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 5"
           />
+          <p x-show="errors.peopleInvolved" x-text="errors.peopleInvolved" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- Average Hourly Rate -->
@@ -261,15 +271,16 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Average hourly rate of responders
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="avgHourlyRate"
             @input="calculateIncidentCost()"
-            min="0" 
+            min="0"
             step="5"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 75"
           />
+          <p x-show="errors.avgHourlyRate" x-text="errors.avgHourlyRate" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- Customer Impact -->
@@ -277,7 +288,7 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Customer impact level
           </label>
-          <select 
+          <select
             x-model="customerImpact"
             @change="calculateIncidentCost()"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
@@ -288,6 +299,7 @@
             <option value="3">High - Major features down</option>
             <option value="4">Critical - Complete service outage</option>
           </select>
+          <p x-show="errors.customerImpact" x-text="errors.customerImpact" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- Results -->
@@ -340,16 +352,17 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Test coverage (%)
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="testCoverage"
             @input="calculateCodeQuality()"
-            min="0" 
+            min="0"
             max="100"
             step="1"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 85"
           />
+          <p x-show="errors.testCoverage" x-text="errors.testCoverage" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- Code Review Coverage -->
@@ -357,16 +370,17 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Code review coverage (%)
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="codeReviewCoverage"
             @input="calculateCodeQuality()"
-            min="0" 
+            min="0"
             max="100"
             step="1"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 95"
           />
+          <p x-show="errors.codeReviewCoverage" x-text="errors.codeReviewCoverage" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- Static Analysis Score -->
@@ -374,16 +388,17 @@
           <label class="block text-sm font-medium text-primary-900 dark:text-primary-100 mb-2">
             Static analysis score (0-100)
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             x-model="staticAnalysisScore"
             @input="calculateCodeQuality()"
-            min="0" 
+            min="0"
             max="100"
             step="1"
             class="w-full p-2 border border-primary-300 dark:border-primary-600 rounded-md bg-white dark:bg-primary-700 text-primary-900 dark:text-primary-100"
             placeholder="e.g., 85"
           />
+          <p x-show="errors.staticAnalysisScore" x-text="errors.staticAnalysisScore" class="text-red-600 text-xs mt-1"></p>
         </div>
 
         <!-- Results -->
@@ -421,27 +436,52 @@
       mttrHours: '',
       changeFailureRate: '',
       doraResults: null,
+      errors: {},
+
+      validateNumber(value, field, opts = {}) {
+        const { min = 0, max } = opts;
+        if (value === '' || value === null) {
+          this.errors[field] = '';
+          return null;
+        }
+        const num = parseFloat(value);
+        if (!Number.isFinite(num) || num < min) {
+          this.errors[field] = min > 0 ? `Please enter a number ≥ ${min}` : 'Please enter a valid non-negative number';
+          return null;
+        }
+        if (max !== undefined && num > max) {
+          this.errors[field] = 'Percentage cannot exceed 100';
+          return null;
+        }
+        this.errors[field] = '';
+        return num;
+      },
 
       calculateDORA() {
-        if (!this.deploymentsPerWeek || !this.leadTimeHours || !this.mttrHours || !this.changeFailureRate) {
+        const deployments = this.validateNumber(this.deploymentsPerWeek, 'deploymentsPerWeek');
+        const lead = this.validateNumber(this.leadTimeHours, 'leadTimeHours');
+        const mttr = this.validateNumber(this.mttrHours, 'mttrHours');
+        const changeFailure = this.validateNumber(this.changeFailureRate, 'changeFailureRate', { max: 100 });
+
+        if ([deployments, lead, mttr, changeFailure].some(v => v === null)) {
           this.doraResults = null;
           return;
         }
 
-        const deploymentFreq = this.getDeploymentFreqRating(parseFloat(this.deploymentsPerWeek));
-        const leadTime = this.getLeadTimeRating(parseFloat(this.leadTimeHours));
-        const mttr = this.getMTTRRating(parseFloat(this.mttrHours));
-        const changeFailure = this.getChangeFailureRating(parseFloat(this.changeFailureRate));
+        const deploymentFreq = this.getDeploymentFreqRating(deployments);
+        const leadTime = this.getLeadTimeRating(lead);
+        const mttrRating = this.getMTTRRating(mttr);
+        const changeFailureRating = this.getChangeFailureRating(changeFailure);
 
-        const ratings = [deploymentFreq, leadTime, mttr, changeFailure];
+        const ratings = [deploymentFreq, leadTime, mttrRating, changeFailureRating];
         const overall = this.getOverallRating(ratings);
 
         this.doraResults = {
           overall,
           deploymentFreq,
           leadTime,
-          mttr,
-          changeFailure
+          mttr: mttrRating,
+          changeFailure: changeFailureRating
         };
       },
 
@@ -501,26 +541,47 @@
       avgSalary: '',
       techDebtTax: '',
       techDebtResults: null,
+      errors: {},
+
+      validateNumber(value, field, opts = {}) {
+        const { min = 0, max } = opts;
+        if (value === '' || value === null) {
+          this.errors[field] = '';
+          return null;
+        }
+        const num = parseFloat(value);
+        if (!Number.isFinite(num) || num < min) {
+          this.errors[field] = min > 0 ? `Please enter a number ≥ ${min}` : 'Please enter a valid non-negative number';
+          return null;
+        }
+        if (max !== undefined && num > max) {
+          this.errors[field] = 'Percentage cannot exceed 100';
+          return null;
+        }
+        this.errors[field] = '';
+        return num;
+      },
 
       calculateTechDebt() {
-        if (!this.teamSize || !this.avgSalary || !this.techDebtTax) {
+        const size = this.validateNumber(this.teamSize, 'teamSize', { min: 1 });
+        const salary = this.validateNumber(this.avgSalary, 'avgSalary');
+        const tax = this.validateNumber(this.techDebtTax, 'techDebtTax', { max: 100 });
+
+        if ([size, salary, tax].some(v => v === null)) {
           this.techDebtResults = null;
           return;
         }
 
-        const teamSize = parseInt(this.teamSize);
-        const avgSalary = parseFloat(this.avgSalary);
-        const debtTax = parseFloat(this.techDebtTax) / 100;
-
-        const totalSalaryCost = teamSize * avgSalary;
+        const debtTax = tax / 100;
+        const totalSalaryCost = size * salary;
         const annualCost = totalSalaryCost * debtTax;
         const workingHoursPerYear = 2080; // Standard work year
-        const lostHours = teamSize * workingHoursPerYear * debtTax;
+        const lostHours = size * workingHoursPerYear * debtTax;
         const equivalentDevs = lostHours / workingHoursPerYear;
 
         this.techDebtResults = {
-          annualCost: new Intl.NumberFormat('en-US', { 
-            style: 'currency', 
+          annualCost: new Intl.NumberFormat('en-US', {
+            style: 'currency',
             currency: 'USD',
             maximumFractionDigits: 0
           }).format(annualCost),
@@ -539,23 +600,48 @@
       avgHourlyRate: '',
       customerImpact: '',
       incidentCostResults: null,
+      errors: {},
+
+      validateNumber(value, field, opts = {}) {
+        const { min = 0, max } = opts;
+        if (value === '' || value === null) {
+          this.errors[field] = '';
+          return null;
+        }
+        const num = parseFloat(value);
+        if (!Number.isFinite(num) || num < min) {
+          this.errors[field] = min > 0 ? `Please enter a number ≥ ${min}` : 'Please enter a valid non-negative number';
+          return null;
+        }
+        if (max !== undefined && num > max) {
+          this.errors[field] = `Value cannot exceed ${max}`;
+          return null;
+        }
+        this.errors[field] = '';
+        return num;
+      },
 
       calculateIncidentCost() {
-        if (!this.incidentDuration || !this.revenuePerHour || !this.peopleInvolved || !this.avgHourlyRate || !this.customerImpact) {
+        const duration = this.validateNumber(this.incidentDuration, 'incidentDuration');
+        const revenue = this.validateNumber(this.revenuePerHour, 'revenuePerHour');
+        const people = this.validateNumber(this.peopleInvolved, 'peopleInvolved', { min: 1 });
+        const rate = this.validateNumber(this.avgHourlyRate, 'avgHourlyRate');
+        const impactVal = this.customerImpact ? parseInt(this.customerImpact) : null;
+        if (!impactVal) {
+          this.errors.customerImpact = 'Please select an impact level';
+        } else {
+          this.errors.customerImpact = '';
+        }
+
+        if ([duration, revenue, people, rate, impactVal].some(v => v === null) || this.errors.customerImpact) {
           this.incidentCostResults = null;
           return;
         }
 
-        const duration = parseFloat(this.incidentDuration);
-        const revenuePerHour = parseFloat(this.revenuePerHour);
-        const people = parseInt(this.peopleInvolved);
-        const hourlyRate = parseFloat(this.avgHourlyRate);
-        const impact = parseInt(this.customerImpact);
-
         // Calculate direct costs
-        const revenueLoss = duration * revenuePerHour;
-        const teamCost = duration * people * hourlyRate;
-        
+        const revenueLoss = duration * revenue;
+        const teamCost = duration * people * rate;
+
         // Impact multipliers based on customer impact
         const impactMultipliers = {
           1: 1.2,  // Low impact - minor additional costs
@@ -563,25 +649,25 @@
           3: 2.0,  // High impact - significant customer service + potential SLA penalties
           4: 3.0   // Critical - major customer service + SLA penalties + potential legal costs
         };
-        
-        const multiplier = impactMultipliers[impact] || 1;
+
+        const multiplier = impactMultipliers[impactVal] || 1;
         const totalDirectCost = revenueLoss + teamCost;
         const totalCost = totalDirectCost * multiplier;
 
         this.incidentCostResults = {
-          revenueLoss: new Intl.NumberFormat('en-US', { 
-            style: 'currency', 
+          revenueLoss: new Intl.NumberFormat('en-US', {
+            style: 'currency',
             currency: 'USD',
             maximumFractionDigits: 0
           }).format(revenueLoss),
-          teamCost: new Intl.NumberFormat('en-US', { 
-            style: 'currency', 
+          teamCost: new Intl.NumberFormat('en-US', {
+            style: 'currency',
             currency: 'USD',
             maximumFractionDigits: 0
           }).format(teamCost),
           impactMultiplier: multiplier + 'x',
-          totalCost: new Intl.NumberFormat('en-US', { 
-            style: 'currency', 
+          totalCost: new Intl.NumberFormat('en-US', {
+            style: 'currency',
             currency: 'USD',
             maximumFractionDigits: 0
           }).format(totalCost)
@@ -596,16 +682,36 @@
       codeReviewCoverage: '',
       staticAnalysisScore: '',
       codeQualityResults: null,
+      errors: {},
+
+      validateNumber(value, field, opts = {}) {
+        const { min = 0, max } = opts;
+        if (value === '' || value === null) {
+          this.errors[field] = '';
+          return null;
+        }
+        const num = parseFloat(value);
+        if (!Number.isFinite(num) || num < min) {
+          this.errors[field] = min > 0 ? `Please enter a number ≥ ${min}` : 'Please enter a valid non-negative number';
+          return null;
+        }
+        if (max !== undefined && num > max) {
+          this.errors[field] = 'Percentage cannot exceed 100';
+          return null;
+        }
+        this.errors[field] = '';
+        return num;
+      },
 
       calculateCodeQuality() {
-        if (!this.testCoverage || !this.codeReviewCoverage || !this.staticAnalysisScore) {
+        const testScore = this.validateNumber(this.testCoverage, 'testCoverage', { max: 100 });
+        const reviewScore = this.validateNumber(this.codeReviewCoverage, 'codeReviewCoverage', { max: 100 });
+        const staticScore = this.validateNumber(this.staticAnalysisScore, 'staticAnalysisScore', { max: 100 });
+
+        if ([testScore, reviewScore, staticScore].some(v => v === null)) {
           this.codeQualityResults = null;
           return;
         }
-
-        const testScore = Math.min(parseFloat(this.testCoverage), 100);
-        const reviewScore = Math.min(parseFloat(this.codeReviewCoverage), 100);
-        const staticScore = Math.min(parseFloat(this.staticAnalysisScore), 100);
 
         // Weighted average: Test 40%, Review 30%, Static 30%
         const overallScore = Math.round(
