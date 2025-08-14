@@ -111,7 +111,13 @@ interface StaticAssessment {
         scoreRange: [0, 2];
         title: 'Focus on Foundation';
         items: ['Implement basic version control', 'Establish development guidelines'];
-        nextSteps: ['/wiki/engineering-practices/normalization/'];
+        nextSteps: [
+          {
+            href: '/wiki/engineering-practices/normalization/',
+            title: 'Normalization Stage',
+            description: 'Foundation building blocks: version control, guidelines, and standardized systems'
+          }
+        ];
       }
     ];
   };
