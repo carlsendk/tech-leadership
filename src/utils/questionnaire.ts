@@ -246,28 +246,6 @@ export function directQuestionnaireAssessment() {
       return actionItems.slice(0, 6); // Limit to 6 items
     },
 
-    getLinkTitle(link: string) {
-      const pathParts = link.split('/').filter(part => part && part !== 'tech-leadership');
-      if (pathParts.length >= 2) {
-        const lastPart = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2];
-        return lastPart
-          .split('-')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ');
-      }
-      return 'Knowledge Base Article';
-    },
-
-    getLinkDescription(link: string) {
-      if (link.includes('/wiki/')) {
-        return 'Wiki article with detailed guidance';
-      } else if (link.includes('/blog/')) {
-        return 'Blog post with practical insights';
-      } else if (link.includes('/tools/')) {
-        return 'Interactive tool or calculator';
-      }
-      return 'Knowledge base resource';
-    },
 
     restartAssessment() {
       this.showResults = false;

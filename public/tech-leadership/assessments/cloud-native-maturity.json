@@ -6,39 +6,36 @@
   "version": "1.0",
   "category": "Cloud Native",
   "estimatedTime": 10,
-  "tags": ["cloud-native", "maturity-assessment", "organizational-transformation", "devops"],
-  "createdAt": "2025-07-14T00:00:00.000Z",
-  "updatedAt": "2025-07-14T00:00:00.000Z",
   "dimensions": [
     {
       "id": "culture",
       "title": "Culture",
       "description": "Organizational mindset and approach to change, learning, and collaboration",
-      "weight": 1.0
+      "weight": 1
     },
     {
       "id": "product-management",
       "title": "Product Management",
       "description": "How products are planned, developed, and managed throughout their lifecycle",
-      "weight": 1.0
+      "weight": 1
     },
     {
       "id": "delivery",
       "title": "Delivery",
       "description": "Methods and practices for delivering software to production",
-      "weight": 1.0
+      "weight": 1
     },
     {
       "id": "architecture",
       "title": "Architecture",
       "description": "System design patterns and architectural approaches",
-      "weight": 1.0
+      "weight": 1
     },
     {
       "id": "infrastructure",
       "title": "Infrastructure",
       "description": "Infrastructure patterns and management approaches",
-      "weight": 1.0
+      "weight": 1
     }
   ],
   "maturityLevels": [
@@ -117,64 +114,127 @@
   },
   "sections": [],
   "scoring": {
-    "interpretation": "The Cloud Native Maturity Matrix helps you visualize your organization's current state across multiple dimensions of cloud native transformation. Each dimension represents a critical aspect of modern software delivery and operations.",
+    "maxScore": 25,
+    "weights": {
+      "cloud-native-dimensions": 1
+    },
     "recommendations": [
       {
+        "scoreRange": [
+          0,
+          10
+        ],
         "title": "Foundation Building",
         "description": "Focus on establishing basic processes and moving away from ad-hoc approaches.",
-        "applicableWhen": {
-          "averageLevel": 2
-        },
-        "actions": [
+        "items": [
           "Implement version control for all code and infrastructure",
           "Establish basic CI/CD pipelines",
           "Create cross-functional teams",
           "Adopt agile development practices"
         ],
+        "nextSteps": [
+          {
+            "href": "/tech-leadership/wiki/cloud-native/foundation/",
+            "title": "Cloud Native Foundation",
+            "description": "Wiki article with detailed guidance"
+          },
+          {
+            "href": "/tech-leadership/blog/cloud-native-getting-started/",
+            "title": "Cloud Native Getting Started",
+            "description": "Blog post with practical insights"
+          }
+        ],
         "priority": "high"
       },
       {
-        "title": "Agile Transformation", 
+        "scoreRange": [
+          11,
+          15
+        ],
+        "title": "Agile Transformation",
         "description": "Mature your agile practices and begin cloud adoption.",
-        "applicableWhen": {
-          "averageLevel": 3
-        },
-        "actions": [
+        "items": [
           "Implement comprehensive testing strategies",
           "Adopt infrastructure as code",
           "Establish monitoring and observability",
           "Begin containerization journey"
         ],
+        "nextSteps": [
+          {
+            "href": "/tech-leadership/wiki/cloud-native/agile-transformation/",
+            "title": "Agile Transformation",
+            "description": "Wiki article with detailed guidance"
+          },
+          {
+            "href": "/tech-leadership/tools/",
+            "title": "Tools",
+            "description": "Interactive tool or calculator"
+          }
+        ],
         "priority": "high"
       },
       {
+        "scoreRange": [
+          16,
+          20
+        ],
         "title": "Cloud Native Adoption",
         "description": "Embrace cloud native patterns and microservices architecture.",
-        "applicableWhen": {
-          "averageLevel": 4
-        },
-        "actions": [
+        "items": [
           "Implement microservices architecture",
           "Adopt Kubernetes and container orchestration",
           "Implement comprehensive observability",
           "Establish chaos engineering practices"
         ],
+        "nextSteps": [
+          {
+            "href": "/tech-leadership/wiki/cloud-native/microservices/",
+            "title": "Microservices",
+            "description": "Wiki article with detailed guidance"
+          },
+          {
+            "href": "/tech-leadership/wiki/cloud-native/observability/",
+            "title": "Observability",
+            "description": "Wiki article with detailed guidance"
+          }
+        ],
         "priority": "medium"
       },
       {
+        "scoreRange": [
+          21,
+          25
+        ],
         "title": "Future-Ready Organization",
         "description": "Leverage AI and automation for next-generation capabilities.",
-        "applicableWhen": {
-          "averageLevel": 5
-        },
-        "actions": [
+        "items": [
           "Implement AI-driven development processes",
           "Adopt serverless and edge computing",
           "Establish self-healing systems",
           "Implement predictive analytics"
         ],
+        "nextSteps": [
+          {
+            "href": "/tech-leadership/wiki/cloud-native/future-ready/",
+            "title": "Future Ready",
+            "description": "Wiki article with detailed guidance"
+          },
+          {
+            "href": "/tech-leadership/blog/ai-driven-development/",
+            "title": "Ai Driven Development",
+            "description": "Blog post with practical insights"
+          }
+        ],
         "priority": "low"
       }
     ]
-  }
+  },
+  "tags": [
+    "cloud-native",
+    "maturity-assessment",
+    "organizational-transformation",
+    "devops"
+  ],
+  "createdAt": "2025-07-14T00:00:00.000Z",
+  "updatedAt": "2025-07-14T00:00:00.000Z"
 }

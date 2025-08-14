@@ -92,8 +92,14 @@ export interface AssessmentRecommendation {
   title: string;
   description: string;
   items: string[];
-  nextSteps: string[];
+  nextSteps: NextStep[];
   priority: 'high' | 'medium' | 'low';
+}
+
+export interface NextStep {
+  href: string;
+  title: string;
+  description: string;
 }
 
 // Response and result types

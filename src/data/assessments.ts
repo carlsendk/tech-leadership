@@ -24,8 +24,14 @@ export interface AssessmentRecommendation {
   title: string;
   description: string;
   items: string[];
-  nextSteps: string[];
+  nextSteps: NextStep[];
   priority: 'high' | 'medium' | 'low';
+}
+
+export interface NextStep {
+  href: string;
+  title: string;
+  description: string;
 }
 
 export interface Assessment {
@@ -305,9 +311,21 @@ export const engineeringPracticesAssessment: Assessment = {
           'Create basic documentation practices'
         ],
         nextSteps: [
-          '/tech-leadership/wiki/engineering-practices/normalization/',
-          '/tech-leadership/blog/engineering-practices-health-check/',
-          '/tech-leadership/wiki/engineering-practices/normalization/version-control/'
+          {
+            href: '/tech-leadership/wiki/engineering-practices/normalization/',
+            title: 'Normalization Stage',
+            description: 'Foundation building blocks: version control, guidelines, and standardized systems'
+          },
+          {
+            href: '/tech-leadership/blog/engineering-practices-health-check/',
+            title: 'Engineering Practices Health Check: A Maturity Assessment Model',
+            description: 'Inspired by Spotify\'s squad health check, we present a comprehensive model for assessing engineering practices maturity across your organization'
+          },
+          {
+            href: '/tech-leadership/wiki/engineering-practices/normalization/version-control/',
+            title: 'Version Control Systems',
+            description: 'Implementing Git workflows, branching strategies, and access control for effective code management'
+          }
         ],
         priority: 'high'
       },
@@ -322,9 +340,21 @@ export const engineeringPracticesAssessment: Assessment = {
           'Create template-based development workflows'
         ],
         nextSteps: [
-          '/tech-leadership/wiki/engineering-practices/standardization/',
-          '/tech-leadership/wiki/engineering-practices/standardization/golden-path/',
-          '/tech-leadership/wiki/engineering-practices/standardization/infrastructure-as-code/'
+          {
+            href: '/tech-leadership/wiki/engineering-practices/standardization/',
+            title: 'Standardization Stage',
+            description: 'Creating consistency through deployment patterns, Golden Path, and Infrastructure as Code'
+          },
+          {
+            href: '/tech-leadership/wiki/engineering-practices/standardization/golden-path/',
+            title: 'Golden Path Implementation',
+            description: 'Creating and promoting paved road practices for common development workflows'
+          },
+          {
+            href: '/tech-leadership/wiki/engineering-practices/standardization/infrastructure-as-code/',
+            title: 'Infrastructure as Code',
+            description: 'Declarative infrastructure management using Terraform, Kubernetes, and automated provisioning'
+          }
         ],
         priority: 'high'
       },
@@ -339,9 +369,21 @@ export const engineeringPracticesAssessment: Assessment = {
           'Enable teams with full stack capabilities'
         ],
         nextSteps: [
-          '/tech-leadership/wiki/engineering-practices/expansion/',
-          '/tech-leadership/wiki/engineering-practices/expansion/autonomous-teams/',
-          '/tech-leadership/blog/autonomous-teams-implementation/'
+          {
+            href: '/tech-leadership/wiki/engineering-practices/expansion/',
+            title: 'Expansion Stage',
+            description: 'Scaling autonomous teams through continuous integration and delivery practices'
+          },
+          {
+            href: '/tech-leadership/wiki/engineering-practices/expansion/autonomous-teams/',
+            title: 'Autonomous Teams',
+            description: 'Empowering self-organized teams with end-to-end ownership, decision-making authority, and cross-functional capabilities'
+          },
+          {
+            href: '/tech-leadership/blog/autonomous-teams-implementation/',
+            title: 'From Dependency Hell to Autonomous Teams: A Practical Implementation Guide',
+            description: 'Step-by-step guide to transforming dependent teams into autonomous, end-to-end ownership structures that deliver faster with higher quality'
+          }
         ],
         priority: 'medium'
       },
@@ -356,9 +398,21 @@ export const engineeringPracticesAssessment: Assessment = {
           'Create predictive analytics for system health'
         ],
         nextSteps: [
-          '/tech-leadership/wiki/engineering-practices/automation/',
-          '/tech-leadership/wiki/engineering-practices/automation/automated-system-configuration/',
-          '/tech-leadership/wiki/engineering-practices/automation/devsecops/'
+          {
+            href: '/tech-leadership/wiki/engineering-practices/automation/',
+            title: 'Automation Stage',
+            description: 'Full automation of system configuration, resource provisioning, and security integration'
+          },
+          {
+            href: '/tech-leadership/wiki/engineering-practices/automation/automated-system-configuration/',
+            title: 'Automated System Configuration',
+            description: 'Configuration management, drift detection, and self-healing systems that ensure consistent and reliable infrastructure'
+          },
+          {
+            href: '/tech-leadership/wiki/engineering-practices/automation/devsecops/',
+            title: 'DevSecOps Integration',
+            description: 'Integrating security practices throughout the software development lifecycle'
+          }
         ],
         priority: 'medium'
       },
@@ -373,9 +427,21 @@ export const engineeringPracticesAssessment: Assessment = {
           'Empower citizen developers with proper governance'
         ],
         nextSteps: [
-          '/tech-leadership/wiki/engineering-practices/self-service/',
-          '/tech-leadership/wiki/engineering-practices/self-service/self-service-platform/',
-          '/tech-leadership/blog/golden-path-evolution/'
+          {
+            href: '/tech-leadership/wiki/engineering-practices/self-service/',
+            title: 'Self-Service Stage',
+            description: 'Developer platforms, refined Golden Path, and citizen developer enablement'
+          },
+          {
+            href: '/tech-leadership/wiki/engineering-practices/self-service/self-service-platform/',
+            title: 'Self-Service Platform',
+            description: 'Developer portals, infrastructure APIs, and automated workflows that enable team independence and rapid innovation'
+          },
+          {
+            href: '/tech-leadership/blog/golden-path-evolution/',
+            title: 'The Evolution of Golden Paths: From Standardization to Intelligence',
+            description: 'How Golden Paths evolve from simple templates to intelligent, self-optimizing developer experiences that adapt to team needs'
+          }
         ],
         priority: 'low'
       }
@@ -542,8 +608,16 @@ export const cloudNativeMaturityAssessment: MatrixAssessment = {
           'Adopt agile development practices'
         ],
         nextSteps: [
-          '/tech-leadership/wiki/cloud-native/foundation/',
-          '/tech-leadership/blog/cloud-native-getting-started/'
+          {
+            href: '/tech-leadership/wiki/cloud-native/foundation/',
+            title: 'Cloud Native Foundation',
+            description: 'Wiki article with detailed guidance'
+          },
+          {
+            href: '/tech-leadership/blog/cloud-native-getting-started/',
+            title: 'Cloud Native Getting Started',
+            description: 'Blog post with practical insights'
+          }
         ],
         priority: 'high'
       },
@@ -558,8 +632,16 @@ export const cloudNativeMaturityAssessment: MatrixAssessment = {
           'Begin containerization journey'
         ],
         nextSteps: [
-          '/tech-leadership/wiki/cloud-native/agile-transformation/',
-          '/tech-leadership/tools/'
+          {
+            href: '/tech-leadership/wiki/cloud-native/agile-transformation/',
+            title: 'Agile Transformation',
+            description: 'Wiki article with detailed guidance'
+          },
+          {
+            href: '/tech-leadership/tools/',
+            title: 'Tools',
+            description: 'Interactive tool or calculator'
+          }
         ],
         priority: 'high'
       },
@@ -574,8 +656,16 @@ export const cloudNativeMaturityAssessment: MatrixAssessment = {
           'Establish chaos engineering practices'
         ],
         nextSteps: [
-          '/tech-leadership/wiki/cloud-native/microservices/',
-          '/tech-leadership/wiki/cloud-native/observability/'
+          {
+            href: '/tech-leadership/wiki/cloud-native/microservices/',
+            title: 'Microservices',
+            description: 'Wiki article with detailed guidance'
+          },
+          {
+            href: '/tech-leadership/wiki/cloud-native/observability/',
+            title: 'Observability',
+            description: 'Wiki article with detailed guidance'
+          }
         ],
         priority: 'medium'
       },
@@ -590,8 +680,16 @@ export const cloudNativeMaturityAssessment: MatrixAssessment = {
           'Implement predictive analytics'
         ],
         nextSteps: [
-          '/tech-leadership/wiki/cloud-native/future-ready/',
-          '/tech-leadership/blog/ai-driven-development/'
+          {
+            href: '/tech-leadership/wiki/cloud-native/future-ready/',
+            title: 'Future Ready',
+            description: 'Wiki article with detailed guidance'
+          },
+          {
+            href: '/tech-leadership/blog/ai-driven-development/',
+            title: 'Ai Driven Development',
+            description: 'Blog post with practical insights'
+          }
         ],
         priority: 'low'
       }
